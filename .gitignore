@@ -6,3 +6,4 @@
 /_test*
 /plugins/dokuwiki/conf/interwiki.conf
 /plugins/dokuwiki/lib/bar_enhance.config.js
+mail.class.php
