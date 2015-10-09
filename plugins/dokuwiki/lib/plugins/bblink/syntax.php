@@ -23,7 +23,8 @@ class syntax_plugin_bblink extends DokuWiki_Syntax_Plugin
 	 */
 	function getMyConf()
 	{
-		require_once(dirname(__FILE__).'.private.conf.php');
+		$bugServices = array();
+		include_once(dirname(__FILE__).'.private.conf.php');
 		
 		return $bugServices;
 	}

@@ -1,0 +1,8 @@
+*.lnk
+/flyspray.conf.php
+.private.conf.php
+/cache/*
+/.htaccess
+/_test*
+/plugins/dokuwiki/conf/interwiki.conf
+/plugins/dokuwiki/lib/bar_enhance.config.js
