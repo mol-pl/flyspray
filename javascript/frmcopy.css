@@ -1,0 +1,39 @@
+body
+{
+	background-color:#eef;
+}
+#copy_frames
+{
+	margin:0;
+	padding:0;
+}
+#copy_actions
+{
+	margin:0 auto;
+	text-align: center;
+}
+#copy_info
+{
+	margin:.5em 1em;
+
+	border: 1px solid black;
+	background-color: gold;
+	
+	text-align: center;
+}
+iframe
+{
+	border:1px solid black;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	width:50%;
+	height:700px;
+	float:left;
+}
+
+.num_shown_frames_1 iframe
+{
+	width:100%;
+	float:left;
+}

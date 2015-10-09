@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pl_PL" xml:lang="pl_PL">
+  <head>
+    <title>Problem</title>
+
+    <meta name="description" content="Flyspray, a Bug Tracking System written in PHP." />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+
+    <link rel="icon" type="image/png" href="http://maciej/bugz/themes/Bluey/favicon.ico" />
+    <link rel="index" id="indexlink" type="text/html" href="http://maciej/bugz/" />
+        <link rel="section" type="text/html" href="http://maciej/bugz/?project=4" />
+        <link rel="section" type="text/html" href="http://maciej/bugz/?project=3" />
+        <link rel="section" type="text/html" href="http://maciej/bugz/?project=5" />
+        <link media="screen" href="http://maciej/bugz//themes/Bluey/theme.css" rel="stylesheet" type="text/css" />
+    <link media="print"  href="http://maciej/bugz//themes/Bluey/theme_print.css" rel="stylesheet" type="text/css" />
+    <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 1.0 Feed"
+          href="http://maciej/bugz/feed.php?feed_type=rss1&amp;project=0" />
+    <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 2.0 Feed"
+          href="http://maciej/bugz/feed.php?feed_type=rss2&amp;project=0" />
+	<link rel="alternate" type="application/atom+xml" title="Flyspray Atom 0.3 Feed"
+	      href="http://maciej/bugz/feed.php?feed_type=atom&amp;project=0" />
+
+    <!--[if IE]>
+    <link media="screen" href="http://maciej/bugz//themes/Bluey/ie.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+      </head>
+  <body onload="perms = new Perms('permissions');">
+
+  <div id="container">
+    <!-- Remove this to remove the logo -->
+			<h1 id="title"><a href="http://maciej/bugz/">&nbsp;</a></h1>
+	
+<div id="pm-menu">
+
+<div id="projectselector">
+    <form id="projectselectorform" action="http://maciej/bugz/index.php" method="get">
+       <div>
+        <select name="project">
+          <option value="0" selected="selected">wszystkie</option><option value="4">Libra</option><option value="3">MOL</option><option value="5">Molik</option>        </select>
+        <button type="submit" value="1" name="switch">Przełącz</button>
+        <input type="hidden" name="do" value="index" />
+              </div>
+    </form>
+</div>
+
+<ul id="pm-menu-list">
+    <li class="first">
+      <a id="toplevellink" href="http://maciej/bugz/index.php?do=toplevel&amp;project=0">Przegląd</a>
+    </li>
+
+    <li>
+    <a id="homelink"
+        href="http://maciej/bugz/index.php?project=0&amp;do=index">Lista zgłoszeń</a>
+    </li>
+
+    
+          <li>
+      <a id="reportslink" href="http://maciej/bugz/index.php?do=reports&amp;project=0">Log zgłoszeń</a>
+      </li>
+    
+    
+    
+    </ul>
+</div>
+
+    
+    <div id="content">
+      <div id="showtask">
+        <form action="http://maciej/bugz/index.php" method="get">
+          <div>
+            <button type="submit">Pokaż zgłoszenie #</button>
+            <input id="taskid" name="show_task" class="text" type="text" size="10" accesskey="t" />
+          </div>
+        </form>
+      </div>
+
+      <div class="clear"></div>
+
+      <div style="border:2px solid black; background:gold; padding: 2px 4px; font-size:110%">W wyniku technicznych problemów system do zgłaszania błędów w dniu dzisiejszym będzie dostępny spoza serwera.</div>
+      
+    </div>
+    <p id="footer">
+       <!-- Please don't remove this line - it helps promote Flyspray -->
+       <a href="http://flyspray.org/" class="offsite">Napędzane przez Flyspray 0.9.9.3  </a>
+    </p>
+  </div>
+  </body>
+</html>

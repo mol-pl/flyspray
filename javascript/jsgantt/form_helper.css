@@ -1,0 +1,56 @@
+﻿body {
+	font: 10pt Helvetica,Arial;
+}
+/* groupped inputs */
+.input_group {
+	margin:1em 0;
+}
+.input_group .info {
+	margin:0 0;
+	font-size:90%;
+}
+.input_group label {
+	font-weight:bold;
+	display:block;
+}
+.input_group label.group {
+	display:block;
+}
+/* lists of inputs */
+.input_group ul.group input
+,.input_group ul.group select
+{
+	width:100%;
+}
+.input_group ul.group label
+{
+	font-weight:normal;
+	padding:.5em 0;
+}
+/* date adder */
+#dateadd label
+{
+	display:inline-block;
+	width:3em;
+	text-align:right;
+}
+#dateadd input
+{
+	width:auto;
+}
+#dateadd .buttons a
+{
+	text-decoration: none;
+	border: 1px outset #ccc;
+	background: #ccc;
+	color: black;
+	padding:.2em .4em;
+	margin:0 1em;
+}
+#dateadd
+{
+	text-align:center;
+	border: 1px solid #dde;
+	background: #eef;
+	width: 20em;
+}
