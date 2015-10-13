@@ -71,7 +71,7 @@ while ($row = $db->FetchRow($milestones)) {
 	{
 		$tasks = $db->Query('SELECT '.$columns.'
 							   FROM {tasks} t
-						  LEFT JOIN {cache} ca ON (t.task_id = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
+						  LEFT JOIN {cache} ca ON (cast(t.task_id as varchar) = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
 							  WHERE closedby_version = ? AND t.project_id = ?
 							  '.$order,
 							 array($row['version_id'], $proj->id));
@@ -80,7 +80,7 @@ while ($row = $db->FetchRow($milestones)) {
 	{
 		$tasks = $db->Query('SELECT '.$columns.'
 							   FROM {tasks} t
-						  LEFT JOIN {cache} ca ON (t.task_id = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
+						  LEFT JOIN {cache} ca ON (cast(t.task_id as varchar) = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
 							  WHERE closedby_version = ? AND t.project_id = ? AND is_closed != 0
 							  '.$order,
 							 array($row['version_id'], $proj->id));
@@ -89,7 +89,7 @@ while ($row = $db->FetchRow($milestones)) {
 	{
 		$tasks = $db->Query('SELECT '.$columns.'
 							   FROM {tasks} t
-						  LEFT JOIN {cache} ca ON (t.task_id = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
+						  LEFT JOIN {cache} ca ON (cast(t.task_id as varchar) = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
 							  WHERE closedby_version = ? AND t.project_id = ? AND is_closed = 0
 							  '.$order,
 							 array($row['version_id'], $proj->id));

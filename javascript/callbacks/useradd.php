@@ -17,7 +17,7 @@ $get_users = $db->Query('SELECT u.real_name, u.user_name, u.user_id, g.group_nam
                            FROM {users} u
                       LEFT JOIN {users_in_groups} uig on uig.user_id = u.user_id 
                       LEFT JOIN {groups} g ON uig.group_id = g.group_id
-                          WHERE (u.user_name LIKE ? OR u.user_id LIKE ?) AND g.group_id is NOT NULL
+                          WHERE (u.user_name LIKE ? OR CAST(u.user_id as varchar) LIKE ?) AND g.group_id is NOT NULL
                        ORDER BY g.group_name ASC',
                          array($searchterm, $searchterm), 1);
 

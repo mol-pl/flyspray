@@ -1331,9 +1331,10 @@ class Backend
         /// process search-conditions {{{
         $submits = array('type' => 'task_type', 'sev' => 'task_severity', 'due' => 'closedby_version', 'reported' => 'product_version',
                          'cat' => 'product_category', 'status' => 'item_status', 'percent' => 'percent_complete', 'pri' => 'task_priority',
+						 // Nux: PG SQL 8.4+ will not allow LIKE for int (hence casting is needed)
                          'dev' => array('cast(a.user_id as varchar)', 'us.user_name', 'us.real_name'),
-                         'opened' => array('opened_by', 'uo.user_name', 'uo.real_name'),
-                         'closed' => array('closed_by', 'uc.user_name', 'uc.real_name'));
+                         'opened' => array('cast(opened_by as varchar)', 'uo.user_name', 'uo.real_name'),
+                         'closed' => array('cast(closed_by as varchar)', 'uc.user_name', 'uc.real_name'));
         foreach ($submits as $key => $db_key) {
             $type = array_get($args, $key, ($key == 'status') ? 'open' : '');
             settype($type, 'array');
@@ -1476,7 +1477,7 @@ class Backend
                           GROUP BY $groupby
                           $having
                           ORDER BY $sortorder", $sql_params);
-        /*
+        /**
 		// Nux test
 		if ($user->perms('is_admin')) {
 			echo "<textarea>
@@ -1489,9 +1490,13 @@ class Backend
                           $where
                           GROUP BY $groupby
                           $having
-                          ORDER BY $sortorder</textarea>";
+  ORDER BY $sortorder
+  
+  ---------------------------
+  ".var_export($sql_params, true)."
+				</textarea>";
 		}
-		*/
+		/**/
 		
         $tasks = $db->fetchAllArray($sql);
         $id_list = array();
