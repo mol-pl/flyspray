@@ -19,14 +19,7 @@
 	Dev links
 	{{tpl:Bugz-linki-wersja|proj_id=5|ver_id=75|ver_id=90|dev=Maciej|dev=Paweł}} - add dev links after TODO devs
 **/
-class VersionLinksTemplate {
-	private $tplName;
-
-	public function __construct($tplName)
-	{
-		$this->tplName = $tplName;
-	}
-
+class VersionLinksTemplate extends AbstractWikiTemplate {
 	/**
 		Based on the template name say if it's mine.
 	*/

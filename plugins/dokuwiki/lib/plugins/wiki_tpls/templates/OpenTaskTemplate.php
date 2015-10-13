@@ -9,14 +9,7 @@
 
 	@note requires special `interwiki.conf` definition: `server    {PATH}?{QUERY}`
 **/
-class OpenTaskTemplate {
-	private $tplName;
-
-	public function __construct($tplName)
-	{
-		$this->tplName = $tplName;
-	}
-
+class OpenTaskTemplate extends AbstractWikiTemplate {
 	/**
 		Based on the template name say if it's mine.
 	*/
@@ -46,8 +39,6 @@ class OpenTaskTemplate {
 	*/
 	public function parse($tpl_params, $plugin_conf) {
 		global $proj;
-		
-		$tpl_name = $this->tplName;
 		
 		// setup
 		$project_id = $proj->id;
