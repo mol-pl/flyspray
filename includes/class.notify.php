@@ -400,7 +400,7 @@ class Notifications {
 					,strtr(var_export($to, true), "\r\n", '  ')
 				)
 				,3
-				,FS_CACHE_DIR.'/err.log'
+				,FS_CACHE_DIR.'/warn.log'
 			);
 		}
 

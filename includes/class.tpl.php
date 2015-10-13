@@ -302,6 +302,7 @@ function tpl_summarylink($item_summary)
 	{
 		$url_rep = $conf['mol']['klienci_base_url']."szukaj.php?nr=$1";
 		$item_summary = preg_replace ("#\[([a-z]*[0-9]{3,}.*?)\]#", "[<a href='$url_rep'>$1</a>]", $item_summary);
+		$item_summary = preg_replace ("#lic\.\s+([a-z]*[0-9]+)\s*$#", "lic. <a href='$url_rep'>$1</a>", $item_summary);
 	}
 
     return $item_summary;

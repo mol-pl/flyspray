@@ -1014,7 +1014,7 @@ function _adodb_debug_execute(&$zthis, $sql, $inputarr)
 		if ($zthis->debug === -1)
 			ADOConnection::outp( "<br />\n($dbt): ".htmlspecialchars($sqlTxt)." &nbsp; $ss\n<br />\n",false);
 		else 
-			ADOConnection::outp( "<hr />\n($dbt): ".htmlspecialchars($sqlTxt)." &nbsp; $ss\n<hr />\n",false);
+			ADOConnection::outp( "<hr />\n($dbt): <pre>".htmlspecialchars($sqlTxt)."</pre> &nbsp; $ss\n<hr />\n",false);
 	} else {
 		ADOConnection::outp("-----\n($dbt): ".$sqlTxt."\n-----\n",false);
 	}

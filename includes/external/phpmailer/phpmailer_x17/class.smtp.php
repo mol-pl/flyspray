@@ -282,6 +282,10 @@ class SMTP
   function Data($msg_data) {
     $this->error = null; # so no confusion is caused
 
+    if($this->do_debug >= 1) {
+      echo "\n\n=== Data ===\n";
+    }
+
     if(!$this->connected()) {
       $this->error = array(
               "error" => "Called Data() without being connected");
@@ -381,14 +385,23 @@ class SMTP
     # over with aleady
     fputs($this->smtp_conn, $this->CRLF . "." . $this->CRLF);
 
+    if($this->do_debug >= 1) {
+      echo "\n\n==== Data sent (reading response) ====\n";
+    }
+
     $rply = $this->get_lines();
     $code = substr($rply,0,3);
 
-    if($this->do_debug >= 2) {
-      echo "SMTP -> FROM SERVER:" . $this->CRLF . $rply;
+    if($this->do_debug >= 1) {
+      echo "\n\n==== Lines read ====\n";
     }
 
-    if($code != 250) {
+    if($this->do_debug >= 2) {
+      echo "SMTP -> FROM SERVER:" . $this->CRLF . "#>" . urlencode($rply) ."<#";
+    }
+
+	// 354 (at least in MS Exchange) seem to be purely informational so it should be fine too
+    if($code != 250 && strpos($rply, "354 Start mail input") === FALSE) {
       $this->error =
         array("error" => "DATA not accepted from server",
               "smtp_code" => $code,

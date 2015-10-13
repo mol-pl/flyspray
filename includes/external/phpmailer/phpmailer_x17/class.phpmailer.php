@@ -397,7 +397,7 @@ class PHPMailer {
     $body = $this->CreateBody();
 	
 	if ($this->SMTPDebug) {
-		echo "\n\n-----------\n Header\n- - - - - -$header\n-----------\n";
+		echo "\n\n-----------\n Header\n- - - - - -\n$header\n-----------\n";
 	}
 	
     if($body == '') {
