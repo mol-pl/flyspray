@@ -87,7 +87,7 @@ if (!empty($ids))
 	$tasks = $db->Query(
 					'SELECT '.$columns.'
 						FROM {tasks} t
-						LEFT JOIN {cache} ca ON (t.task_id = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
+						LEFT JOIN {cache} ca ON (cast(t.task_id as varchar) = ca.topic AND ca.type = \'rota\' AND t.last_edited_time <= ca.last_updated)
 						WHERE t.task_id  IN ('.$ids.')
 						ORDER BY '.$order.'
 					'
