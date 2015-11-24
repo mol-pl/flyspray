@@ -1,5 +1,10 @@
 <div id="taskdetails">
 <span id="navigation">
+	<button
+		onclick="clipboardHelper.copyHtml('#taskdetails .summary')"
+	><img src="{$this->get_image('klipper_icon')}" alt="{L('copy summary')}" 
+	/></button>
+	
 	<!--
 	<a href="{$conf['mol']['bibz_base_url']}?do=details&task_id={$task_details['task_id']}">widok w Bibz</a>
 	-->

@@ -58,6 +58,8 @@
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/calendar-setup_stripped.js"> </script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/lang/calendar-{substr(L('locale'), 0, 2)}.js"></script>
 
+    <script type="text/javascript" src="{$baseurl}javascript/clipboard.js"></script>
+
 	<!-- Form copy -->
 	<script type="text/javascript" src="{$baseurl}/javascript/framemsg.js"></script>
 	<script type="text/javascript" src="{$baseurl}/javascript/frmcopy.js"></script>

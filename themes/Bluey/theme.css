@@ -1208,6 +1208,15 @@ span#navigation a#prev {
 	background:url(prev.png) no-repeat left;
 }
 
+/* button in task's navi. */
+span#navigation button {
+	margin:0 1em;
+}
+span#navigation button img {
+	max-height:13px;
+}
+
+
 div.attachments {
 	display:block;
 	padding:5px 15px 5px 35px;
