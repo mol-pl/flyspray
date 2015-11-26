@@ -286,6 +286,38 @@ function tpl_userlink($uid)
     return $cache[$uid];
 }
 
+/**
+ * Translate tag id to its name.
+ *
+ * @global Database $db
+ * @global Project $proj
+ * @staticvar array $cache
+ * @param integer $tag_id
+ * @return string
+ */
+function tpl_tagname($tag_id)
+{
+    global $db, $proj;
+
+    static $cache = array();
+
+	$tag_id = intval($tag_id);
+
+	// invalidate cache
+    if (empty($cache[$tag_id])) {
+        $tags = $proj->listTags();
+		foreach ($tags as $tag) {
+			$cache[intval($tag['tag_id'])] = $tag['tag_name'];
+		}
+	}
+
+	// still unknown? weird...
+    if (empty($cache[$tag_id])) {
+		return "NN [$tag_id]";
+	}
+	return $cache[$tag_id];
+}
+
 function tpl_fast_tasklink($arr)
 {
     return tpl_tasklink($arr[1], $arr[0]);
