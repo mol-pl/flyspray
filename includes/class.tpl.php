@@ -297,22 +297,22 @@ function tpl_userlink($uid)
  */
 function tpl_tagname($tag_id)
 {
-    global $db, $proj;
+	global $db, $proj;
 
-    static $cache = array();
+	static $cache = array();	// note - this is one request only cache
 
 	$tag_id = intval($tag_id);
 
-	// invalidate cache
-    if (empty($cache[$tag_id])) {
-        $tags = $proj->listTags();
+	// setup tags cache
+	if (empty($cache)) {
+		$tags = $proj->listTags();
 		foreach ($tags as $tag) {
 			$cache[intval($tag['tag_id'])] = $tag['tag_name'];
 		}
 	}
 
 	// still unknown? weird...
-    if (empty($cache[$tag_id])) {
+	if (empty($cache[$tag_id])) {
 		return "NN [$tag_id]";
 	}
 	return $cache[$tag_id];
