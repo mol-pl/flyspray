@@ -264,9 +264,11 @@ class Backend
 		// check if strings are equal
 		if ($old != $new) {
 			// make sure lists are not simply re-ordered
-			$old_array = sort (Flyspray::int_explode(' ', $old), SORT_NUMERIC);
-			$new_array = sort (Flyspray::int_explode(' ', $new), SORT_NUMERIC);
-			if (implode(',', $old_array) === implode(',', $new_array)) {
+			$old_array = Flyspray::int_explode(' ', $old);
+			$new_array = Flyspray::int_explode(' ', $new);
+			sort ($old_array, SORT_NUMERIC);
+			sort ($new_array, SORT_NUMERIC);
+			if (implode(',', $old_array) !== implode(',', $new_array)) {
 				return $new_array;
 			}
 		}
@@ -315,7 +317,7 @@ class Backend
 		$assignees_changed = false;
 		// Update the list of users assigned this task
 		if ($user->perms('edit_assignments')) {
-			$new_assigned_to_array = self::_equal_old_new_ids();
+			$new_assigned_to_array = self::_equal_old_new_ids($old_assigned_to, $new_assigned_to);
 			if ($new_assigned_to_array !== true) {
 				$assignees_changed = true;
 
