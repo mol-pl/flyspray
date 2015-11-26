@@ -216,6 +216,8 @@ class dokuwiki_TextFormatter
 					."\\n====Informacje dodatkowe===="
 					."\\n  * Praca biblioteki wstrzymana: Tak/Nie"
 				;
+				if (!$user->isAnon()) // especially not for Bibz users (not for customers)
+				{
 				$strToolbarExtra = '
 					<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'\n<notka_serwisowa>**'.$user->infos['real_name'].'** ('.date('Y-m-d, H:i').')\n\n\', \'\n</notka_serwisowa>\', \''.$textareaId.'\'); return false;">
 						<img src="'.$baseurl.'plugins/dokuwiki/img/note_internal.png" align="bottom" alt="Wstaw notkę" title="Wstaw notkę serwisową (niewidoczną dla klienta)" border="0" /></a>
@@ -229,6 +231,7 @@ class dokuwiki_TextFormatter
 						<img onload="nuxbar.insertTemplates(this.parentNode, \''.$textareaId.'\')" src="'.$baseurl.'themes/Bluey/ajax_load.gif" align="bottom" width="22" height="22" alt="Wczytywanie?" title="Wczytywanie szablonów odpowiedzi" border="0" />
 					</div>
 				';
+				}
 			break;
 
 			default:
