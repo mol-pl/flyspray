@@ -52,9 +52,14 @@
 		<?php foreach ($tags as $tag_group): ?>
 			<tr>
 				<td><label>{$tag_group['name']}</label></td>
-				<td>
+				<td class='tag-container'>
 					<?php foreach ($tag_group['tags'] as $tag): ?>
-						<input type="checkbox" name="tags[]" value="{$tag['tag_id']}" id="task-tag-{$tag['tag_id']}">
+						<?php if(in_array($tag['tag_id'], $task_details['tags'])): ?>
+							<?php $tag_selected_attribute = 'checked="checked"'; ?>
+						<?php else: ?>
+							<?php $tag_selected_attribute = ''; ?>
+						<?php endif; ?>
+						<input type="checkbox" name="tags[]" {!$tag_selected_attribute} value="{$tag['tag_id']}" id="task-tag-{$tag['tag_id']}">
 						<label for="task-tag-{$tag['tag_id']}">{$tag['tag_name']}</label>
 					<?php endforeach; ?>
 				</td>

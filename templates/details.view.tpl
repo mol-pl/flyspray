@@ -76,7 +76,7 @@
 	<?php foreach ($tags as $tag_group): ?>
 		<tr>
 			<th><?=$tag_group['name']?></th>
-			<td>
+			<td class='tag-container'>
 				<?php $tag_group_empty = true; ?>
 				<?php if (!empty($task_details['tags'])): ?>
 					<?php foreach ($tag_group['tags'] as $tag): ?>

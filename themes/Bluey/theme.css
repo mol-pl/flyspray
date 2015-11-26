@@ -252,6 +252,23 @@ label.text {
 	font-weight:400;
 }
 
+/* tags edit/add */
+table td.tag-container label {
+	text-align:left;
+	display: inline-block;
+	font-weight: normal;
+	padding: 0;
+	margin: 0 .5em 0 .2em;
+}
+/* tags view */
+#taskdetails .tag-container .tag:before {
+	content: '• ';
+	margin: 0 .2em;
+}
+#taskdetails .tag-container .tag:first-child:before {
+	content: '';
+	margin: 0;
+}
 
 /* div.box and p.box is used for areas that only administrators can use
 p.box for instance for adding comments
