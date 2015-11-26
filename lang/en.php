@@ -259,6 +259,7 @@ $language = array(
 'taskassigned'            => 'Task assigned to',
 'taskreassigned'          => 'Task reassigned to',
 'assignmentremoved'       => 'Assignment removed',
+'tagassignmentremoved'       => 'Tag assignment removed',
 'summary'                 => 'Summary',
 'addedasrelated'          => 'Task added to the related list of',
 'deletedasrelated'        => 'Task removed from the related list of',

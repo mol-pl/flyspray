@@ -235,7 +235,7 @@ function event_description($history) {
                 $return .= eL('taskassigned').' ';
                 $return .= implode(', ', $tags);
             } elseif (empty($new_value)) {
-                 $return .= eL('assignmentremoved');
+                 $return .= eL('tagassignmentremoved');
             } else {
                  $tags = explode(' ', trim($new_value));
                  $tags = array_map('tpl_tagname', $tags);

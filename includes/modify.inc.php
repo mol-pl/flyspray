@@ -123,7 +123,7 @@ switch ($action = Req::val('action'))
 		// run changes
 		Backend::edit_task($task, $sql_fileds['set'], $sql_fileds['vals'], 
 				Post::val('old_assigned'), Post::val('assigned_to'),
-				Post::val('old_tags'), implode(' ', Post::val('tags')),
+				Post::val('old_tags'), implode(' ', Post::val('tags', array())),
 				$time);
 		// extra changes
         Backend::add_comment($task, Post::val('comment_text'), $time);
