@@ -84,16 +84,86 @@ class Project
             return '';
         }
 
-		// Nux: Dodane sortowanie po id projektu (na górze systemy/kategorie dodane do danego projektu)
-        return "SELECT  {$type}_id, {$type}_name
+		$columns = "{$type}_id, {$type}_name";
+		// Nux: Added order by project id (this makes common categories/systems land on top of lists)
+		$order = "project_id DESC, list_position";
+		// tags are more complicated...
+		if ($type === 'tag') {
+			$columns .= ", {$type}_group";
+			$order = "{$type}_group, $order";
+		}
+
+        return "SELECT  $columns
                   FROM  {list_{$type}}
                  WHERE  show_in_list = 1 AND ( project_id = ? OR project_id = 0 )
                         $where
-              ORDER BY  project_id DESC, list_position";
+              ORDER BY  $order";
     }
 
     // }}}
     // PM dependant functions {{{
+
+	/**
+	 * Standard tag list.
+	 * 
+	 * @global Database $db
+	 * @param bool $pm If true then a list for project management is returned.
+	 * @return array
+	 */
+    function listTags($pm = false)
+    {
+        global $db;
+        if ($pm) {
+            return $db->cached_query(
+                    'pm_tag',
+                    $this->_pm_list_sql('tag', array('task_type')),
+                    array($this->id));
+        } else {
+            return $db->cached_query(
+                    'tag', $this->_list_sql('tag'), array($this->id));
+        }
+    }
+
+	/**
+	 * Tags in arrays of groups array.
+	 *
+	 * This for dysplay in task forms (search, edit, add).
+	 *
+	 * @param bool $pm If true then a list for project management is returned.
+	 * @return array
+	 */
+	function listGrouppedTags($pm = false)
+	{
+		$tags_flat = $this->listTags($pm);
+
+		$current_group = '';
+		$tags = array();
+		foreach ($tags_flat as $tag) {
+			if ($current_group != $tag['tag_group']) {
+				$current_group = $tag['tag_group'];
+				$tags[$current_group] = array(
+					'code' => $this->_getTagGroupCode($tag['tag_group']),
+					'name' => $tag['tag_group'],
+					'tags' => array(),
+				);
+			}
+			$tags[$current_group]['tags'][] = $tag;
+		}
+
+		return $tags;
+	}
+
+	/**
+	 * Group identification code.
+	 *
+	 * Should be safe to use in HTML id attributes.
+	 *
+	 * @param string $group_name
+	 * @return string
+	 */
+	function _getTagGroupCode($group_name) {
+		return preg_replace('#[^a-zA-Z]#', '-', $group_name);
+	}
 
     function listTaskTypes($pm = false)
     {

@@ -47,6 +47,19 @@
 				</select>
 			 </td>
 			</tr>
+
+		<?php foreach ($tags as $tag_group): ?>
+			<tr>
+				<td><label>{$tag_group['name']}</label></td>
+				<td>
+					<?php foreach ($tag_group['tags'] as $tag): ?>
+						<input type="checkbox" name="tags[]" value="{$tag['tag_id']}" id="task-tag-{$tag['tag_id']}">
+						<label for="task-tag-{$tag['tag_id']}">{$tag['tag_name']}</label>
+					<?php endforeach; ?>
+				</td>
+			</tr>
+		<?php endforeach; ?>
+
 			<tr>
 			 <td><label for="category">{L('category')}</label></td>
 			 <td>
