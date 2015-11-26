@@ -292,9 +292,13 @@ class Backend
 	 * @param array $sql_fields_values Array of changed values (in the same order as in \a $sql_fileds_set).
 	 * @param string $old_assigned_to Space separated list of old assignees.
 	 * @param string $new_assigned_to Space separated list of new assignees.
+	 * @param string $old_tags Space separated list of old tags.
+	 * @param string $new_tags Space separated list of new tags.
 	 * @param int $time Time of change (as from `time()` function). Defaults to current time.
 	 */
-    function edit_task($task, $sql_fields_set, $sql_fields_values, $old_assigned_to = '', $new_assigned_to = '',  $time = null)
+    function edit_task($task, $sql_fields_set, $sql_fields_values, $old_assigned_to = '', $new_assigned_to = ''
+			, $old_tags = '', $new_tags = ''
+			,  $time = null)
     {
         global $db, $user, $notify;
 
@@ -334,6 +338,26 @@ class Backend
 			}
 		}
 
+		// Update the list of tags assigned to this task
+		$old_tags = trim($old_tags);
+		$new_tags = trim($new_tags);
+		$new_tags_array = self::_equal_old_new_ids($old_tags, $new_tags);
+		if ($new_tags_array !== true) {
+			// Log to task history
+			Flyspray::logEvent($task['task_id'], 40, $new_tags, $old_tags, '', $time);
+
+			// Delete the current assignees for this task
+			$db->Query('DELETE FROM {tag_assignment}
+							  WHERE task_id = ?',
+						array($task['task_id']));
+
+			// Convert tags and store them in the 'assigned' table
+			foreach ($new_tags_array as $key => $val)
+			{
+				$db->Replace('{tag_assignment}', array('tag_id'=> $val, 'task_id'=> $task['task_id']), array('tag_id','task_id'));
+			}
+		}
+
         // Get the details of the task we just updated
         // To generate the changed-task message
         $new_details_full = Flyspray::GetTaskDetails($task['task_id']);
@@ -343,7 +367,7 @@ class Backend
         $new_details = $db->FetchRow($result);
 
         foreach ($new_details as $key => $val) {
-            if (strstr($key, 'last_edited_') || $key == 'assigned_to'
+            if (strstr($key, 'last_edited_') || $key == 'assigned_to' || $key == 'tags'
                     || is_numeric($key))
             {
                 continue;
@@ -448,6 +472,7 @@ class Backend
 
 		Backend::edit_task($task, $sql_fileds['set'], $sql_fileds['vals'],
 				$old_assigned_to, $new_assigned_to,
+				'', '',
 				$time);
 	}
 

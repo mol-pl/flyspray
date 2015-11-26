@@ -19,6 +19,7 @@
         <input type="hidden" name="edit" value="1" />
 		<input type="hidden" name="task_id" value="{$task_details['task_id']}" />
 		<input type="hidden" name="edit_start_time" value="{Req::val('edit_start_time', time())}" />
+		<input type="hidden" name="old_tags" value="{implode(' ', $task_details['tags'])}">
 
 		<div id="fineprint">
 		  {L('attachedtoproject')}:
