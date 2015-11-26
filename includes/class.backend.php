@@ -1020,6 +1020,19 @@ class Backend
                             $notify->SpecificAddresses(Flyspray::int_explode(' ', $args['assigned_to'])));
         }
 
+        // Add and log the tag assignments
+        if (isset($args['tags']) && trim($args['tags']))
+        {
+            // Convert tags and store them in the 'assigned' table
+            foreach ($args['tags'] as $key => $val)
+            {
+				$val = intval($val);
+                $db->Replace('{tag_assignment}', array('tag_id'=> $val, 'task_id'=> $task_id), array('tag_id','task_id'));
+            }
+            // Log to task history
+            Flyspray::logEvent($task_id, 40, implode(' ', $args['tags']));
+        }
+
         // Log that the task was opened
         Flyspray::logEvent($task_id, 1);
 

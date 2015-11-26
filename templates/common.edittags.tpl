@@ -1,9 +1,11 @@
+<?php /* Note. When creating a new task `$task_details` is empty */ ?>
+
 <?php foreach ($tags as $tag_group): ?>
 	<tr>
 		<td><label>{$tag_group['name']}</label></td>
 		<td class='tag-container'>
 			<?php foreach ($tag_group['tags'] as $tag): ?>
-				<?php if(in_array($tag['tag_id'], $task_details['tags'])): ?>
+				<?php if(!empty($task_details) && in_array($tag['tag_id'], $task_details['tags'])): ?>
 					<?php $tag_selected_attribute = 'checked="checked"'; ?>
 				<?php else: ?>
 					<?php $tag_selected_attribute = ''; ?>
