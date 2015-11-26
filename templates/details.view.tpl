@@ -73,6 +73,25 @@
 		  <th id="tasktype">{L('tasktype')}</th>
 		  <td headers="tasktype">{$task_details['tasktype_name']}</td>
 		</tr>
+	<?php foreach ($tags as $tag_group): ?>
+		<tr>
+			<th><?=$tag_group['name']?></th>
+			<td>
+				<?php $tag_group_empty = true; ?>
+				<?php if (!empty($task_details['tags'])): ?>
+					<?php foreach ($tag_group['tags'] as $tag): ?>
+						<?php if(in_array($tag['tag_id'], $task_details['tags'])): ?>
+							<span class='tag'><?=$tag['tag_name']?></span>
+							<?php $tag_group_empty = false; ?>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				<?php endif; ?>
+				<?php if ($tag_group_empty): ?>
+					&mdash;
+				<?php endif; ?>
+			</td>
+		</tr>
+	<?php endforeach; ?>
 		<tr>
 		  <th id="category">{L('category')}</th>
 		  <td headers="category">
