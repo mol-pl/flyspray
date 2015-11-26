@@ -250,6 +250,30 @@ class Backend
     }
 
 	/**
+	 * Compare list of old (previous) ids with new ones.
+	 *
+	 * @param string $old Space separated list of old assignees.
+	 * @param string $new Space separated list of new assignees.
+	 * @return boolean|array
+	 *	True if the lists are the same.
+	 *  Array of integers created with `Flyspray::int_explode` from $new.
+	 */
+	function _equal_old_new_ids($old, $new) {
+		$old = trim($old);
+		$new = trim($new);
+		// check if strings are equal
+		if ($old != $new) {
+			// make sure lists are not simply re-ordered
+			$old_array = sort (Flyspray::int_explode(' ', $old), SORT_NUMERIC);
+			$new_array = sort (Flyspray::int_explode(' ', $new), SORT_NUMERIC);
+			if (implode(',', $old_array) === implode(',', $new_array)) {
+				return $new_array;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Edit task details (either full or partial edit).
 	 *
 	 * @note It's assumed permissions for changing task details were already checked.
@@ -289,21 +313,24 @@ class Backend
 		$old_assigned_to = trim($old_assigned_to);
 		$new_assigned_to = trim($new_assigned_to);
 		$assignees_changed = false;
-        // Update the list of users assigned this task
-        if ($user->perms('edit_assignments') && $old_assigned_to != $new_assigned_to ) {
-			$assignees_changed = true;
+		// Update the list of users assigned this task
+		if ($user->perms('edit_assignments')) {
+			$new_assigned_to_array = self::_equal_old_new_ids();
+			if ($new_assigned_to_array !== true) {
+				$assignees_changed = true;
 
-            // Delete the current assignees for this task
-            $db->Query('DELETE FROM {assigned}
-                              WHERE task_id = ?',
-                        array($task['task_id']));
+				// Delete the current assignees for this task
+				$db->Query('DELETE FROM {assigned}
+								  WHERE task_id = ?',
+							array($task['task_id']));
 
-            // Convert assigned_to and store them in the 'assigned' table
-            foreach (Flyspray::int_explode(' ', $new_assigned_to) as $key => $val)
-            {
-                $db->Replace('{assigned}', array('user_id'=> $val, 'task_id'=> $task['task_id']), array('user_id','task_id'));
-            }
-         }
+				// Convert assigned_to and store them in the 'assigned' table
+				foreach ($new_assigned_to_array as $key => $val)
+				{
+					$db->Replace('{assigned}', array('user_id'=> $val, 'task_id'=> $task['task_id']), array('user_id','task_id'));
+				}
+			}
+		}
 
         // Get the details of the task we just updated
         // To generate the changed-task message
