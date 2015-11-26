@@ -260,6 +260,17 @@ table td.tag-container label {
 	padding: 0;
 	margin: 0 .5em 0 .2em;
 }
+table div#taskfields td {
+	white-space: normal !important;
+}
+table div#taskfields td {
+	white-space: normal !important;
+}
+table div#taskfields td .tag-box {
+	white-space: nowrap;
+	display: inline-block;
+	margin-bottom: .5em;
+}
 /* tags view */
 #taskdetails .tag-container .tag:before {
 	content: '• ';

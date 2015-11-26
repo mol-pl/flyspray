@@ -59,8 +59,10 @@
 						<?php else: ?>
 							<?php $tag_selected_attribute = ''; ?>
 						<?php endif; ?>
-						<input type="checkbox" name="tags[]" {!$tag_selected_attribute} value="{$tag['tag_id']}" id="task-tag-{$tag['tag_id']}">
-						<label for="task-tag-{$tag['tag_id']}">{$tag['tag_name']}</label>
+						<span class="tag-box">
+							<input type="checkbox" name="tags[]" {!$tag_selected_attribute} value="{$tag['tag_id']}" id="task-tag-{$tag['tag_id']}">
+							<label for="task-tag-{$tag['tag_id']}">{$tag['tag_name']}</label>
+						</span>
 					<?php endforeach; ?>
 				</td>
 			</tr>
