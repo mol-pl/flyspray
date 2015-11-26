@@ -1,7 +1,7 @@
 <?php
 	include('tags.data.groupped.php');
 	
-	$old_tags = array(65, 66);
+	$old_tags = array(11, 12);
 	
 	var_export($_POST);
 ?>
