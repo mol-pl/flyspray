@@ -47,6 +47,9 @@
 				</select>
 			 </td>
 			</tr>
+
+			<?php $this->display('common.edittags.tpl'); ?>
+
 			<tr>
 			 <td><label for="category">{L('category')}</label></td>
 			 <td>
