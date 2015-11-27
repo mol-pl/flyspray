@@ -434,6 +434,27 @@ function tpl_userselect($name, $value = null, $id = '', $attrs = array()) {
 // }}}
 
 // {{{ Options for a <select>
+/**
+ * Prepares option tags for select.
+ *
+ * @example Options array and output:
+ * array(
+ *  '' => 'Nothing'	// -> <option value="">Nothing
+ *  1 => array (0 => 5, 'os_id' => 5, 1 => 'Linux', 'os_name' => 'Linux') // -> <option value="5">Linux
+ *  2 => array (0 => 6, 'os_id' => 6, 1 => 'Windows', 'os_name' => 'Windows') // -> <option value="6">Windows
+ *  2 => array (0 => 8, 'os_id' => 8, 1 => 'iOS', 'os_name' => 'iOS') // -> <option value="8">iOS
+ * );
+ *
+ * @param array $options Note! Each element of the array can either be
+ *	'value' => 'label'
+ *	or
+ *	'whatever' => array(0 => 'value', 1 => 'label')
+ * @param mixed $selected array or string from $_GET or something like that. Mulitselect arrays supported.
+ * @param boolean $labelIsValue Force value to be the same as label.
+ * @param array $attr Additional attributes.
+ * @param string $remove Value to be ignored.
+ * @return string HTML with options.
+ */
 function tpl_options($options, $selected = null, $labelIsValue = false, $attr = null, $remove = null)
 {
     $html = '';
