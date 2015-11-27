@@ -109,11 +109,9 @@
 		<div class="search_select">
 			<label class="default multisel" for="tags-<?=$tag_group['code']?>"><?=$tag_group['name']?></label>
 			<select name="tags[]" id="tags-<?=$tag_group['code']?>" multiple="multiple" size="5">
-				<option value="">{L('allcategories')}</option>
-				<option value="-<?=$tag_group['name']?>">{L('unassigned')}</option>
-				<?php foreach ($tag_group['tags'] as $tag): ?>
-					<option value="<?=$tag['tag_id']?>"><?=$tag['tag_name']?></option>
-				<?php endforeach; ?>
+				<option value="">&mdash;</option>
+				{!tpl_options(array('-'.$tag_group['name'] => L('unassigned'))
+					 + $tag_group['tags'], Get::val('tags', ''))}
 			</select>
 		</div>
 	<?php endforeach; ?>
