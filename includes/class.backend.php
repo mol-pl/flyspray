@@ -1191,11 +1191,17 @@ class Backend
 
     /**
      * Returns an array of tasks (respecting pagination) and an ID list (all tasks)
+	 *
      * @param array $args
      * @param array $visible
      * @param integer $offset
-     * @param integer $comment
-     * @param bool $perpage
+     * @param integer $perpage
+	 *
+	 * @global Project $proj
+	 * @global Database $db
+	 * @global User $user
+	 * @global array $conf
+	 *
      * @access public
      * @return array
      * @version 1.0
@@ -1515,6 +1521,7 @@ class Backend
 
 		// tags search
 		if (array_get($args, 'tags')) {
+			// parse _GET['tags']
 			$tag_ids = array();
 			$negative_tag_groups = array();
 			foreach ($args['tags'] as $tag_value) {
@@ -1531,10 +1538,28 @@ class Backend
 					$negative_tag_groups[] = substr($tag_value, 1);
 				}
 			}
+			// id search condition
 			if (!empty($tag_ids)) {
 				$where[] = ' t.task_id IN ('
 							. 'SELECT task_id FROM {tag_assignment} tag_a WHERE t.task_id = tag_a.task_id '
 								. ' AND tag_a.tag_id IN ('.implode(',', $tag_ids).') '
+						. ') ';
+			}
+			// unassigned search condition
+			if (!empty($negative_tag_groups)) {
+				$result = $db->Query('
+					SELECT  tag_id, tag_group
+					FROM  {list_tag}
+				');
+				$negative_tag_ids = array();
+				while ($row = $db->FetchRow($result)) {
+					if (in_array($row['tag_group'], $negative_tag_groups)) {
+						$negative_tag_ids[] = $row['tag_id'];
+					}
+				}
+				$where[] = ' t.task_id NOT IN ('
+							. 'SELECT task_id FROM {tag_assignment} tag_a WHERE t.task_id = tag_a.task_id '
+								. ' AND tag_a.tag_id IN ('.implode(',', $negative_tag_ids).') '
 						. ') ';
 			}
 		}
