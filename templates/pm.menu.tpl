@@ -4,6 +4,7 @@
   <a id="projttlink"    href="{CreateURL('pm', 'tasktype',         $proj->id)}">{L('tasktypes')}</a>
   <a id="projstatuslink" href="{CreateURL('pm', 'status',     $proj->id)}">{L('taskstatuses')}</a>
   <a id="projreslink"   href="{CreateURL('pm', 'resolution',        $proj->id)}">{L('resolutions')}</a>
+  <a id="projtaglink"   href="{CreateURL('pm', 'tag',        $proj->id)}">{L('tags')}</a>
   <a id="projcatlink"   href="{CreateURL('pm', 'cat',        $proj->id)}">{L('categories')}</a>
   <a id="projoslink"    href="{CreateURL('pm', 'os',         $proj->id)}">{L('operatingsystems')}</a>
   <a id="projverlink"   href="{CreateURL('pm', 'version',        $proj->id)}">{L('versions')}</a>

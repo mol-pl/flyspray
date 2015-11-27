@@ -4,6 +4,7 @@
   <a id="globttlink" href="{CreateURL('admin', 'tasktype')}">{L('tasktypes') }</a>
   <a id="globstatuslink" href="{CreateURL('admin', 'status')}">{L('taskstatuses') }</a>
   <a id="globreslink" href="{CreateURL('admin', 'resolution')}">{L('resolutions') }</a>
+  <a id="globtaglink" href="{CreateURL('admin', 'tag')}">{L('tags') }</a>
   <a id="globcatlink" href="{CreateURL('admin', 'cat')}">{L('categories') }</a>
   <a id="globoslink" href="{CreateURL('admin', 'os')}">{L('operatingsystems')}</a>
   <a id="globverlink" href="{CreateURL('admin', 'version')}">{L('versions') }</a>

@@ -123,6 +123,7 @@ $language = array(
 'assignotherstoself'      => 'Assign others\' tasks to self',
 'viewreports'             => 'View event log',
 'othersview'              => 'Allow anyone to view this project',
+'tags'                    => 'Tags',
 'usersandgroups'          => 'Users and Groups',
 'globalgroup'             => 'Global Group',
 'globalgroups'            => 'Global Groups',
