@@ -1310,7 +1310,7 @@ class Backend
 			// to avoid +1 thingies
             $select .= ' 1    AS num_assigned, ';
         }
-		
+
         if (array_get($args, 'only_primary')) {
             $from   .= ' LEFT JOIN  {dependencies} dep  ON dep.dep_task_id = t.task_id ';
             $where[] = 'dep.depend_id IS NULL';
@@ -1512,6 +1512,32 @@ class Backend
             $sql_params[] = $user->id;
             $sql_params[] = $user->id;
         }
+
+		// tags search
+		if (array_get($args, 'tags')) {
+			$tag_ids = array();
+			$negative_tag_groups = array();
+			foreach ($args['tags'] as $tag_value) {
+				if (empty($tag_value)) {
+					continue;
+				}
+				// id search
+				$tag_id = intval($tag_value, 10);
+				if (!empty($tag_id)) {
+					$tag_ids[] = $tag_id;
+				}
+				// unassigned search
+				if (strpos($tag_value, '-') === 0) {
+					$negative_tag_groups[] = substr($tag_value, 1);
+				}
+			}
+			if (!empty($tag_ids)) {
+				$where[] = ' t.task_id IN ('
+							. 'SELECT task_id FROM {tag_assignment} tag_a WHERE t.task_id = tag_a.task_id '
+								. ' AND tag_a.tag_id IN ('.implode(',', $tag_ids).') '
+						. ') ';
+			}
+		}
 
         $where = (count($where)) ? 'WHERE '. join(' AND ', $where) : '';
 

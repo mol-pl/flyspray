@@ -2,6 +2,27 @@
 	include('tags.data.groupped.php');
 
 	var_export($_GET);
+
+	$args = $_GET;
+
+			$tag_ids = array();
+			$negative_tag_groups = array();
+			foreach ($args['tags'] as $tag_value) {
+				if (empty($tag_value)) {
+					continue;
+				}
+				// id search
+				$tag_id = intval($tag_value, 10);
+				if (!empty($tag_id)) {
+					$tag_ids[] = $tag_id;
+				}
+				// unassugned search
+				if (strpos($tag_value, '-') === 0) {
+					$negative_tag_groups[] = substr($tag_value, 1);
+				}
+			}
+	echo"<br>tag_ids "; var_export($tag_ids);
+	echo"<br>negative_tag_groups "; var_export($negative_tag_groups);
 ?>
 
 <style type="text/css">
@@ -40,6 +61,7 @@ h2
 		<div class="search_select">
 			<label class="default multisel" for="tags-<?=$tag_group['code']?>"><?=$tag_group['name']?></label>
 			<select name="tags[]" id="tags-<?=$tag_group['code']?>" multiple="multiple" size="5">
+				<option value="">{L('allcategories')}</option>
 				<option value="-<?=$tag_group['name']?>">nieprzypisane</option>
 				<?php foreach ($tag_group['tags'] as $tag): ?>
 					<option value="<?=$tag['tag_id']?>"><?=$tag['tag_name']?></option>

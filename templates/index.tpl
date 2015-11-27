@@ -104,6 +104,20 @@
         </select>
         </div>
 
+	<?php $tags = $proj->listGrouppedTags(); ?>
+	<?php foreach ($tags as $tag_group): ?>
+		<div class="search_select">
+			<label class="default multisel" for="tags-<?=$tag_group['code']?>"><?=$tag_group['name']?></label>
+			<select name="tags[]" id="tags-<?=$tag_group['code']?>" multiple="multiple" size="5">
+				<option value="">{L('allcategories')}</option>
+				<option value="-<?=$tag_group['name']?>">{L('unassigned')}</option>
+				<?php foreach ($tag_group['tags'] as $tag): ?>
+					<option value="<?=$tag['tag_id']?>"><?=$tag['tag_name']?></option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+	<?php endforeach; ?>
+
         <div class="search_select">
         <label class="default multisel" for="status">{L('status')}</label>
         <select name="status[]" id="status" multiple="multiple" size="5">
