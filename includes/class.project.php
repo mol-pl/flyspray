@@ -114,10 +114,16 @@ class Project
     {
         global $db;
         if ($pm) {
+			// must NOT use _pm_list_sql, as it doesn't work for many to many assoc.
             return $db->cached_query(
-                    'pm_tag',
-                    $this->_pm_list_sql('tag', array('task_type')),
-                    array($this->id));
+					'pm_tag',
+					"SELECT  l.*, count(a.tag_id) AS used_in_tasks
+						FROM  {list_tag} l
+						LEFT JOIN  {tag_assignment} a ON (a.tag_id = l.tag_id)
+						WHERE  l.project_id = ?
+					GROUP BY  l.tag_id, l.tag_group, l.tag_name, l.project_id, l.list_position, l.show_in_list
+					ORDER BY  tag_group, list_position",
+					array($this->id));
         } else {
             return $db->cached_query(
                     'tag', $this->_list_sql('tag'), array($this->id));

@@ -926,25 +926,28 @@ switch ($action = Req::val('action'))
                 if (!isset($listshow[$id])) {
                     $listshow[$id] = 0;
                 }
-                $update = $db->Query($sql
+                $update = $db->Query($sql, array(
 					// set
-					, $listnames[$id], intval($listposition[$id]), intval($listshow[$id]), $listgroups[$id]
+					$listnames[$id], intval($listposition[$id]), intval($listshow[$id]), $listgroups[$id]
 					// where
 					, $id, $proj->id
-				);
+				));
             } else {
                 Flyspray::show_error(L('fieldsmissing'));
             }
         }
 
-		// delete unsupported... (at least for now)
-		// WARNING! Cannot delete in so simple manner as tag_assigments would remin in db.
-		/*
+		// delete selected
         if (is_array($listdelete) && count($listdelete)) {
-            $deleteids = "$list_id = " . join(" OR $list_id =", array_map('intval', array_keys($listdelete)));
-            $db->Query("DELETE FROM $list_table_name WHERE project_id = ? AND ($deleteids)", array($proj->id));
+            $deleteids = join(",", array_map('intval', array_keys($listdelete)));
+            $db->Query(
+				"DELETE FROM $list_table_name l WHERE project_id = ? "
+					. " AND tag_id IN ($deleteids)"
+					// make sure tags are not used
+					. " AND tag_id NOT IN (SELECT tag_id FROM {tag_assignment} a WHERE (a.tag_id = l.tag_id))"
+				, array($proj->id)
+			);
         }
-		*/
 
         $_SESSION['SUCCESS'] = L('listupdated');
         break;
