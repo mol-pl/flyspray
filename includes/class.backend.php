@@ -1021,9 +1021,9 @@ class Backend
         }
 
         // Add and log the tag assignments
-        if (isset($args['tags']) && trim($args['tags']))
+        if (!empty($args['tags']))
         {
-            // Convert tags and store them in the 'assigned' table
+			// Convert tags and store them in the 'assigned' table
             foreach ($args['tags'] as $key => $val)
             {
 				$val = intval($val);
