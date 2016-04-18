@@ -104,6 +104,18 @@
         </select>
         </div>
 
+	<?php $tags = $proj->listGrouppedTags(); ?>
+	<?php foreach ($tags as $tag_group): ?>
+		<div class="search_select">
+			<label class="default multisel" for="tags-<?=$tag_group['code']?>"><?=$tag_group['name']?></label>
+			<select name="tags[]" id="tags-<?=$tag_group['code']?>" multiple="multiple" size="5">
+				<option value="">&mdash;</option>
+				{!tpl_options(array('-'.$tag_group['name'] => L('unassigned'))
+					 + $tag_group['tags'], Get::val('tags', ''))}
+			</select>
+		</div>
+	<?php endforeach; ?>
+
         <div class="search_select">
         <label class="default multisel" for="status">{L('status')}</label>
         <select name="status[]" id="status" multiple="multiple" size="5">

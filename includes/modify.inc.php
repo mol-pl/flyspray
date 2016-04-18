@@ -123,6 +123,7 @@ switch ($action = Req::val('action'))
 		// run changes
 		Backend::edit_task($task, $sql_fileds['set'], $sql_fileds['vals'], 
 				Post::val('old_assigned'), Post::val('assigned_to'),
+				Post::val('old_tags'), implode(' ', Post::val('tags', array())),
 				$time);
 		// extra changes
         Backend::add_comment($task, Post::val('comment_text'), $time);
@@ -850,7 +851,7 @@ switch ($action = Req::val('action'))
         $listshow     = Post::val('show_in_list');
         $listdelete   = Post::val('delete');
 
-        foreach ($listnames as $id => $listname) {
+		foreach ($listnames as $id => $listname) {
             if ($listname != '') {
                 if (!isset($listshow[$id])) {
                     $listshow[$id] = 0;
@@ -898,6 +899,85 @@ switch ($action = Req::val('action'))
                                  (project_id, $list_column_name, list_position, show_in_list)
                          VALUES  (?, ?, ?, ?)",
                 array($proj->id, Post::val('list_name'), $position, '1'));
+
+        $_SESSION['SUCCESS'] = L('listitemadded');
+        break;
+
+    // ##################
+    // updating a tags list
+    // ##################
+    case 'update_tag_list':
+        if (!$user->perms('manage_project') || !isset($list_table_name)) {
+            break;
+        }
+
+        $listnames    = Post::val('list_name');
+        $listgroups   = Post::val('list_group');
+        $listposition = Post::val('list_position');
+        $listshow     = Post::val('show_in_list');
+        $listdelete   = Post::val('delete');
+
+		$sql = "UPDATE  $list_table_name
+				SET  $list_column_name = ?, list_position = ?, show_in_list = ?, tag_group = ?
+			  WHERE  $list_id = ? AND project_id = ?"
+        ;
+		foreach ($listnames as $id => $listname) {
+            if ($listname != '') {
+                if (!isset($listshow[$id])) {
+                    $listshow[$id] = 0;
+                }
+                $update = $db->Query($sql, array(
+					// set
+					$listnames[$id], intval($listposition[$id]), intval($listshow[$id]), $listgroups[$id]
+					// where
+					, $id, $proj->id
+				));
+            } else {
+                Flyspray::show_error(L('fieldsmissing'));
+            }
+        }
+
+		// delete selected
+        if (is_array($listdelete) && count($listdelete)) {
+            $deleteids = join(",", array_map('intval', array_keys($listdelete)));
+            $db->Query(
+				"DELETE FROM $list_table_name l WHERE project_id = ? "
+					. " AND tag_id IN ($deleteids)"
+					// make sure tags are not used
+					. " AND tag_id NOT IN (SELECT tag_id FROM {tag_assignment} a WHERE (a.tag_id = l.tag_id))"
+				, array($proj->id)
+			);
+        }
+
+        $_SESSION['SUCCESS'] = L('listupdated');
+        break;
+
+    // ##################
+    // adding a tag list item
+    // ##################
+    case 'pm.add_to_tag_list':
+    case 'admin.add_to_tag_list':
+        if (!$user->perms('manage_project') || !isset($list_table_name)) {
+            break;
+        }
+
+        if (!Post::val('list_name') || !Post::val('list_group')) {
+            Flyspray::show_error(L('fillallfields'));
+            break;
+        }
+
+        $position = Post::num('list_position');
+        if (!$position) {
+            $position = intval($db->FetchOne($db->Query("SELECT max(list_position)+1
+                                                    FROM $list_table_name
+                                                   WHERE project_id = ?",
+                                                 array($proj->id))));
+        }
+
+        $db->Query("INSERT INTO  $list_table_name
+                                 (project_id, $list_column_name, list_position, show_in_list, tag_group)
+                         VALUES  (?, ?, ?, ?, ?)",
+                array($proj->id, Post::val('list_name'), $position, '1', Post::val('list_group')));
 
         $_SESSION['SUCCESS'] = L('listitemadded');
         break;

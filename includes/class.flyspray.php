@@ -359,6 +359,7 @@ class Flyspray
             $get_details['assigned_to'] = $assignees[0];
             $get_details['assigned_to_name'] = $assignees[1];
         }
+		$get_details['tags'] = Flyspray::GetAssignedTags($task_id);
         $cache[$task_id] = $get_details;
 
         return $get_details;
@@ -486,6 +487,7 @@ class Flyspray
         // 29: User added to the list of assignees
         // 30: New user registration
         // 31: User deletion
+        // 40: Task tags changed (assigned to tags / re-assigned to different tags / unassigned)
 
         $query_params = array(intval($task_id), intval($user->id),
                              ((!is_numeric($time)) ? time() : $time),
@@ -821,6 +823,31 @@ class Flyspray
     } /// }}}
 
     // {{{
+    /**
+     * Get a list of tags assigned to the task.
+     * @param integer $task_id
+     * @access public static
+     * @return array
+     * @version 1.0
+     */
+    function GetAssignedTags($task_id)
+    {
+        global $db;
+
+        $sql = $db->Query('SELECT t.tag_id
+                             FROM {list_tag} t, {tag_assignment} a
+                            WHERE task_id = ? AND t.tag_id = a.tag_id',
+                              array($task_id));
+
+        $tags = array();
+        while ($row = $db->FetchRow($sql)) {
+            $tags[] = $row['tag_id'];
+        }
+
+        return $tags;
+    } /// }}}
+
+	// {{{
     /**
      * Explode string to the array of integers
      * @param string $separator

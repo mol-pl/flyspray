@@ -286,6 +286,38 @@ function tpl_userlink($uid)
     return $cache[$uid];
 }
 
+/**
+ * Translate tag id to its name.
+ *
+ * @global Database $db
+ * @global Project $proj
+ * @staticvar array $cache
+ * @param integer $tag_id
+ * @return string
+ */
+function tpl_tagname($tag_id)
+{
+	global $db, $proj;
+
+	static $cache = array();	// note - this is one request only cache
+
+	$tag_id = intval($tag_id);
+
+	// setup tags cache
+	if (empty($cache)) {
+		$tags = $proj->listTags();
+		foreach ($tags as $tag) {
+			$cache[intval($tag['tag_id'])] = $tag['tag_name'];
+		}
+	}
+
+	// still unknown? weird...
+	if (empty($cache[$tag_id])) {
+		return "NN [$tag_id]";
+	}
+	return $cache[$tag_id];
+}
+
 function tpl_fast_tasklink($arr)
 {
     return tpl_tasklink($arr[1], $arr[0]);
@@ -402,6 +434,27 @@ function tpl_userselect($name, $value = null, $id = '', $attrs = array()) {
 // }}}
 
 // {{{ Options for a <select>
+/**
+ * Prepares option tags for select.
+ *
+ * @example Options array and output:
+ * array(
+ *  '' => 'Nothing'	// -> <option value="">Nothing
+ *  1 => array (0 => 5, 'os_id' => 5, 1 => 'Linux', 'os_name' => 'Linux') // -> <option value="5">Linux
+ *  2 => array (0 => 6, 'os_id' => 6, 1 => 'Windows', 'os_name' => 'Windows') // -> <option value="6">Windows
+ *  2 => array (0 => 8, 'os_id' => 8, 1 => 'iOS', 'os_name' => 'iOS') // -> <option value="8">iOS
+ * );
+ *
+ * @param array $options Note! Each element of the array can either be
+ *	'value' => 'label'
+ *	or
+ *	'whatever' => array(0 => 'value', 1 => 'label')
+ * @param mixed $selected array or string from $_GET or something like that. Mulitselect arrays supported.
+ * @param boolean $labelIsValue Force value to be the same as label.
+ * @param array $attr Additional attributes.
+ * @param string $remove Value to be ignored.
+ * @return string HTML with options.
+ */
 function tpl_options($options, $selected = null, $labelIsValue = false, $attr = null, $remove = null)
 {
     $html = '';

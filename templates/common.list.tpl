@@ -13,9 +13,12 @@
    <thead>
      <tr>
        <?php if ($list_type == 'version'): ?>
-       <th>ID</th>
+		   <th>ID</th>
 	   <?php endif; ?>
        <th>{L('name')}</th>
+       <?php if ($list_type == 'tag'): ?>
+	       <th>{L('group')}</th>
+	   <?php endif; ?>
        <th>{L('order')}</th>
        <th>{L('show')}</th>
        <?php if ($list_type == 'version'): ?><th>{L('tense')}</th><?php endif; ?>
@@ -29,14 +32,20 @@
     $countlines++; ?>
     <tr>
       <?php if ($list_type == 'version'): ?>
-      <td>
-        {$row[$list_type.'_id']}
-      </td>
+		<td>
+		  {$row[$list_type.'_id']}
+		</td>
       <?php endif; ?>
       <td class="first">
         <input id="listname{$countlines}" class="text" type="text" size="21" maxlength="40" name="list_name[{$row[$list_type.'_id']}]"
           value="{$row[$list_type.'_name']}" />
       </td>
+      <?php if ($list_type == 'tag'): ?>
+		<td class="first">
+		  <input id="listgroup{$countlines}" class="text" type="text" size="21" maxlength="40" name="list_group[{$row[$list_type.'_id']}]"
+			value="{$row[$list_type.'_group']}" />
+		</td>
+	  <?php endif; ?>
       <td title="{L('ordertip')}">
         <input id="listposition{$countlines}" class="text" type="text" size="3" maxlength="3" name="list_position[{$row[$list_type.'_id']}]" value="{$row['list_position']}" />
       </td>
@@ -66,6 +75,8 @@
       <td class="buttons">
         <?php if ($list_type == 'version'): ?>
         <input type="hidden" name="action" value="update_version_list" />
+        <?php elseif ($list_type == 'tag'): ?>
+        <input type="hidden" name="action" value="update_tag_list" />
         <?php else: ?>
         <input type="hidden" name="action" value="update_list" />
         <?php endif; ?>
@@ -98,6 +109,8 @@ SCRIPT_CODE;
       <td>
         <?php if ($list_type == 'version'): ?>
         <input type="hidden" name="action" value="{$do}.add_to_version_list" />
+        <?php elseif ($list_type == 'tag'): ?>
+        <input type="hidden" name="action" value="{$do}.add_to_tag_list" />
         <?php else: ?>
         <input type="hidden" name="action" value="{$do}.add_to_list" />
         <?php endif; ?>
@@ -107,10 +120,18 @@ SCRIPT_CODE;
         <?php endif; ?>
         <input type="hidden" name="area" value="{Req::val('area')}" />
         <input type="hidden" name="do" value="{Req::val('do')}" />
-        <input id="listnamenew" class="text" type="text" size="21" maxlength="40" value="{Req::val('list_name')}" name="list_name" />
+        <input id="listnamenew" class="text" type="text" size="21" maxlength="40" value="{Req::val('list_name')}" 
+			   name="list_name" placeholder="{L('name')} " />
       </td>
+      <?php if ($list_type == 'tag'): ?>
+		<td>
+	        <input id="listgroupnew" class="text" type="text" size="21" maxlength="40" value="{Req::val('list_group')}" 
+				   name="list_group" placeholder="{L('group')}" />
+		</td>
+	  <?php endif; ?>
       <td>
-        <input id="listpositionnew" class="text" type="text" size="3" maxlength="3" value="{Req::val('list_position')}" name="list_position" />
+        <input id="listpositionnew" class="text" type="text" size="3" maxlength="3" value="{Req::val('list_position')}" 
+			   name="list_position" placeholder="{L('order')}" />
       </td>
       <td>
         <input id="showinlistnew" type="checkbox" name="show_in_list" checked="checked" disabled="disabled" />

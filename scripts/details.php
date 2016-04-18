@@ -29,6 +29,8 @@ $page->uses('task_details');
 $page->assign('assigned_users', $task_details['assigned_to']);
 $page->assign('old_assigned', implode(' ', $task_details['assigned_to']));
 
+$page->assign('tags', $proj->listGrouppedTags());
+
 $page->setTitle($task_details['project_title'] . sprintf(' - '.FS_PREFIX_CODE.'#%d : %s', $task_details['task_id'], $task_details['item_summary']));
 
 if (Get::val('edit_readonly')) {

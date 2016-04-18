@@ -250,6 +250,32 @@ class Backend
     }
 
 	/**
+	 * Compare list of old (previous) ids with new ones.
+	 *
+	 * @param string $old Space separated list of old assignees.
+	 * @param string $new Space separated list of new assignees.
+	 * @return boolean|array
+	 *	True if the lists are the same.
+	 *  Array of integers created with `Flyspray::int_explode` from $new.
+	 */
+	function _equal_old_new_ids($old, $new) {
+		$old = trim($old);
+		$new = trim($new);
+		// check if strings are equal
+		if ($old != $new) {
+			// make sure lists are not simply re-ordered
+			$old_array = Flyspray::int_explode(' ', $old);
+			$new_array = Flyspray::int_explode(' ', $new);
+			sort ($old_array, SORT_NUMERIC);
+			sort ($new_array, SORT_NUMERIC);
+			if (implode(',', $old_array) !== implode(',', $new_array)) {
+				return $new_array;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * Edit task details (either full or partial edit).
 	 *
 	 * @note It's assumed permissions for changing task details were already checked.
@@ -266,9 +292,13 @@ class Backend
 	 * @param array $sql_fields_values Array of changed values (in the same order as in \a $sql_fileds_set).
 	 * @param string $old_assigned_to Space separated list of old assignees.
 	 * @param string $new_assigned_to Space separated list of new assignees.
+	 * @param string $old_tags Space separated list of old tags.
+	 * @param string $new_tags Space separated list of new tags.
 	 * @param int $time Time of change (as from `time()` function). Defaults to current time.
 	 */
-    function edit_task($task, $sql_fields_set, $sql_fields_values, $old_assigned_to = '', $new_assigned_to = '',  $time = null)
+    function edit_task($task, $sql_fields_set, $sql_fields_values, $old_assigned_to = '', $new_assigned_to = ''
+			, $old_tags = '', $new_tags = ''
+			,  $time = null)
     {
         global $db, $user, $notify;
 
@@ -289,21 +319,44 @@ class Backend
 		$old_assigned_to = trim($old_assigned_to);
 		$new_assigned_to = trim($new_assigned_to);
 		$assignees_changed = false;
-        // Update the list of users assigned this task
-        if ($user->perms('edit_assignments') && $old_assigned_to != $new_assigned_to ) {
-			$assignees_changed = true;
+		// Update the list of users assigned this task
+		if ($user->perms('edit_assignments')) {
+			$new_assigned_to_array = self::_equal_old_new_ids($old_assigned_to, $new_assigned_to);
+			if ($new_assigned_to_array !== true) {
+				$assignees_changed = true;
 
-            // Delete the current assignees for this task
-            $db->Query('DELETE FROM {assigned}
-                              WHERE task_id = ?',
-                        array($task['task_id']));
+				// Delete the current assignees for this task
+				$db->Query('DELETE FROM {assigned}
+								  WHERE task_id = ?',
+							array($task['task_id']));
 
-            // Convert assigned_to and store them in the 'assigned' table
-            foreach (Flyspray::int_explode(' ', $new_assigned_to) as $key => $val)
-            {
-                $db->Replace('{assigned}', array('user_id'=> $val, 'task_id'=> $task['task_id']), array('user_id','task_id'));
-            }
-         }
+				// Convert assigned_to and store them in the 'assigned' table
+				foreach ($new_assigned_to_array as $key => $val)
+				{
+					$db->Replace('{assigned}', array('user_id'=> $val, 'task_id'=> $task['task_id']), array('user_id','task_id'));
+				}
+			}
+		}
+
+		// Update the list of tags assigned to this task
+		$old_tags = trim($old_tags);
+		$new_tags = trim($new_tags);
+		$new_tags_array = self::_equal_old_new_ids($old_tags, $new_tags);
+		if ($new_tags_array !== true) {
+			// Log to task history
+			Flyspray::logEvent($task['task_id'], 40, $new_tags, $old_tags, '', $time);
+
+			// Delete the current assignees for this task
+			$db->Query('DELETE FROM {tag_assignment}
+							  WHERE task_id = ?',
+						array($task['task_id']));
+
+			// Convert tags and store them in the 'assigned' table
+			foreach ($new_tags_array as $key => $val)
+			{
+				$db->Replace('{tag_assignment}', array('tag_id'=> $val, 'task_id'=> $task['task_id']), array('tag_id','task_id'));
+			}
+		}
 
         // Get the details of the task we just updated
         // To generate the changed-task message
@@ -314,7 +367,7 @@ class Backend
         $new_details = $db->FetchRow($result);
 
         foreach ($new_details as $key => $val) {
-            if (strstr($key, 'last_edited_') || $key == 'assigned_to'
+            if (strstr($key, 'last_edited_') || $key == 'assigned_to' || $key == 'tags'
                     || is_numeric($key))
             {
                 continue;
@@ -419,6 +472,7 @@ class Backend
 
 		Backend::edit_task($task, $sql_fileds['set'], $sql_fileds['vals'],
 				$old_assigned_to, $new_assigned_to,
+				'', '',
 				$time);
 	}
 
@@ -966,6 +1020,19 @@ class Backend
                             $notify->SpecificAddresses(Flyspray::int_explode(' ', $args['assigned_to'])));
         }
 
+        // Add and log the tag assignments
+        if (!empty($args['tags']))
+        {
+			// Convert tags and store them in the 'assigned' table
+            foreach ($args['tags'] as $key => $val)
+            {
+				$val = intval($val);
+                $db->Replace('{tag_assignment}', array('tag_id'=> $val, 'task_id'=> $task_id), array('tag_id','task_id'));
+            }
+            // Log to task history
+            Flyspray::logEvent($task_id, 40, implode(' ', $args['tags']));
+        }
+
         // Log that the task was opened
         Flyspray::logEvent($task_id, 1);
 
@@ -1124,11 +1191,17 @@ class Backend
 
     /**
      * Returns an array of tasks (respecting pagination) and an ID list (all tasks)
+	 *
      * @param array $args
      * @param array $visible
      * @param integer $offset
-     * @param integer $comment
-     * @param bool $perpage
+     * @param integer $perpage
+	 *
+	 * @global Project $proj
+	 * @global Database $db
+	 * @global User $user
+	 * @global array $conf
+	 *
      * @access public
      * @return array
      * @version 1.0
@@ -1243,7 +1316,7 @@ class Backend
 			// to avoid +1 thingies
             $select .= ' 1    AS num_assigned, ';
         }
-		
+
         if (array_get($args, 'only_primary')) {
             $from   .= ' LEFT JOIN  {dependencies} dep  ON dep.dep_task_id = t.task_id ';
             $where[] = 'dep.depend_id IS NULL';
@@ -1445,6 +1518,51 @@ class Backend
             $sql_params[] = $user->id;
             $sql_params[] = $user->id;
         }
+
+		// tags search
+		if (array_get($args, 'tags')) {
+			// parse _GET['tags']
+			$tag_ids = array();
+			$negative_tag_groups = array();
+			foreach ($args['tags'] as $tag_value) {
+				if (empty($tag_value)) {
+					continue;
+				}
+				// id search
+				$tag_id = intval($tag_value, 10);
+				if (!empty($tag_id)) {
+					$tag_ids[] = $tag_id;
+				}
+				// unassigned search
+				if (strpos($tag_value, '-') === 0) {
+					$negative_tag_groups[] = substr($tag_value, 1);
+				}
+			}
+			// id search condition
+			if (!empty($tag_ids)) {
+				$where[] = ' t.task_id IN ('
+							. 'SELECT task_id FROM {tag_assignment} tag_a WHERE t.task_id = tag_a.task_id '
+								. ' AND tag_a.tag_id IN ('.implode(',', $tag_ids).') '
+						. ') ';
+			}
+			// unassigned search condition
+			if (!empty($negative_tag_groups)) {
+				$result = $db->Query('
+					SELECT  tag_id, tag_group
+					FROM  {list_tag}
+				');
+				$negative_tag_ids = array();
+				while ($row = $db->FetchRow($result)) {
+					if (in_array($row['tag_group'], $negative_tag_groups)) {
+						$negative_tag_ids[] = $row['tag_id'];
+					}
+				}
+				$where[] = ' t.task_id NOT IN ('
+							. 'SELECT task_id FROM {tag_assignment} tag_a WHERE t.task_id = tag_a.task_id '
+								. ' AND tag_a.tag_id IN ('.implode(',', $negative_tag_ids).') '
+						. ') ';
+			}
+		}
 
         $where = (count($where)) ? 'WHERE '. join(' AND ', $where) : '';
 

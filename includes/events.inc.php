@@ -228,6 +228,21 @@ function event_description($history) {
                  $return .= implode(', ', $users);
             }
             break;
+    case '40':  //Task assigned to tags
+            if (empty($old_value)) {
+                $tags = explode(' ', trim($new_value));
+                $tags = array_map('tpl_tagname', $tags);
+                $return .= eL('taskassigned').' ';
+                $return .= implode(', ', $tags);
+            } elseif (empty($new_value)) {
+                 $return .= eL('tagassignmentremoved');
+            } else {
+                 $tags = explode(' ', trim($new_value));
+                 $tags = array_map('tpl_tagname', $tags);
+                 $return .= eL('taskreassigned').' ';
+                 $return .= implode(', ', $tags);
+            }
+            break;
     case '17': //Reminder added
             $return .= eL('reminderadded') . ': ' . tpl_userlink($new_value);
             break;
