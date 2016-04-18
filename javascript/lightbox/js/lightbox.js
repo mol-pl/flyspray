@@ -48,6 +48,7 @@
 LightboxOptions = Object.extend({
     fileLoadingImage:        'lightbox/images/loading.gif',     
     fileBottomNavCloseImage: 'lightbox/images/closelabel.gif',
+    fileBottomNavDownloadImage: 'lightbox/images/download-icon.gif',
 
     overlayOpacity: 0.8,   // controls transparency of shadow overlay
 
@@ -150,13 +151,16 @@ Lightbox.prototype = {
                 Builder.node('div',{id:'imageData'}, [
                     Builder.node('div',{id:'imageDetails'}, [
                         Builder.node('span',{id:'caption'}),
-                        Builder.node('span',{id:'numberDisplay'})
+                        Builder.node('span',{id:'numberDisplay'}),
+                        Builder.node('a',{id:'bottomNavDownload', href: '#', target: '_blank', style: 'margin: 0 4px 8px 0; box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.2); display: inline-block;' },
+                            Builder.node('img', { src: LightboxOptions.fileBottomNavDownloadImage })
+                        ),
                     ]),
-                    Builder.node('div',{id:'bottomNav'},
+                    Builder.node('div',{id:'bottomNav'}, [
                         Builder.node('a',{id:'bottomNavClose', href: '#' },
                             Builder.node('img', { src: LightboxOptions.fileBottomNavCloseImage })
                         )
-                    )
+					])
                 ])
             )
         ]));
@@ -174,7 +178,7 @@ Lightbox.prototype = {
         (function(){
             var ids = 
                 'overlay lightbox outerImageContainer imageContainer lightboxImage hoverNav prevLink nextLink loading loadingLink ' + 
-                'imageDataContainer imageData imageDetails caption numberDisplay bottomNav bottomNavClose';   
+                'imageDataContainer imageData imageDetails caption numberDisplay bottomNav bottomNavClose bottomNavDownload';   
             $w(ids).each(function(id){ th[id] = $(id); });
         }).defer();
     },
@@ -260,6 +264,7 @@ Lightbox.prototype = {
 
         imgPreloader.onload = (function(){
             this.lightboxImage.src = this.imageArray[this.activeImage][0];
+            this.bottomNavDownload.href = this.imageArray[this.activeImage][0];
             this.resizeImageContainer(imgPreloader.width, imgPreloader.height);
         }).bind(this);
         imgPreloader.src = this.imageArray[this.activeImage][0];
