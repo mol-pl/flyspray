@@ -1,4 +1,3 @@
-
 --
 -- Test data
 --
@@ -15,4 +14,4 @@ INSERT INTO flyspray_list_tag (show_in_list, tag_id, tag_group, tag_name) VALUES
 INSERT INTO flyspray_list_tag (show_in_list, tag_id, tag_group, tag_name) VALUES (1, 7, 'edycja', 'Starter');
 
 -- must change sequance after manually setting tag_id
-ALTER SEQUENCE flyspray_list_tag_tag_id_seq INCREMENT 14;
+SELECT setval('flyspray_list_tag_tag_id_seq', 13);
