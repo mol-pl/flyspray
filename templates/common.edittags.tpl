@@ -1,11 +1,22 @@
-<?php /* Note. When creating a new task `$task_details` is empty */ ?>
+<?php
+	/* Note. When creating a new task `$task_details` is empty */
+	$pre_selected_tags = array();
+	if(!empty($task_details)) {
+		$pre_selected_tags = $task_details['tags'];
+	} else {
+		$pre_selected_tags = Req::val('tags');
+	}
+	if (!is_array($pre_selected_tags)) {
+		$pre_selected_tags = array($pre_selected_tags);
+	}
+?>
 
 <?php foreach ($tags as $tag_group): ?>
 	<tr>
 		<td><label>{$tag_group['name']}</label></td>
 		<td class='tag-container'>
 			<?php foreach ($tag_group['tags'] as $tag): ?>
-				<?php if(!empty($task_details) && in_array($tag['tag_id'], $task_details['tags'])): ?>
+				<?php if(!empty($pre_selected_tags) && in_array($tag['tag_id'], $pre_selected_tags)): ?>
 					<?php $tag_selected_attribute = 'checked="checked"'; ?>
 				<?php else: ?>
 					<?php $tag_selected_attribute = ''; ?>
