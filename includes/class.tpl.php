@@ -287,6 +287,38 @@ function tpl_userlink($uid)
 }
 
 /**
+ * Translate tag id to it's data (tag_id, tag_name, tag_group).
+ *
+ * @global Database $db
+ * @global Project $proj
+ * @staticvar array $cache
+ * @param integer $tag_id
+ * @return array (tag_id, tag_name, tag_group) or an empty array if tag ID was not found.
+ */
+function tpl_tagdata($tag_id)
+{
+	global $db, $proj;
+
+	static $cache = array();	// note - this cache works only within a single request
+
+	$tag_id = intval($tag_id);
+
+	// setup tags cache
+	if (empty($cache)) {
+		$tags = $proj->listTags();
+		foreach ($tags as $tag) {
+			$cache[intval($tag['tag_id'])] = $tag;
+		}
+	}
+
+	// still unknown? weird...
+	if (empty($cache[$tag_id])) {
+		return array();
+	}
+	return $cache[$tag_id];
+}
+
+/**
  * Translate tag id to its name.
  *
  * @global Database $db
@@ -297,25 +329,15 @@ function tpl_userlink($uid)
  */
 function tpl_tagname($tag_id)
 {
-	global $db, $proj;
-
-	static $cache = array();	// note - this is one request only cache
-
 	$tag_id = intval($tag_id);
+	
+	$tag = tpl_tagdata($tag_id);
 
-	// setup tags cache
-	if (empty($cache)) {
-		$tags = $proj->listTags();
-		foreach ($tags as $tag) {
-			$cache[intval($tag['tag_id'])] = $tag['tag_name'];
-		}
-	}
-
-	// still unknown? weird...
-	if (empty($cache[$tag_id])) {
+	// unknown? weird...
+	if (empty($tag)) {
 		return "NN [$tag_id]";
 	}
-	return $cache[$tag_id];
+	return $tag['tag_name'];
 }
 
 function tpl_fast_tasklink($arr)

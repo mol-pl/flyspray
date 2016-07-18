@@ -23,7 +23,16 @@
   <?php endif; ?>
 </span>
 
-	<h2 class="summary severity{$task_details['task_severity']}">{$task_details['project_title']} - 
+	<!-- when there is a single tag use it instead of project title -->
+	<h2 class="summary severity{$task_details['task_severity']}"
+	><?php if (!empty($task_details['tags']) && count($task_details['tags'])==1): ?>
+		<?php foreach ($task_details['tags'] as $tag_id): ?>
+			{!tpl_tagname($tag_id)}
+		<?php endforeach; ?>
+	<?php else: ?>
+		{$task_details['project_title']}
+	<?php endif; ?>
+	 - 
 	<?php if (array_get($conf['general'], 'address_rewriting')): ?>
 		<a href="{$baseurl}task/{$task_details['task_id']}">{FS_PREFIX_CODE}#{$task_details['task_id']}</a>
 	<?php else: ?>
