@@ -45,8 +45,23 @@ if (Cookie::has('flyspray_userid') && Cookie::has('flyspray_passhash')) {
 } else {
     $user = new User(0, $proj);
 }
+// Nux: lock for anons -- init
+$anon_lock_active = false;
+if ($user->isAnon()) {
+	if (!isset($conf['general']['anon_lock'])
+		|| $conf['general']['anon_lock']=='1')	// Nux: allow disabling duplicate check
+	{
+		$anon_lock_active = true;
+	}
+}
 
 if (Get::val('getfile')) {
+	// Nux: lock for anons
+	if ($anon_lock_active) {
+        Flyspray::show_error(1);
+        exit();
+	}
+	
     // If a file was requested, deliver it
     $result = $db->Query("SELECT  t.project_id,
                                   a.orig_name, a.file_name, a.file_type, t.*
@@ -168,19 +183,23 @@ if ($user->isAnon() && !$fs->prefs['user_notify']) {
 $page->setTitle($fs->prefs['page_title'] . $proj->prefs['project_title']);
 
 $page->assign('do', $do);
+$page->assign('anon_lock_active', $anon_lock_active);
 if (!Req::val('printview', 0)) {
 	$page->pushTpl('header.tpl');
 } else {
 	$page->pushTpl('header.printview.tpl');
 }
 
-// DB modifications?
-if (Req::has('action')) {
-    require_once(BASEDIR . '/includes/modify.inc.php');
+if (!$anon_lock_active) {	// Nux: lock for anons
+	// DB modifications?
+	if (Req::has('action')) {
+		require_once(BASEDIR . '/includes/modify.inc.php');
+	}
 }
-
-if (!defined('NO_DO')) {
-    require_once(BASEDIR . "/scripts/$do.php");
+if (!$anon_lock_active || $do == 'authenticate') {	// Nux: lock for anons -- allow login
+	if (!defined('NO_DO')) {
+		require_once(BASEDIR . "/scripts/$do.php");
+	}
 }
 
 $page->pushTpl('footer.tpl');

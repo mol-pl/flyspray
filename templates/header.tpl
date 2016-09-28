@@ -123,6 +123,8 @@
     <?php endif; ?>
 
     <div id="content">
+    <?php if (!$anon_lock_active): ?>
+    
       <div id="showtask">
         <form action="{$baseurl}index.php" method="get">
           <div>
@@ -146,3 +148,5 @@
 	  <div id="intromessage">{!TextFormatter::render($proj->prefs['intro_message'], false, 'msg', $proj->id,
                                ($proj->prefs['last_updated'] < $proj->prefs['cache_update']) ? $proj->prefs['pm_instructions'] : '')}</div>
       <?php endif; ?>
+    
+    <?php endif; ?>

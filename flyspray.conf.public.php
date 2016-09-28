@@ -30,6 +30,8 @@ test_server_name = "..."	    				; String, case-insensitive name of the server t
 
 new_task_reportedver_tenses = "2,3"
 
+anon_lock = "1"									; Boolean. 0 = off, 1 = on. If on anonymous user will only be able to see headers.
+
 ; Cliph upper tab bar
 [cliph]
 tab_number = 4

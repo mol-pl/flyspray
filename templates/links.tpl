@@ -45,6 +45,8 @@
 <?php endif; ?>
 </div>
 
+<?php if (!$anon_lock_active): ?>
+
 <div id="pm-menu">
 
 <div id="projectselector">
@@ -125,3 +127,5 @@
     <?php endif; ?>
 </ul>
 </div>
+
+<?php endif; ?>
