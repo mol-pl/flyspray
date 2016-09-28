@@ -27,6 +27,17 @@ body .serwis_templates a:hover
 	text-decoration:none;
 }
 
+/* assigned input and buttons in one line */
+#taskfieldscell #assigned_select {
+	/* btn.w:26*2 + margin:6*2 */
+	width: calc(100% - 58px - 12px);
+	box-sizing: border-box;
+}
+#taskfieldscell button {
+	width: 26px;
+	box-sizing: border-box;
+}
+
 /*
 	Images
 */
