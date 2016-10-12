@@ -190,13 +190,13 @@ if (!Req::val('printview', 0)) {
 	$page->pushTpl('header.printview.tpl');
 }
 
-if (!$anon_lock_active) {	// Nux: lock for anons
+if (!$anon_lock_active || in_array($do, array('lostpw', 'register'))) {	// Nux: lock for anons -- allow lost password and registration (Note! You can disable registration in settings)
 	// DB modifications?
 	if (Req::has('action')) {
 		require_once(BASEDIR . '/includes/modify.inc.php');
 	}
 }
-if (!$anon_lock_active || $do == 'authenticate') {	// Nux: lock for anons -- allow login
+if (!$anon_lock_active || in_array($do, array('authenticate', 'lostpw', 'register'))) {	// Nux: lock for anons -- allow login and lost password and registration (Note! You can disable registration in settings)
 	if (!defined('NO_DO')) {
 		require_once(BASEDIR . "/scripts/$do.php");
 	}
