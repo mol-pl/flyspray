@@ -17,7 +17,7 @@ Highlights of differences from original:
 * PostgreSQL fixes (also for PG SQL 8.4 and above).
 * Gantt export of selected task.
 * Mass close for tasks from given version (with given type).
-* Form copying to allow cross-domian copy of tasks between Flyspray installations.
+* Form copying to allow cross-domain copy of tasks between Flyspray installations.
 * Read-only edit form to allow copying closed tasks.
 * Attachments preview (lightbox) -- AFAIK was later added to Flyspray.
 * Support for `blockquote` tag in dokuwiki.
@@ -27,7 +27,8 @@ Highlights of differences from original:
 * Flyspray prefix code customization.
 * Database errors logging.
 * Anonymous users notifications.
-* Special support tags dokuwiki - text in this tags is hidden anonymous users (remove from both notifications, tasks details and comments).
+* Special support tags dokuwiki -- text in this tags is hidden anonymous users (remove from both notifications, tasks details and comments).
+* Anonymous users lock -- file configuration based lock for your Flyspray installation. With `anon_lock = "1"` users are not able to view any tasks, nor download any files. Only thing they can do is -- using login (authentication), lost password and registration forms.
 
 Major features
 --------------
