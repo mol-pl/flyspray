@@ -159,15 +159,20 @@ function cNuxbar(objName)
 			{
 				url = url.replace(matched_url, cur_pref.prefix+'>');
 
+				// need to get hash out of url as it requires different parsing method
+				var hash = '';
+				url = url.replace(/(.*?)(#.+)/, function(a, pre, post){
+					hash = post;
+					return pre;
+				});
+				
+				// extra parsing for wiki
 				if (cur_pref.type==='wiki')
 				{
 					url = url.replace (/_/g, ' ');
-					url = decodeURIComponent(url);	// dokuwiki to koduje
 				}
-				else
-				{
-					url = decodeURIComponent(url);	// dokuwiki to koduje
-				}
+				
+				url = decodeURIComponent(url) + hash;	// dokuwiki to koduje
 				break;
 			}
 		}
