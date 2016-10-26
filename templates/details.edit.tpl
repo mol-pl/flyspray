@@ -51,11 +51,19 @@
 
 			<?php $this->display('common.edittags.tpl'); ?>
 
-			<tr>
+			<?php
+				// Nux: Auto-hide if only a single category is available
+				$projListCategories = $proj->listCategories();
+				$projListCategoriesStyle = '';
+				if (count($projListCategories) <= 1) {
+					$projListCategoriesStyle = 'display:none';
+				}
+			?>
+			<tr style="{$projListCategoriesStyle}">
 			 <td><label for="category">{L('category')}</label></td>
 			 <td>
 				<select id="category" name="product_category" class="frmcopyme">
-				 {!tpl_options($proj->listCategories(), Req::val('product_category', $task_details['product_category']))}
+				 {!tpl_options($projListCategories, Req::val('product_category', $task_details['product_category']))}
 				</select>
 			 </td>
 			</tr>
