@@ -283,6 +283,26 @@ Lightbox.prototype = {
         var widthNew  = (imgWidth  + LightboxOptions.borderSize * 2);
         var heightNew = (imgHeight + LightboxOptions.borderSize * 2);
 
+		// rescale to window
+		var widthMax = Math.floor(window.innerWidth * 0.95);
+		var heightMax = Math.floor(window.innerHeight * 1.10);
+		var overflowResizeRatio = 1;
+		if (widthNew > widthMax) {
+			overflowResizeRatio = widthMax / widthNew;
+		}
+		if (heightNew > heightMax) {
+			tempOverflowResizeRatio = heightMax / heightNew;
+			if (tempOverflowResizeRatio < overflowResizeRatio) {
+				overflowResizeRatio = tempOverflowResizeRatio;
+			}
+		}
+		if (overflowResizeRatio != 1) {
+			widthNew = Math.floor(widthNew * overflowResizeRatio);
+			heightNew = Math.floor(heightNew * overflowResizeRatio);
+			imgWidth = Math.floor(imgWidth * overflowResizeRatio);
+			imgHeight = Math.floor(imgHeight * overflowResizeRatio);
+		}
+		
         // scalars based on change from old to new
         var xScale = (widthNew  / widthCurrent)  * 100;
         var yScale = (heightNew / heightCurrent) * 100;
@@ -307,6 +327,10 @@ Lightbox.prototype = {
             this.nextLink.setStyle({ height: imgHeight + 'px' });
             this.imageDataContainer.setStyle({ width: widthNew + 'px' });
 
+			// reset width
+			this.lightboxImage.setAttribute('width', '');
+			this.lightboxImage.setAttribute('style', 'width:100%');
+		
             this.showImage();
         }).bind(this).delay(timeout / 1000);
     },
@@ -330,7 +354,7 @@ Lightbox.prototype = {
     //  Display caption, image number, and bottom nav.
     //
     updateDetails: function() {
-    
+	
         // if caption is not null
         if (this.imageArray[this.activeImage][1] != ""){
             this.caption.update(this.imageArray[this.activeImage][1]).show();
