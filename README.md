@@ -29,6 +29,7 @@ Highlights of differences from original:
 * Anonymous users notifications.
 * Special support tags dokuwiki -- text in this tags is hidden anonymous users (remove from both notifications, tasks details and comments).
 * Anonymous users lock -- file configuration based lock for your Flyspray installation. With `anon_lock = "1"` users are not able to view any tasks, nor download any files. Only thing they can do is -- using login (authentication), lost password and registration forms.
+* Filter by projects when viewing/searching all tasks (in all projects).
 
 Major features
 --------------
