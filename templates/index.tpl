@@ -126,6 +126,15 @@
         </select>
         </div>
 
+	<?php if ($proj->id === 0): ?>
+        <div class="search_select">
+        <label class="default multisel" for="projects">{L('project')}</label>
+        <select name="projects[]" id="projects" multiple="multiple" size="5">
+          {!tpl_options(array_merge(array(0 => L('allprojects')), $fs->projects), Get::val('projects', $proj->id))}
+        </select>
+        </div>
+	<?php endif; ?>
+
         <div class="search_select">
         <label class="default multisel" for="percent">{L('percentcomplete')}</label>
         <select name="percent[]" id="percent" multiple="multiple" size="5">
@@ -133,6 +142,7 @@
           {!tpl_options(array('' => L('anyprogress')) + $percentages, Get::val('percent', ''))}
         </select>
         </div>
+
         <div class="clear"></div>
         </fieldset>
 

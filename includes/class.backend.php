@@ -1404,6 +1404,8 @@ class Backend
         /// process search-conditions {{{
         $submits = array('type' => 'task_type', 'sev' => 'task_severity', 'due' => 'closedby_version', 'reported' => 'product_version',
                          'cat' => 'product_category', 'status' => 'item_status', 'percent' => 'percent_complete', 'pri' => 'task_priority',
+						 // Nux: Filter by projects
+                         'projects' => 't.project_id',
 						 // Nux: PG SQL 8.4+ will not allow LIKE for int (hence casting is needed)
                          'dev' => array('cast(a.user_id as varchar)', 'us.user_name', 'us.real_name'),
                          'opened' => array('cast(opened_by as varchar)', 'uo.user_name', 'uo.real_name'),
