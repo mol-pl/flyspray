@@ -480,6 +480,7 @@ ul#menu-list li.first, ul#pm-menu-list li.first {
 	background:url(menu/help.png) no-repeat;
 }
 
+.profilelink,
 #profilelink {
 	background-image:url(menu/editmydetails.png)
 }

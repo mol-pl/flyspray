@@ -85,8 +85,14 @@
     <?php foreach(TextFormatter::get_javascript() as $file): ?>
         <script type="text/javascript" src="{$baseurl}plugins/{$file}"></script>
     <?php endforeach; ?>
+	
+	<script type="text/javascript" src="{$baseurl}javascript/UserTimezoneHelper.js"></script>
   </head>
-  <body onload="perms = new Perms('permissions');
+  <body
+	data-userTimezone="<?=($user->isAnon() ? '' : $user->infos['time_zone'])?>" 
+	data-userRole="<?=($user->perms('is_admin') ? 'admin' : '')?>" 
+    onload="
+	    perms = new Perms('permissions');
 		if (document.getElementById('mixedbar'))
 		{
 			window.setTimeout('Effect.Fade(\'mixedbar\', &lbrace;duration:.3&rbrace;)', 10000);
@@ -99,7 +105,8 @@
 		{
 			window.setTimeout('Effect.Fade(\'errorbar\', &lbrace;duration:.3&rbrace;)', 8000);
 		}
-		">
+    "
+  >
 
   <div id="container">
     <!-- Remove this to remove the logo -->
