@@ -405,6 +405,23 @@ function cNuxbar(objName)
 			}
 		}
 	}
+
+	/*!
+		@brief Insert browser information for new tasks.
+		
+		Note. Assumes `${navigator-user-agent}` string is in the default details text.
+		Otherwise it doesn't do anything.
+	*/
+	this.initBrowser = function ()
+	{
+		var placeholderMatcher = /\$\{navigator-user-agent\}/g;
+		
+		var details = document.getElementById('details');
+		if (!details || details.value.search(placeholderMatcher) < 0) {
+			return;
+		}
+		details.value = details.value.replace(placeholderMatcher, navigator.userAgent);
+	}
 }
 
 /*
@@ -414,4 +431,5 @@ var nuxbar = new cNuxbar('nuxbar');
 smpAddEvent(window, 'load', function()
 {
 	nuxbar.init();
+	nuxbar.initBrowser();
 });
