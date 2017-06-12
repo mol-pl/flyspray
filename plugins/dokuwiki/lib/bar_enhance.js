@@ -422,7 +422,121 @@ function cNuxbar(objName)
 		}
 		details.value = details.value.replace(placeholderMatcher, navigator.userAgent);
 	}
+		
+	/*!
+		@brief Init keyboard helper.
+	*/
+	this.initKeyboard = function ()
+	{
+		var me = this;
+		jQuery("textarea#details,textarea#comment_text").keydown(function(e) {
+			if(e.keyCode === 9) { // tab was pressed
+				var textareaSelection = new NuxbarTextareaSelection(this);
+				if (e.shiftKey) {
+					textareaSelection.removeTextPerLine("  ");
+				} else {
+					textareaSelection.insertTextPerLine("  ");
+				}
+
+				// prevent the focus lose
+				e.preventDefault();
+			}
+		});
+	}
 }
+
+function NuxbarTextareaSelection(textarea) {
+	this.textarea = textarea;
+}
+
+/**
+	Insert a new text (and put caret after the text).
+*/
+NuxbarTextareaSelection.prototype._insertNewText = function (start, end, value, textToInsert)
+{
+	var textarea = this.textarea;
+	
+	// set textarea value to: text before caret + new text + text after caret
+	textarea.value =
+		value.substring(0, start)
+		+ textToInsert
+		+ value.substring(end)
+	;
+	
+	// put caret after text inserted
+	var newPosition = start + textToInsert.length
+	textarea.selectionStart = textarea.selectionEnd = newPosition;
+}
+/**
+	Set (replace) selection with new text (and keep caret around the text).
+*/
+NuxbarTextareaSelection.prototype._setNewTextAround = function (start, end, value, newText)
+{
+	var textarea = this.textarea;
+
+	// set textarea value to: text before caret + new text + text after caret
+	textarea.value =
+		value.substring(0, start)
+		+ newText
+		+ value.substring(end)
+	;
+	
+	// put caret around new text
+	textarea.selectionStart = start;
+	textarea.selectionEnd = start + newText.length;
+}
+
+/*!
+	@brief Insert text at cursor or per line.
+*/
+NuxbarTextareaSelection.prototype.insertTextPerLine = function (textToInsert)
+{
+	var textarea = this.textarea;
+
+	// get caret position/selection
+	var start = textarea.selectionStart;
+	var end = textarea.selectionEnd;
+
+	var value = textarea.value;
+
+	if (start!=end) {
+		var inside = value.substring(start, end);
+		if (inside.search("\n") >= 0) {
+			var newText = inside.replace(/(^|\r?\n)([^\r\n])/g, '$1'+textToInsert+'$2');	// replace non-empty lines
+			this._setNewTextAround(start, end, value, newText);
+			return;
+		}
+	}
+	
+	this._insertNewText(start, end, value, textToInsert);
+}
+
+/*!
+	@brief Remove text per line if one or more lines are selected.
+*/
+NuxbarTextareaSelection.prototype.removeTextPerLine = function (textToInsert)
+{
+	var textarea = this.textarea;
+
+	// get caret position/selection
+	var start = textarea.selectionStart;
+	var end = textarea.selectionEnd;
+
+	var value = textarea.value;
+
+	if (start!=end) {
+		var inside = value.substring(start, end);
+		if (inside.search("\n") >= 0) {
+			var removeRe = new RegExp("(^|\\r?\\n)" + textToInsert, "g");
+			var newText = inside.replace(removeRe, '$1');
+			this._setNewTextAround(start, end, value, newText);
+			
+			return;
+		}
+	}
+}
+
+
 
 /*
 	Init obj
@@ -432,4 +546,5 @@ smpAddEvent(window, 'load', function()
 {
 	nuxbar.init();
 	nuxbar.initBrowser();
+	nuxbar.initKeyboard();
 });
