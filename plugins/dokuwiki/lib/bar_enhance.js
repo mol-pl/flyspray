@@ -541,10 +541,12 @@ NuxbarTextareaSelection.prototype.removeTextPerLine = function (textToInsert)
 /*
 	Init obj
 */
-var nuxbar = new cNuxbar('nuxbar');
-smpAddEvent(window, 'load', function()
-{
-	nuxbar.init();
-	nuxbar.initBrowser();
-	nuxbar.initKeyboard();
-});
+if (typeof nuxbar !== 'object') {
+	var nuxbar = new cNuxbar('nuxbar');
+	smpAddEvent(window, 'load', function()
+	{
+		nuxbar.init();
+		nuxbar.initBrowser();
+		nuxbar.initKeyboard();
+	});
+}
