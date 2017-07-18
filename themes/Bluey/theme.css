@@ -7,6 +7,17 @@
 .comment-collapsed {
 	height: 2.5em;
 	overflow-y: hidden;
+	position: relative;
+}
+.comment-collapsed:after {
+    content:" ";
+	display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2em;
+    width: 100%;
+	background: linear-gradient(transparent, #e6eef6, #e6eef6);
 }
 
 /* Nux: narrow window fix for menu */
