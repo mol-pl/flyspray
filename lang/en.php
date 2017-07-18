@@ -835,7 +835,12 @@ Regards,',
 'smp_summary'             => 'summary',
 'smp_summaries'           => 'Summaries',
 'backtoroadmap'           => 'Go back to roadmap',
-'hideshowprojectintro'    => 'Hide/show project intro'
+'hideshowprojectintro'    => 'Hide/show project intro',
+
+'comment_done'            => 'Mark done',
+'comment_done_long'       => 'Mark comment as done/irrelevant',
+'comment_undone'          => 'Reactivate',
+'comment_undone_long'     => 'Bring back comment marked as done',
 );
 
 ?>
