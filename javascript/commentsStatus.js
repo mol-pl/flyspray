@@ -43,7 +43,7 @@
 				done = false;
 			}
 			toggleStatus(baseUrl, projectId, commentId, done, function(data){
-				console.log(commentId, done, data);
+				console.log('comment status set to: ', done, commentId, data);
 			});
 		});
 	});
@@ -67,9 +67,16 @@
 			}
 		})
 		.done(function(data) {
+			if (data === 'OK') {
 				if (typeof onSuccess == 'function') {
 					onSuccess(data);
 				}
+			} else {
+				console.warn('[toggleStatus] possible problem settings status: ', data);
+			}
+		})
+		.fail(function(jqXHR, textStatus) {
+			console.error('[toggleStatus] problem settings status: ', textStatus, jqXHR);
 		});
 	}
 
