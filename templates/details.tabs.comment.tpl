@@ -1,4 +1,4 @@
-<div id="comments" class="tab">
+<div id="comments" class="tab" data-base-url="{$baseurl}" data-project-id="{$proj->id}">
   <?php foreach($comments as $comment): ?>
   <em>
     <a name="comment{$comment['comment_id']}" id="comment{$comment['comment_id']}"
@@ -11,6 +11,14 @@
   </em>
 
   <span class="DoNotPrint">
+	<?php if ($user->perms('add_comments')): ?>
+    &mdash;
+    <a href="#comment{$comment['comment_id']}" class="comment-status-toggle"
+		data-comment-done="{$comment['done']}"
+		data-comment-id="{$comment['comment_id']}"
+		title="<?=( empty($comment['done']) ? L('comment_done_long') : L('comment_undone_long') )?>"
+	><?=( empty($comment['done']) ? L('comment_done') : L('comment_undone') )?></a>
+    <?php endif ?>
     <?php if ($user->perms('edit_comments') || ($user->perms('edit_own_comments') && $comment['user_id'] == $user->id)): ?>
     &mdash;
     <a href="{$_SERVER['SCRIPT_NAME']}?do=editcomment&amp;task_id={$task_details['task_id']}&amp;id={$comment['comment_id']}">
