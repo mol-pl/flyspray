@@ -18,7 +18,7 @@
 		}
 		// get base url
 		baseUrl = $commentsContainer.attr('data-base-url');
-		projectId = $commentsContainer.attr('data-base-url');
+		projectId = $commentsContainer.attr('data-project-id');
 
 		$('.comment-status-toggle', $commentsContainer).click(function(event){
 			event.preventDefault();
