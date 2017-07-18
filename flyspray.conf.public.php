@@ -53,6 +53,11 @@ dbprefix="flyspray_"
 
 [attachments]
 zip = "application/zip" ; MIME-type for ZIP files
+; mapping new MS Office types to older (and shorter) equivalents
+; https://stackoverflow.com/questions/4212861/what-is-a-correct-mime-type-for-docx-pptx-etc
+docx = "application/msword"
+xlsx = "application/vnd.ms-excel"
+pptx = "application/vnd.ms-powerpoint"
 
 [formcopy]
 reMsgSourceBaseUrls = "/:\/\/(192\.160\.0\.[0-9]+|[a-z.]+\.mol\.(com\.)?pl|localhost)(:[0-9]+)?$/"	; do not double slash! (php does in parse_ini_file)
