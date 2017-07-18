@@ -36,6 +36,8 @@
 		//console.log('i18n: ', i18n);
 
 		$('.comment-status-toggle', $commentsContainer).click(function(event){
+			var toggler = this;
+
 			event.preventDefault();
 			var commentId = this.getAttribute('data-comment-id');
 			var done = true;	// status to be set
@@ -44,6 +46,9 @@
 			}
 			toggleStatus(baseUrl, projectId, commentId, done, function(data){
 				console.log('comment status set to: ', done, commentId, data);
+				toggler.textContent = !done ? i18n['comment-done'] : i18n['comment-undone'];
+				toggler.title = !done ? i18n['comment-done-long'] : i18n['comment-undone-long'];
+				toggler.setAttribute('data-comment-done', done ? 1 : 0);
 			});
 		});
 	});
