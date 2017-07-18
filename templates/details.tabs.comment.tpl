@@ -4,6 +4,8 @@
 	data-i18n-comment-done-long="{L('comment_done_long')}"
 	data-i18n-comment-undone="{L('comment_undone')}"
 	data-i18n-comment-undone-long="{L('comment_undone_long')}"
+	data-i18n-collapse="{L('collapse')}"
+	data-i18n-expand="{L('expand')}"
 >
   <?php foreach($comments as $comment): ?>
   <em>
@@ -43,6 +45,10 @@
   "
 	data-comment-id="{$comment['comment_id']}"
   >
+	<?php if (!empty($comment['done'])): ?>
+		<a href="#comment{$comment['comment_id']}" class="collapsed-comment-toggle"
+		>{L('expand')}</a>
+	<?php endif ?>
   <?php if(isset($comment_changes[$comment['date_added']])): ?>
   <ul class="comment_changes">
   <?php foreach($comment_changes[$comment['date_added']] as $change): ?>

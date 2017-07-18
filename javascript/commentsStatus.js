@@ -13,6 +13,8 @@
 		'comment-done-long' : '',
 		'comment-undone' : '',
 		'comment-undone-long' : '',
+		'expand' : '',
+		'collapse' : '',
 	};
 
 	// init
@@ -35,6 +37,7 @@
 		}
 		//console.log('i18n: ', i18n);
 
+		// toggle
 		$('.comment-status-toggle', $commentsContainer).click(function(event){
 			var toggler = this;
 
@@ -58,6 +61,14 @@
 					$comment.removeClass('comment-done');
 				}
 			});
+		});
+
+		// expand/collapse
+		$('.collapsed-comment-toggle', $commentsContainer).click(function(event){
+			var $comment = $(this.parentNode);
+			var wasCollapsed = $comment.hasClass('comment-collapsed');
+			$comment.toggleClass('comment-collapsed');
+			this.textContent = !wasCollapsed ? i18n['expand'] : i18n['collapse'];
 		});
 	});
 
