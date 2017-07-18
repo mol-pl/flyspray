@@ -64,17 +64,17 @@
     <script type="text/javascript" src="{$baseurl}javascript/jsdiff-history.js"></script>
 
 	<!-- Form copy -->
-	<script type="text/javascript" src="{$baseurl}/javascript/framemsg.js"></script>
-	<script type="text/javascript" src="{$baseurl}/javascript/frmcopy.js"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/framemsg.js"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/frmcopy.js"></script>
 	<script type="text/javascript">
 	//<![CDATA[
 	oPostman.reMsgSourceBaseUrls = {!$conf['formcopy']['reMsgSourceBaseUrls']};
 	//]]>
 	</script>
 
-	<script type="text/javascript" src="{$baseurl}/javascript/frmextra.js"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/frmextra.js"></script>
 
-    <link media="screen" href="{$baseurl}/javascript/frmcopy_dest.css" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$baseurl}javascript/frmcopy_dest.css" rel="stylesheet" type="text/css" />
 	<!-- LIGHTBOX -->
 	<script type="text/javascript" src="{$baseurl}javascript/lightbox/js/lightbox.js"></script>
 	<link rel="stylesheet" href="{$baseurl}javascript/lightbox/css/lightbox.css?1641" type="text/css" media="screen" />
@@ -87,6 +87,8 @@
     <?php endforeach; ?>
 	
 	<script type="text/javascript" src="{$baseurl}javascript/UserTimezoneHelper.js"></script>
+
+	<script type="text/javascript" src="{$baseurl}javascript/commentsStatus.js"></script>
   </head>
   <body
 	data-userTimezone="<?=($user->isAnon() ? '' : $user->infos['time_zone'])?>" 
