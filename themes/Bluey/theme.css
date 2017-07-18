@@ -1,5 +1,14 @@
 @import url("../../javascript/jscalendar/calendar-system.css");
 
+/* Nux: comment collapsing when done */
+.comment-done {
+	border-left: 5px solid #33b433;
+}
+.comment-collapsed {
+	height: 2.5em;
+	overflow-y: hidden;
+}
+
 /* Nux: narrow window fix for menu */
 html body div#pm-menu {
     height: auto;

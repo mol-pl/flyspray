@@ -39,7 +39,7 @@
     <?php endif ?>
   </span>
   <div class="comment
-	<?=( !empty($comment['done']) ? 'comment-done' : '' )?>
+	<?=( !empty($comment['done']) ? 'comment-done comment-collapsed' : '' )?>
   "
 	data-comment-id="{$comment['comment_id']}"
   >
