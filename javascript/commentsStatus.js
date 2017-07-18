@@ -8,6 +8,12 @@
 	var $commentsContainer = null;
 	var baseUrl = '';
 	var projectId = 0;
+	var i18n = {
+		'comment-done' : '',
+		'comment-done-long' : '',
+		'comment-undone' : '',
+		'comment-undone-long' : '',
+	};
 
 	// init
 	$(function(){
@@ -16,9 +22,18 @@
 		if (!$commentsContainer.length) {
 			return;
 		}
-		// get base url
+		// get base settings
 		baseUrl = $commentsContainer.attr('data-base-url');
 		projectId = $commentsContainer.attr('data-project-id');
+
+		// get i18n settings
+		for (var key in i18n) {
+			var value = $commentsContainer.attr('data-i18n-'+key);
+			if (typeof value === 'string') {
+				i18n[key] = value;
+			}
+		}
+		//console.log('i18n: ', i18n);
 
 		$('.comment-status-toggle', $commentsContainer).click(function(event){
 			event.preventDefault();
@@ -52,9 +67,9 @@
 			}
 		})
 		.done(function(data) {
-			if (typeof onSuccess == 'function') {
-				onSuccess(data);
-			}
+				if (typeof onSuccess == 'function') {
+					onSuccess(data);
+				}
 		});
 	}
 

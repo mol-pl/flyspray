@@ -1,4 +1,10 @@
-<div id="comments" class="tab" data-base-url="{$baseurl}" data-project-id="{$proj->id}">
+<div id="comments" class="tab" 
+	data-base-url="{$baseurl}" data-project-id="{$proj->id}"
+	data-i18n-comment-done="{L('comment_done')}"
+	data-i18n-comment-done-long="{L('comment_done_long')}"
+	data-i18n-comment-undone="{L('comment_undone')}"
+	data-i18n-comment-undone-long="{L('comment_undone_long')}"
+>
   <?php foreach($comments as $comment): ?>
   <em>
     <a name="comment{$comment['comment_id']}" id="comment{$comment['comment_id']}"
