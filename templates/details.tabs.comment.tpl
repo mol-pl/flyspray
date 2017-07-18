@@ -38,7 +38,11 @@
       {L('delete')}</a>
     <?php endif ?>
   </span>
-  <div class="comment">
+  <div class="comment
+	<?=( !empty($comment['done']) ? 'comment-done' : '' )?>
+  "
+	data-comment-id="{$comment['comment_id']}"
+  >
   <?php if(isset($comment_changes[$comment['date_added']])): ?>
   <ul class="comment_changes">
   <?php foreach($comment_changes[$comment['date_added']] as $change): ?>

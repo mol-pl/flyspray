@@ -46,9 +46,17 @@
 			}
 			toggleStatus(baseUrl, projectId, commentId, done, function(data){
 				console.log('comment status set to: ', done, commentId, data);
+				// setup toggler state
 				toggler.textContent = !done ? i18n['comment-done'] : i18n['comment-undone'];
 				toggler.title = !done ? i18n['comment-done-long'] : i18n['comment-undone-long'];
 				toggler.setAttribute('data-comment-done', done ? 1 : 0);
+				// setup comment state
+				var $comment = $('.comment[data-comment-id='+commentId+']', $commentsContainer);
+				if (done) {
+					$comment.addClass('comment-done');
+				} else {
+					$comment.removeClass('comment-done');
+				}
 			});
 		});
 	});
