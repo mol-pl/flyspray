@@ -19,7 +19,7 @@ if (Cookie::has('flyspray_userid') && Cookie::has('flyspray_passhash')) {
 }
 
 // Init basic user variables
-$task_id = Get::num('task_id');
+$comment_id = Get::num('comment_id');
 $project_id = Get::num('project_id');
 $done = Get::num('done');
 
@@ -28,8 +28,7 @@ if (!($user->perms('add_comments', $project_id))) {
     die();
 }
 
-$sql = get_events(Get::num('task_id'), $details);
-$db->Query('UPDATE {comments} SET done = ? WHERE task_id = ?', array($done, $task_id));
+$db->Query('UPDATE {comments} SET done = ? WHERE comment_id = ?', array($done, $comment_id));
 if ($db->affectedRows()) {
 	die('OK');
 }
