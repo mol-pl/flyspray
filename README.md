@@ -36,6 +36,18 @@ Major features
 
 Applying this features to your FS should be a bit easier as they have their branches. At least for initial changes.
 
+### Done status for comments ###
+**Initial changes**: [feature/done-comments](https://github.com/mol-pl/flyspray/commits/feature/done-comments) branch.
+
+This feature allows marking some comments as done/irrelevant.
+* Comments status is changed rapidly in background (AJAX) call.
+* Done comments are marked with green border (can be changed in `theme.css`).
+* When the task is initially rendered done-comments will be collapsed.
+* Collapsed comments can be expanded both individually and all at once.
+
+Note. Required database change are in:
+* `.workdir/commentStatus/db_changes.sql`
+
 ### Task tags ###
 **Initial changes**: [feature/tags](https://github.com/mol-pl/flyspray/commits/feature/tags) branch.
 
@@ -47,9 +59,9 @@ This feature is NOT about some dokuwiki tags. This feature allows you to tag tas
 
 So tags are kind of like categories, but you can only add one category to a task. You can add multiple tags to a task.
 
-Note. Required database change are in:
-* tags._sql.create.sql
-* tags._sql.create.assignment.sql
+Note. Required database change are in `.workdir/tags/` in files:
+* `tags._sql.create.sql`
+* `tags._sql.create.assignment.sql`
 
 Both are PostgreSQL specific and require some changes to work in MySQL (e.g. `serial` should be `auto_increment`, `character varying` should be `varchar`).
 Also, you need to change owner of tables to something else.
