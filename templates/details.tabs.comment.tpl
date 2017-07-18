@@ -7,6 +7,11 @@
 	data-i18n-collapse="{L('collapse')}"
 	data-i18n-expand="{L('expand')}"
 >
+  <p class="collapsed-comments-controls" style="display: none">
+	<a href="#comments" class="collapsed-comments-expand">{L('expandall')}</a>
+	&mdash;
+	<a href="#comments" class="collapsed-comments-collapse">{L('collapseall')}</a>
+  </p>
   <?php foreach($comments as $comment): ?>
   <em>
     <a name="comment{$comment['comment_id']}" id="comment{$comment['comment_id']}"

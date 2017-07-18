@@ -70,6 +70,29 @@
 			$comment.toggleClass('comment-collapsed');
 			this.textContent = !wasCollapsed ? i18n['expand'] : i18n['collapse'];
 		});
+
+		// expand/collapse all
+		if ($('.comment-collapsed').length) {
+			$('.collapsed-comments-controls').show();
+			// expand all
+			$('.collapsed-comments-expand').click(function(event){
+				event.preventDefault();
+				$('.collapsed-comment-toggle', $commentsContainer).each(function(){
+					var $comment = $(this.parentNode);
+					$comment.removeClass('comment-collapsed');
+					this.textContent = i18n['collapse'];
+				});
+			});
+			// collapse all
+			$('.collapsed-comments-collapse').click(function(event){
+				event.preventDefault();
+				$('.collapsed-comment-toggle', $commentsContainer).each(function(){
+					var $comment = $(this.parentNode);
+					$comment.addClass('comment-collapsed');
+					this.textContent = i18n['expand'];
+				});
+			});
+		}
 	});
 
 	/**
