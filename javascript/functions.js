@@ -559,41 +559,26 @@ Perms.prototype.hide = function() {
 // Replaces the currently selected text with the passed text.
 function replaceText(text, textarea)
 {
-	textarea = document.getElementById( textarea );
-	// Attempt to create a text range (IE).
-	if (typeof(textarea.caretPos) != "undefined" && textarea.createTextRange)
-	{
-		var caretPos = textarea.caretPos;
-
-		caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == ' ' ? text + ' ' : text;
-		caretPos.select();
+	if (typeof textarea === 'string') {
+		textarea = document.getElementById( textarea );
 	}
-	// Mozilla text range replace.
-	else if (typeof(textarea.selectionStart) != "undefined")
-	{
-		var begin = textarea.value.substr(0, textarea.selectionStart);
-		var end = textarea.value.substr(textarea.selectionEnd);
-		var scrollPos = textarea.scrollTop;
-
-		textarea.value = begin + text + end;
-
-		if (textarea.setSelectionRange)
-		{
-			textarea.focus();
-			textarea.setSelectionRange(begin.length + text.length, begin.length + text.length);
+	textarea.focus();
+	
+	var newText = text;
+	// attempting to paste to preserver undo functionality
+	var pasted = true;
+	try {
+		//textarea.focus();
+		if (!document.execCommand("insertText", false, newText)) {
+			pasted = false;
 		}
-		textarea.scrollTop = scrollPos;
+	} catch (e) {
+		pasted = false;
 	}
-    else if (document.selection) {
-        textarea.focus();
-        sel=document.selection.createRange();
-        sel.text=text;
-    }
-	// Just put it on the end.
-	else
-	{
-		textarea.value += text;
-		textarea.focus(textarea.value.length - 1);
+	// fallback
+	if (!pasted) {
+		console.warn('paste unsuccessful, fallback to standard paste');
+		sel_t.setSelStr(textarea, newText);
 	}
 }
 
@@ -602,79 +587,31 @@ function replaceText(text, textarea)
 function surroundText(text1, text2, textarea)
 {
 	textarea = document.getElementById( textarea );
-	// Can a text range be created?
-	if (typeof(textarea.caretPos) != "undefined" && textarea.createTextRange)
-	{
-		var caretPos = textarea.caretPos;
+	
+	var selectedText = sel_t.getSelStr(textarea);
+	var newText = text1 + selectedText + text2;
+	
+	replaceText(newText, textarea)
+}
 
-		caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == ' ' ? text1 + caretPos.text + text2 + ' ' : text1 + caretPos.text + text2;
-		caretPos.select();
+// Replace `search` with `replacement` in the `textarea`
+// `search` can be RegExp
+// When nothig is selected `insert` will be used.
+function replaceInSelectedText(insert, search, replacement, textarea)
+{
+	textarea = document.getElementById( textarea );
+	
+	var selectedText = sel_t.getSelStr(textarea);
+	
+	// empty selection -- just insert text
+	if (selectedText.length === 0) {
+		replaceText(insert, textarea);
+		return;
 	}
-	// Mozilla text range wrap.
-	else if (typeof(textarea.selectionStart) != "undefined")
-	{
-		var begin = textarea.value.substr(0, textarea.selectionStart);
-		var selection = textarea.value.substr(textarea.selectionStart, textarea.selectionEnd - textarea.selectionStart);
-		var end = textarea.value.substr(textarea.selectionEnd);
-		var oldCursorPos = textarea.selectionStart;
-		var oldLength = textarea.value.length;
-		var scrollPos = textarea.scrollTop;
-
-		textarea.value = begin + text1 + selection + text2 + end;
-		var newLength = textarea.value.length;
-
-		if (textarea.setSelectionRange)
-		{
-			if (textarea.value.search(/\r/)>=0)	// Opera POV
-			{
-				// replace \n as Opera does upon inserting text to textarea (this will change lenght of strings to those that were inserted)
-				text1 = text1.replace(/\n/g, '\r\n');
-				selection = selection.replace(/\n/g, '\r\n');
-			}
-			if (selection.length == 0)
-			{
-				textarea.setSelectionRange(oldCursorPos + text1.length, oldCursorPos + text1.length);
-			}
-			else
-			{
-				//textarea.setSelectionRange(oldCursorPos, oldCursorPos + text1.length + selection.length + text2.length);
-				textarea.setSelectionRange(oldCursorPos, oldCursorPos + (newLength-oldLength) + selection.length);
-			}
-			textarea.focus();
-		}
-		textarea.scrollTop = scrollPos;
-	}
-    else if(document.selection) {
-        textarea.focus();
-        var sampleText = 'TEXT';
-        var currentRange = document.selection.createRange();
-        var selection = currentRange.text;
-        var replaced = true;
-        if(!selection) {
-               replaced=false;
-               selection = sampleText;
-        }
-        if(selection.charAt(selection.length-1)==" "){
-               selection=selection.substring(0,selection.length-1);
-               currentRange.text = text1 + selection + text2 + " ";
-        }
-        else
-        {
-               currentRange.text = text1 + selection + text2;
-        }
-        if(!replaced){
-               // If putting in sample text (i.e. insert) adjust range start and end
-               currentRange.moveStart('character',-text.length-text2.length);
-               currentRange.moveEnd('character',-text2.length);
-        }
-        currentRange.select();
-    }
-	// Just put them on the end, then.
-	else
-	{
-		textarea.value += text1 + text2;
-		textarea.focus(textarea.value.length - 1);
-	}
+	
+	var newText = selectedText.replace(search, replacement);
+	
+	replaceText(newText, textarea)
 }
 
 function stopBubble(e) {

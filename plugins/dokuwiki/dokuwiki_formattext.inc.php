@@ -291,9 +291,9 @@ class dokuwiki_TextFormatter
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'&#123;&#123;FB:index.php?getfile=...|550px|center|tytuł\', \'&#125;&#125;\', \''.$textareaId.'\'); return false;">
 				<img src="'.$baseurl.'plugins/dokuwiki/img/image-x-generic.png" align="bottom" alt="Wstaw obrazek" title="Wstaw obrazek" border="0" /></a>
 			
-			<a tabindex="-1" href="javascript:void(0);" onclick="replaceText(\'\n  * \', \''.$textareaId.'\'); return false;">
+			<a tabindex="-1" href="javascript:void(0);" onclick="replaceInSelectedText(\'\n  * \', /(^|\n)/g, \'\n  * \', \''.$textareaId.'\'); return false;">
 				<img src="'.$baseurl.'plugins/dokuwiki/img/ul.gif" align="bottom" width="23" height="22" alt="Wstaw listę" title="Wstaw listę" border="0" /></a>
-			<a tabindex="-1" href="javascript:void(0);" onclick="replaceText(\'\n  - \', \''.$textareaId.'\'); return false;">
+			<a tabindex="-1" href="javascript:void(0);" onclick="replaceInSelectedText(\'\n  - \', /(^|\n)/g, \'\n  - \', \''.$textareaId.'\'); return false;">
 				<img src="'.$baseurl.'plugins/dokuwiki/img/ol.gif" align="bottom" width="23" height="22" alt="Wstaw listę numeryczną" title="Wstaw listę numeryczną" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="replaceText(\'----\', \''.$textareaId.'\'); return false;">
 				<img src="'.$baseurl.'plugins/dokuwiki/img/hr.gif" align="bottom" width="23" height="22" alt="Linia rozdzielająca" title="Linia rozdzielająca" border="0" /></a>
