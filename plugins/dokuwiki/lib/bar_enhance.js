@@ -430,6 +430,10 @@ function cNuxbar(objName)
 	{
 		var me = this;
 		jQuery("textarea#details,textarea#comment_text").keydown(function(e) {
+			if (e.metaKey || e.altKey || e.ctrlKey) {
+				return;
+			}
+			
 			if(e.keyCode === 9) { // tab was pressed
 				var textareaSelection = new NuxbarTextareaSelection(this);
 				if (e.shiftKey) {
