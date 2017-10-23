@@ -239,11 +239,11 @@ function addUploadFields(id) {
     el.appendChild(newBox);
   }
 }
-function adduserselect(url, user, selectid, error)
+function adduserselect(url, user, selectid, error, skipUpdateValueField)
 {
     var myAjax = new Ajax.Request(url, {method: 'post', parameters: 'id=' + user, onComplete:function(originalRequest)
 	{
-        if(originalRequest.responseText) {
+        if(originalRequest.responseText && originalRequest.status==200) {
             var user_info = originalRequest.responseText.split('|');
             // Check if user does not yet exist
             for (i = 0; i < $('r' + selectid).options.length; i++) {
@@ -255,13 +255,18 @@ function adduserselect(url, user, selectid, error)
             opt = new Option(user_info[0], user_info[1]);
             try {
                 $('r' + selectid).options[$('r' + selectid).options.length]=opt;
-                updateDualSelectValue(selectid);
+				// no need to update when doing initial filling
+				if (!skipUpdateValueField) {
+					updateDualSelectValue(selectid);
+				}
             } catch(ex) {
                 return;
             }
-        } else {
+        } else if (typeof error == 'string' && error.length) {
             alert(error);
-        }
+        } else {
+			console.error(originalRequest);
+		}
 	}});
 }
 function checkok(url, message, form) {
@@ -314,7 +319,7 @@ function remove_0val(id) {
 function fill_userselect(url, id) {
     var users = $('v' + id).value.split(' ');
     for (i = 0; i < users.length; i++) {
-        if(users[i]) adduserselect(url, users[i], id, '');
+        if(users[i]) adduserselect(url, users[i], id, '', true);
     }
 }
 
