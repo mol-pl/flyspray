@@ -79,7 +79,7 @@
 	 <?php endif; ?>
   </div>
 
-  <table><tr><td id="taskfieldscell"><?php // small layout table ?>
+  <table width="100%"><tr><td id="taskfieldscell"><?php // small layout table ?>
 
   <div id="taskfields">
 	 <table>
@@ -249,7 +249,7 @@
 	 </table>
   </div>
 
-  </td><td>
+	</td><td width="100%">
 
   <div id="taskdetailsfull">
 	 <h3 class="taskdesc">{L('details')}</h3>
