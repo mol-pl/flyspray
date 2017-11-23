@@ -325,13 +325,15 @@ class dokuwiki_TextFormatter
 			<img src="'.$baseurl.'plugins/dokuwiki/img/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />
 			
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'<code java>\', \'</code>\', \''.$textareaId.'\'); return false;">
-				<img src="'.$baseurl.'plugins/dokuwiki/img/source_java.png" align="bottom" alt="Wstaw kod Javy" title="Wstaw kod Javy" border="0" /></a>
+				<img src="'.$baseurl.'plugins/dokuwiki/img/source_java.png" align="bottom" alt="Wstaw Javę" title="Wstaw kod Javy" border="0" /></a>
+			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'<code javascript>\', \'</code>\', \''.$textareaId.'\'); return false;">
+				<img src="'.$baseurl.'plugins/dokuwiki/img/source_javascript.png" align="bottom" alt="Wstaw JS" title="Wstaw kod JavaScript" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'<code cpp>\', \'</code>\', \''.$textareaId.'\'); return false;">
-				<img src="'.$baseurl.'plugins/dokuwiki/img/source.png" align="bottom" alt="Wstaw kod C++" title="Wstaw kod C++" border="0" /></a>
+				<img src="'.$baseurl.'plugins/dokuwiki/img/source.png" align="bottom" alt="Wstaw C++" title="Wstaw kod C++" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'<code sql>\', \'</code>\', \''.$textareaId.'\'); return false;">
-				<img src="'.$baseurl.'plugins/dokuwiki/img/source_sql.png" align="bottom" alt="Wstaw kod SQL" title="Wstaw kod SQL" border="0" /></a>
+				<img src="'.$baseurl.'plugins/dokuwiki/img/source_sql.png" align="bottom" alt="Wstaw SQL" title="Wstaw kod SQL" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'<code php>\', \'</code>\', \''.$textareaId.'\'); return false;">
-				<img src="'.$baseurl.'plugins/dokuwiki/img/source_php.png" align="bottom" alt="Wstaw kod PHP" title="Wstaw kod PHP" border="0" /></a>
+				<img src="'.$baseurl.'plugins/dokuwiki/img/source_php.png" align="bottom" alt="Wstaw PHP" title="Wstaw kod PHP" border="0" /></a>
 
 			<img src="'.$baseurl.'plugins/dokuwiki/img/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />
 
