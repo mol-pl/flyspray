@@ -9,6 +9,7 @@ $language = array(
 'notifytype'              => 'Notify Type',
 'group'                   => 'Group',
 'accountenabled'          => 'Account Enabled',
+'inactive_accounts'       => 'inactive',
 'updatedetails'           => 'Update details',
 'setglobally'             => 'This preference has been set globally.',
 'usergroupmanage'         => 'User and Group management',
