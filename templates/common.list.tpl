@@ -37,7 +37,7 @@
 		</td>
       <?php endif; ?>
       <td class="first">
-        <input id="listname{$countlines}" class="text" type="text" size="21" maxlength="40" name="list_name[{$row[$list_type.'_id']}]"
+        <input id="listname{$countlines}" class="text" type="text" size="35" maxlength="40" name="list_name[{$row[$list_type.'_id']}]"
           value="{$row[$list_type.'_name']}" />
       </td>
       <?php if ($list_type == 'tag'): ?>
