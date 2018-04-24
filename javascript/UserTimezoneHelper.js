@@ -47,8 +47,15 @@ function UserTimezoneHelper() {
 		if (userRole === 'admin' && container) {
 			var nel = document.createElement('div');
 			nel.innerHTML = `
-			<strong>Poprawa strefę dla wszystkich użytkowników</strong>
+			<strong>Popraw strefę dla wszystkich użytkowników</strong>
 <pre>
+-- test
+SELECT user_name, time_zone
+	FROM flyspray_users
+	ORDER BY time_zone
+;
+
+-- fix
 UPDATE flyspray_users set time_zone = ${actualTimezone}
 --WHERE time_zone IN (1,2)
 </pre>
