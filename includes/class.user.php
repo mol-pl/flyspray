@@ -7,10 +7,15 @@ class User
     var $perms = array();
     var $infos = array();
     var $searches = array();
+	// JS: copy(location.search.split('&').map(param => param.replace(/(^\?|=.*|\[\]|%5B%5D)/g, '')))
     var $search_keys = array('string', 'type', 'sev', 'pri', 'due', 'dev', 'cat', 'status', 'order', 'sort', 'percent', 'changedfrom', 'closedfrom',
                              'opened', 'closed', 'search_in_comments', 'search_for_all', 'reported', 'only_primary', 'only_watched', 'closedto',
-                             'changedto', 'duedatefrom', 'duedateto', 'openedfrom', 'openedto', 'has_attachment');
-
+                             'changedto', 'duedatefrom', 'duedateto', 'openedfrom', 'openedto', 'has_attachment',
+                             'search_in_details',
+                             'order2', 'sort2',
+                             'unchangedwithindays', 'unchangedwithinhours', 
+                             'tags', 'projects',
+	);
     function User($uid = 0)
     {
         global $db;
