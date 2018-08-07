@@ -182,6 +182,9 @@ $language = array(
 'accountdisabled'         => 'Your account is disabled.  Contact a full admin.',
 'task'                    => 'Task',
 'edittask'                => 'Edit this task',
+
+'copytask'                => 'Copy task',
+
 'openedby'                => 'Opened by',
 'editedby'                => 'Last edited by',
 'tasktype'                => 'Task Type',
@@ -207,6 +210,7 @@ $language = array(
 'relatedtasks'            => 'Related Tasks',
 'edit'                    => 'Edit',
 'addcomment'              => 'Add comment',
+'sendcomment'             => 'Send comment',
 'fileuploadedby'          => 'File uploaded by',
 'uploadafile'             => 'Attach a file',
 'uploadnow'               => 'Upload now!',
