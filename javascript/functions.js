@@ -100,70 +100,101 @@ addEvent(window,'load',setUpCookieHideShow);
 addEvent(window,'load',setUpTasklistTable);
 function Disable(formid)
 {
-   document.formid.buSubmit.disabled = true;
-   document.formid.submit();
+	document.formid.buSubmit.disabled = true;
+	document.formid.submit();
 }
 
 function showstuff(boxid, type){
-   if (!type) type = 'block';
-   $(boxid).style.display= type;
-   $(boxid).style.visibility='visible';
+	if (!type) type = 'block';
+	$(boxid).style.display= type;
+	$(boxid).style.visibility='visible';
 }
 
-function hidestuff(boxid){
-   $(boxid).style.display='none';
+function hidestuff(boxid) {
+	$(boxid).style.display = 'none';
 }
 
-function hidestuff_e(e, boxid){
-   e = e || window.event;
-   if (Event.element(e).getAttribute('id') !== 'lastsearchlink' ||
-	(Event.element(e).getAttribute('id') === 'lastsearchlink' && $('lastsearchlink').className == 'inactive')) {
-	if (!Position.within($(boxid), Event.pointerX(e), Event.pointerY(e))) {
-	   //Event.stop(e);
-	   if (boxid === 'mysearches') {
-		activelink('lastsearchlink');
-	   }
-	   $(boxid).style.visibility='hidden';
-	   $(boxid).style.display='none';
-	   document.onmouseup = null;
-   	}
-   }
+/**
+ * Hide stuff shown by `showhidestuff`.
+ * 
+ * @param {Event} e Event.
+ * @param {String} boxid Parent box shown with `showhidestuff`.
+ */
+function hidestuff_e(e, boxid) {
+	e = e || window.event;
+
+	//console.log('hidestuff_e; boxid:', boxid)
+
+	var eventElement = Event.element(e);
+	var box = document.getElementById(boxid);
+	// skip if descendant element
+	if (box && box.contains(eventElement)) {
+		return;
+	}
+
+	if (eventElement.id !== 'lastsearchlink' ||
+		(eventElement.id === 'lastsearchlink' && $('lastsearchlink').className == 'inactive')) {
+		if (!Position.within($(boxid), Event.pointerX(e), Event.pointerY(e))) {
+			//Event.stop(e);
+			if (boxid === 'mysearches') {
+				activelink('lastsearchlink');
+			}
+			$(boxid).style.visibility = 'hidden';
+			$(boxid).style.display = 'none';
+			document.onmouseup = null;
+		}
+	}
 }
 
+/**
+ * Shows a popup that will be closed after clicking outside of the box.
+ * 
+ * @note There is some old magic here (i.e. undocument stuff). There might be dragons.
+ * 
+ * @param {String} boxid Parent box to be shown.
+ */
 function showhidestuff(boxid) {
-   if (boxid === 'mysearches') {
-	activelink('lastsearchlink');
-   }
-   switch ($(boxid).style.visibility) {
-      case '':
-	$(boxid).style.visibility='visible';
-	break;
-      case 'hidden':
-	$(boxid).style.visibility='visible';
-	break;
-      case 'visible':
-	$(boxid).style.visibility='hidden';
-	break;
-   }
-   switch ($(boxid).style.display) {
-      case '':
-	$(boxid).style.display='block';
-	document.onmouseup = function(e) { hidestuff_e(e, boxid); };
-	break;
-      case 'none':
-	$(boxid).style.display='block';
-	document.onmouseup = function(e) { hidestuff_e(e, boxid); };
-	break;
-      case 'block':
-	$(boxid).style.display='none';
-	document.onmouseup = null;
-	break;
-      case 'inline':
-	$(boxid).style.display='none';
-	document.onmouseup = null;
-	break;
-   }
+	//console.log('showhidestuff; boxid:', boxid)
+
+	if (boxid === 'mysearches') {
+		activelink('lastsearchlink');
+	}
+	switch ($(boxid).style.visibility) {
+		case '':
+			$(boxid).style.visibility = 'visible';
+			break;
+		case 'hidden':
+			$(boxid).style.visibility = 'visible';
+			break;
+		case 'visible':
+			$(boxid).style.visibility = 'hidden';
+			break;
+	}
+	switch ($(boxid).style.display) {
+		case '':
+			$(boxid).style.display = 'block';
+			document.onmouseup = function (e) {
+				hidestuff_e(e, boxid);
+			};
+			break;
+		case 'none':
+			$(boxid).style.display = 'block';
+			document.onmouseup = function (e) {
+				hidestuff_e(e, boxid);
+			};
+			break;
+		case 'block':
+			$(boxid).style.display = 'none';
+			document.onmouseup = null;
+			break;
+		case 'inline':
+			$(boxid).style.display = 'none';
+			document.onmouseup = null;
+			break;
+	}
 }
+
+
 function setUpTasklistTable() {
   if (!$('tasklist_table')) {
     // No tasklist on the page
