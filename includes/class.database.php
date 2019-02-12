@@ -17,6 +17,7 @@ if (!defined('IN_FS')) {
 }
 
 require_once dirname(dirname(__FILE__)) . '/adodb/adodb.inc.php';
+require_once dirname(dirname(__FILE__)) . '/includes/_moje_fun.php';
 
 class Database
 {
@@ -192,19 +193,13 @@ class Database
 
 		if (defined('DEBUG_ALL_SQL'))
 		{
-			error_log (
+			fs_error_log(
 				sprintf(''
-					."\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
-					."\nTime:".date('c')
-					."\nIP:{$_SERVER['REMOTE_ADDR']}"
-					."\n---------------------------------------------"
 					."\nQuery:\n%s"
 					."\n with params:\n%s"
 					,$sql
 					,var_export($inputarr, true)
 				)
-				,3
-				,FS_CACHE_DIR.'/err.log'
 			);
 		}
 
@@ -225,21 +220,15 @@ class Database
             }
 
 			// Nux-start: always log, not always show...
-			error_log (
+			fs_error_log(
 				sprintf(''
-					."\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
-					."\nTime:".date('c')
-					."\nIP:{$_SERVER['REMOTE_ADDR']}"
-					."\n---------------------------------------------"
 					."\nQuery:\n%s"
 					."\n with params:\n%s"
 					."\n Failed! \n%s\n"
 					,$sql
 					,var_export($inputarr, true)
-					,htmlspecialchars($this->dblink->ErrorMsg())
+					,$this->dblink->ErrorMsg()
 				)
-				,3
-				,FS_CACHE_DIR.'/err.log'
 			);
 			if (defined('LIGHT_DEBUG_SQL'))
 			{

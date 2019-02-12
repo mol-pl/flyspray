@@ -23,6 +23,8 @@ else
 {
 	require_once dirname(__FILE__) . '/external/phpmailer/mail.class.php';
 }
+require_once dirname(dirname(__FILE__)) . '/includes/_moje_fun.php';
+
 
 class Notifications {
 
@@ -387,20 +389,15 @@ class Notifications {
 		// debug log on error
 		if (!$retval)
 		{
-			error_log (
+			fs_error_log (
 				sprintf(''
-					."\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
-					."\nTime:".date('c')
-					."\nIP:{$_SERVER['REMOTE_ADDR']}"
-					."\nMailer:".(empty($conf['general']['notifications_use_phpmailer']) ? 'Swift' : 'PHPmailer')
-					."\n---------------------------------------------"
 					."\nSendEmail"
 					."\n \$task_id, '\$to', '\$subject', '\$body':\n"
 					."\n $task_id, '%s', '$subject', '$body'\n"
 					,strtr(var_export($to, true), "\r\n", '  ')
 				)
-				,3
-				,FS_CACHE_DIR.'/warn.log'
+				,"Mailer: ".(empty($conf['general']['notifications_use_phpmailer']) ? 'Swift' : 'PHPmailer')
+				,'WARNING'
 			);
 		}
 

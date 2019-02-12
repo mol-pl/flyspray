@@ -1,5 +1,37 @@
 <?php
 
+/**
+	Standarized error log.
+	
+	Adds some information in header for diagnostics.
+*/
+function fs_error_log($content, $extra_header = "", $level = "ERROR") {
+	global $user;
+	
+	$header = ''
+		."\nTime: ".date('c')
+		."\nIP: {$_SERVER['REMOTE_ADDR']}"
+	;
+	
+	if (is_object($user)) {
+		$header .= "\nUser: [{$user->id}] {$user->infos['user_name']}";
+	}
+	
+	if (!empty($extra_header)) {
+		$header .= "\n" . ltrim($extra_header);
+	}
+	
+	error_log (
+		''
+			."\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-"
+			.$header
+			."\n---------------------------------------------"
+			.$content
+		,3
+		,$level=="ERROR" ? FS_CACHE_DIR.'/err.log' : FS_CACHE_DIR.'/warn.log'
+	);
+}
+
 /*
 	@param $rows tablica z wierszami
 	@param $link specyfikacja gdzie wstawiæ link
