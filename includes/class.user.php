@@ -249,9 +249,9 @@ class User
         return !$this->isAnon() && in_array($this->id, Flyspray::GetAssignees($task['task_id']));
     }
 
-    function can_edit_task($task)
+    function can_edit_task($task, $ignore_closed_status=false)
     {
-        return !$task['is_closed']
+        return (!$task['is_closed'] || $ignore_closed_status)
             && ($this->perms('modify_all_tasks', $task['project_id']) ||
                     ($this->perms('modify_own_tasks', $task['project_id'])
                      && in_array($this->id, Flyspray::GetAssignees($task['task_id']))));

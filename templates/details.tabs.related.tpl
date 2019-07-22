@@ -28,7 +28,7 @@ if (strpos($_SERVER['HTTP_REFERER'], 'copytask&task_id')!==false)
         ?>
         <tr>
           <td class="ttcolumn">
-            <input type="checkbox" name="related_id[]" {!tpl_disableif(!$user->can_edit_task($task_details))} value="{$row['related_id']}" /></td>
+            <input type="checkbox" name="related_id[]" {!tpl_disableif(!$user->can_edit_task($task_details, true))} value="{$row['related_id']}" /></td>
           <td>{!tpl_tasklink($row)}</td>
         </tr>
         <?php endforeach; ?>
@@ -54,7 +54,7 @@ if (strpos($_SERVER['HTTP_REFERER'], 'copytask&task_id')!==false)
     </td></tr>
   </table>
 
-  <?php if ($user->can_edit_task($task_details) && !$task_details['is_closed']): ?>
+  <?php if ($user->can_edit_task($task_details, true) /*&& !$task_details['is_closed']*/): ?>
   <form action="{CreateUrl('details', $task_details['task_id'])}#related" method="post" id="formaddrelatedtask">
     <div>
       <input type="hidden" name="action" value="details.add_related" />

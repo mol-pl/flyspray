@@ -1131,7 +1131,7 @@ switch ($action = Req::val('action'))
     // adding a related task entry
     // ##################
     case 'details.add_related':
-        if (!$user->can_edit_task($task)) {
+        if (!$user->can_edit_task($task, true)) {
             break;
         }
 
@@ -1172,7 +1172,7 @@ switch ($action = Req::val('action'))
     // Removing a related task entry
     // ##################
     case 'remove_related':
-        if (!$user->can_edit_task($task)  || !is_array(Post::val('related_id'))) {
+        if (!$user->can_edit_task($task, true)  || !is_array(Post::val('related_id'))) {
             break;
         }
 
