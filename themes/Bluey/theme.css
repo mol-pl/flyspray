@@ -75,6 +75,10 @@ body .serwis_templates a:hover
 	width: 26px;
 	box-sizing: border-box;
 }
+/* Nux: extra width for version tense */
+#taskdetails #taskfieldscell {
+	min-width: 250px;
+}  
 
 /*
 	Images

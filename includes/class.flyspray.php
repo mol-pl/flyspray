@@ -364,6 +364,43 @@ class Flyspray
 
         return $get_details;
     } // }}}
+    // List versions {{{
+    /**
+     * Returns a list of all versions
+	 * 
+	 * Nux: Provide a list of versions for displaying tense and similar.
+	 * 
+     * @param bool $return_map return mapped with version_id.
+     * @param bool|int $project_id show only versions for given project.
+     * @access public static
+     * @return array
+     * @version 1.0
+     */
+    function listVersions($return_map = true, $project_id = false)
+    {
+        global $db;
+
+        $query = 'SELECT  * FROM {list_version}';
+
+        if ($project_id)  {
+            $query .= ' WHERE  project_id = ' . intval($project_id);
+        }
+
+		$sql = $db->Query($query);
+		$rows = $db->fetchAllArray($sql);
+
+		// raw results
+		if (!$return_map) {
+			return $rows;
+		}
+
+		// re-map with id
+		$map = array();
+		foreach ($rows as $row) {
+			$map[$row['version_id']] = $row;
+		}
+		return $map;
+    } // }}}
     // List projects {{{
     /**
      * Returns a list of all projects

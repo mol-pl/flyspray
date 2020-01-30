@@ -25,6 +25,24 @@ require_once(BASEDIR . '/includes/events.inc.php');
 
 $page->uses('task_details');
 
+// Nux: prepare versions info [START]
+$versions_map = Flyspray::listVersions();
+//$page->assign('versions_map', $versions_map);
+function versionMap($version_id) {
+	global $versions_map;
+	$version_tense_map = array(1=>L('past'), 2=>L('present'), 3=>L('future'));
+	if (isset($versions_map[$version_id])) {
+		$version = $versions_map[$version_id];
+		$version['tense_name'] = $version_tense_map[$version['version_tense']];
+		return $version;
+	}
+	return false;
+}
+$reported_version = versionMap($task_details['product_version']);
+$due_in_version = versionMap($task_details['closedby_version']);
+$page->uses('reported_version', 'due_in_version');
+// Nux: prepare versions info [END]
+
 // Send user variables to the template
 $page->assign('assigned_users', $task_details['assigned_to']);
 $page->assign('old_assigned', implode(' ', $task_details['assigned_to']));

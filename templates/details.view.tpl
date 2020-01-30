@@ -155,13 +155,20 @@
 		</tr>
 		<tr>
 		  <th id="reportedver">{L('reportedversion')}</th>
-		  <td headers="reportedver">{$task_details['reported_version_name']}</td>
+		  <td headers="reportedver">{$task_details['reported_version_name']} 
+			 <?php if (!empty($reported_version)): ?>
+			 	<br><em>{$reported_version['tense_name']}</em>
+			 <?php endif; ?>
+		  </td>
 		</tr>
 		<tr>
 		  <th id="dueversion">{L('dueinversion')}</th>
 		  <td headers="dueversion">
 			 <?php if ($task_details['due_in_version_name']): ?>
 			 {$task_details['due_in_version_name']}
+			 <?php if (!empty($due_in_version)): ?>
+			 	<br><em>{$due_in_version['tense_name']}</em>
+			 <?php endif; ?>
 			 <?php else: ?>
 			 {L('undecided')}
 			 <?php endif; ?>
