@@ -8,3 +8,4 @@
 /plugins/dokuwiki/lib/bar_enhance.config.js
 mail.class.php
 /nbproject/private/
+.workdir/tags/copy_tags.sql
