@@ -150,10 +150,19 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
 	 */
 	function render($mode, &$renderer, $data)
 	{
-		// render content
-        $html = TextFormatter::render($data);
-		$html = preg_replace('#^\s*<p>\s*#im', '', $html);
-		$html = preg_replace('#\s*</?p>\s*$#im', '', $html);
+		// render content (assume doku-wiki)
+		if (is_string($data)) {
+			$html = TextFormatter::render($data);
+			$html = preg_replace('#^\s*<p>\s*#im', '', $html);
+			$html = preg_replace('#\s*</?p>\s*$#im', '', $html);
+		// assume already having HTML
+		} else if (is_array($data) && !empty($data['html'])) {
+			$html = $data['html'];
+		// unknown
+		} else {
+			$html = '';
+		}
+		
 		// output
 		$renderer->doc .= $html;
 		return true;

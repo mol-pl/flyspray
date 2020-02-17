@@ -30,12 +30,18 @@
 	<link rel="apple-touch-icon" href="{$baseurl}themes/logo_app/logo128.png">
 
     <script type="text/javascript" src="{$baseurl}javascript/prototype/prototype.js"></script>
-    <script type="text/javascript" src="{$baseurl}javascript/jquery-min.js"></script>
+	<script src="{$baseurl}javascript/jquery-ui/js/jquery.js"></script>
 	<script type="text/javascript">
 	//<![CDATA[
+	// Nux: required for prototype :-/
 	var $j = jQuery.noConflict();
 	//]]>
 	</script>
+	<!-- jQuery UI -->
+	<script src="{$baseurl}javascript/jquery-ui/js/jquery-ui.js"></script>
+	<script src="{$baseurl}javascript/jquery-ui/js/i18n/jquery.ui.datepicker-pl.js"></script>
+	<link rel="stylesheet" href="{$baseurl}javascript/jquery-ui/css/ui-lightness/jquery-ui.css" media="screen" />
+	
     <script type="text/javascript" src="{$baseurl}javascript/jquery-ext.js?1135"></script>
     <script type="text/javascript" src="{$baseurl}javascript/script.aculo.us/scriptaculous.js"></script>
 	
@@ -159,3 +165,15 @@
       <?php endif; ?>
     
     <?php endif; ?>
+
+<!-- Nux: CollapsibleTemplate as accordion  -->
+<script>
+(function($)
+{
+	$(function() {
+		$( ".collapsible-container" ).accordion({
+			heightStyle: "content"
+		});
+	});
+})(jQuery);
+</script>
