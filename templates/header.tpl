@@ -62,6 +62,10 @@
 	
     <script type="text/javascript" src="{$baseurl}javascript/jsdiff.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/jsdiff-history.js"></script>
+	
+	<!-- Table collapser helpers -->
+	<script type="text/javascript" src="{$baseurl}javascript/table-collapser.js"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/table-collapser-init.js"></script>
 
 	<!-- Form copy -->
 	<script type="text/javascript" src="{$baseurl}javascript/framemsg.js"></script>
@@ -156,6 +160,7 @@
 		onclick="toogleCookieHideShow('intromessage')" /></div>
 	  <div id="intromessage">{!TextFormatter::render($proj->prefs['intro_message'], false, 'msg', $proj->id,
                                ($proj->prefs['last_updated'] < $proj->prefs['cache_update']) ? $proj->prefs['pm_instructions'] : '')}</div>
+	  <script>initCollapsers('#intromessage')</script>
       <?php endif; ?>
     
     <?php endif; ?>
