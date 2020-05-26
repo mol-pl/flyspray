@@ -56,7 +56,7 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
 		// RejsZ extra
  		if (FS_PREFIX_CODE == 'RZ')
 		{
-			$myConf['devs_status'] = '&status[]=2&status[]=3&status[]=5';
+			$myConf['devs_status'] = '&status[]=2&status[]=3&status[]=5&status[]=14';
 			$myConf['devs_order'] = $myConf['single_dev_order'] = '&order=priority&sort=desc&order2=severity&sort2=desc';
 		}
 		
