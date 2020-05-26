@@ -1,0 +1,56 @@
+Collapible tests (project prefrences).
+
+{{tpl:Collapsible-top}}
+{{tpl:Collapsible-start|header=Current}}
+^     Bieżące :!:  ^^
+^        Sprint 64 - Libra 1.0 | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=226}} |
+^           Biblioteczka 1.x | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=172|ver_id=217|gantt=auto}} |
+{{tpl:Collapsible-end}}
+{{tpl:Collapsible-start|header=Archive}}
+^  Archiwalne      ^^
+^              Geronimo 1 - 3 | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=125|ver_id=126|ver_id=127}} |
+^                  Ext 1 - 10 | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=128|ver_id=129|ver_id=130|ver_id=131|ver_id=132|ver_id=133|ver_id=134|ver_id=135|ver_id=136|ver_id=137}} |
+^    Sprint 11 - 50 (do 14.0) | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=138|ver_id=146|ver_id=147|ver_id=155|ver_id=151|ver_id=156|ver_id=157|ver_id=160|ver_id=162|ver_id=163|ver_id=164|ver_id=165|ver_id=167|ver_id=168|ver_id=169|ver_id=171|ver_id=173|ver_id=174|ver_id=176|ver_id=177|ver_id=179|ver_id=182|ver_id=183|ver_id=184|ver_id=186|ver_id=187|ver_id=180|ver_id=188|ver_id=189|ver_id=190|ver_id=191|ver_id=192|ver_id=193|ver_id=195|ver_id=196|ver_id=197|ver_id=198|ver_id=199|ver_id=200|ver_id=201}} |
+^  MOL Sprinty 51 - 61 (14.1-14.6) | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=202|ver_id=203|ver_id=204|ver_id=206|ver_id=208|ver_id=209|ver_id=212|ver_id=210|ver_id=213|ver_id=216|ver_id=215}} |
+^  Libra+MOL Sprinty 62, 63, 63-5 (hotfix1), hotfix2, hotfix3 | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=219|ver_id=222|ver_id=230|ver_id=231|ver_id=233}} |
+^     Biblioteczka 0.1 - 0.10 | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=170|ver_id=141|ver_id=143|ver_id=145|ver_id=150|ver_id=158|ver_id=161|ver_id=166|ver_id=159|ver_id=175|ver_id=178|gantt=wiki:Biblioteczka/plan}} |
+^  Nadchodzące     ^^
+^        Sprint 65 - Libra 2.0 | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=225}} |
+^           TODO w Libra NET | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=211}} |
+^                  TODO soon | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=194}} |
+^         SuperMOL + Serwery | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=214}} |
+^  Sprint - Autom. Konwersja | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=207}} |
+^         Zadania oczekujące | {{tpl:Rejsz-linki-wersja|proj_id=15|ver_id=185}} |
+^  Inne  ^^
+^             Wszystkie | {{tpl:Rejsz-linki-wersja|proj_id=15|dev=Paweł|dev=Piotr|dev=Andrzej.J|dev=Nux|dev=MaciejCz}} |
+^   Kandydaci na sprint | [[rz>index.php?string=&project=15&search_name=&search_in_comments=1&search_in_details=1&type%5B%5D=&sev%5B%5D=&pri%5B%5D=&reported%5B%5D=&due%5B%5D=&cat%5B%5D=&status%5B%5D=2&status%5B%5D=3&status%5B%5D=5&percent%5B%5D=&opened=&dev=&closed=&duedatefrom=&duedateto=&changedfrom=&changedto=&openedfrom=&openedto=&closedfrom=&closedto=&unchangedwithindays=&unchangedwithinhours=&do=index|TODO programiści]] • [[rz>index.php?do=index&project=15&string=&project=15&search_name=&search_in_comments=1&search_in_details=1&type[]=&sev[]=&pri[]=&reported[]=&due[]=&cat[]=&status[]=2&percent[]=&opened=&dev=&closed=&duedatefrom=&duedateto=&changedfrom=&changedto=&openedfrom=&openedto=&closedfrom=&closedto=&unchangedwithindays=&unchangedwithinhours=&do=index&order=id&sort=desc&order2=&sort2=|Nowe (wg ID)]] • [[rz>index.php?string=&do=index&project=15&due[]=128&due[]=129&due[]=130&due[]=131&due[]=132&due[]=133&due[]=134&due[]=135&due[]=136&due[]=137&due[]=138&status[]=1&status[]=2&status[]=3&status[]=5&status[]=9&order=priority&sort=desc&order2=severity&sort2=desc|Zaległe (stare sprinty, cześć trzeba podzielić!)]] |
+^               TODO PM | [[rz>index.php?do=index&project=15&do=index&project=15&string=&search_name=&search_in_comments=1&search_in_details=1&type[]=&sev[]=&pri[]=&reported[]=&due[]=&cat[]=&status[]=6&percent[]=&opened=&dev=&closed=&duedatefrom=&duedateto=&changedfrom=&changedto=&openedfrom=&openedto=&closedfrom=&closedto=&unchangedwithindays=&unchangedwithinhours=&order=lastedit&sort=asc&order2=id&sort2=asc|Do zamknięcia?]] • [[rz>index.php?string=&project=15&search_name=&search_in_comments=1&search_in_details=1&type%5B%5D=&sev%5B%5D=&pri%5B%5D=&reported%5B%5D=&due%5B%5D=&cat%5B%5D=&status%5B%5D=1&status%5B%5D=9&percent%5B%5D=&opened=&dev=&closed=&duedatefrom=&duedateto=&changedfrom=&changedto=&openedfrom=&openedto=&closedfrom=&closedto=&unchangedwithindays=&unchangedwithinhours=&do=index|Do zaplanowania / podziału / wyjaśnienia]] |
+{{tpl:Collapsible-end}}
+{{tpl:Collapsible-bottom}}
+
+
+
+<!--
+  Po zmianach wrzuć kopię do:
+  https://prl.mol.com.pl/wiki/index.php/MOL.NET:Rejsz-wersje
+-->
+
+Zadania etapów Javowych.
+
+^        Dodaj nowe zgłoszenie | {{tpl:Open-task|extra_cat=Biblioteczka}} |
+
+----
+
+^                       Varia | [[molwiki>MOL.NET:Dokumenty]] • [[https://jenkins.mol.com.pl/|Jenkins]] • [[http://prl.mol.com.pl:8081/|Sonar]] • [[https://prl.mol.com.pl/molnet-activity-stats/|MOL NET+ activity stats]] • [[https://docs.google.com/spreadsheets/d/1kf6PIBn1b9KpaKA3n3qTRtL4j4UblFZz6dzHpwSbZ1w/edit?usp=sharing_eixpa_np&ts=5832dadf|Problemy w serwerowni]] |
+^          Wdrażanie i serwery| [[https://dev.mol.com.pl/info/|dev (bieżący)]] • [[https://test.mol.com.pl/info/|test (względnie stabilny)]] |
+<!--
+  Przykłady:
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75}}
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|ver_id=90}} - two versions in links
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|gantt=auto}} - extra link to Gantt generator
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|gantt=auto|gantt_start=2013-09-16}} - extra link to Gantt generator with given date
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|gantt=auto:2013-09-16}} - shorthand syntaxt for start date
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|gantt=wiki:Harmonogram_-_MOL_13.10}} - wiki link syntax
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|karta_count=123}} - extra ISO project link count = iso project version
+  {{tpl:Rejsz-linki-wersja|proj_id=5|ver_id=75|ver_id=90|dev=Maciej|dev=Paweł}} - add dev links after TODO devs
+-->
