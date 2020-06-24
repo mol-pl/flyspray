@@ -53,7 +53,7 @@ function ParseIdsCSVForSafety ($ids)
 function GetIntervalsFromTask ($task)
 {
 	$std_time_string = '';
-	if (preg_match("#czas wykonania:[ \t]*(.+)#", $task['detailed_desc'], $raw_time_string))
+	if (preg_match("#(?:czas wykonania|time estimation):[ \t]*(.+)#", $task['detailed_desc'], $raw_time_string))
 	{
 		$raw_time_string = trim($raw_time_string[1]);
 		$std_time_string = InternalTaskInterval2StdInterval ($raw_time_string, empty($task['assigned_count']) ? 1 : $task['assigned_count']);
