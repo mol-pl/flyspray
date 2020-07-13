@@ -34,9 +34,9 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 	}
 
 	/**
-		Parse data
+		Base Link.
 	*/
-	public function parse($tpl_params, $plugin_conf) {
+	private function getBase($tpl_params) {
 		$tpl_name = $this->tplName;
 		
 		$isRejszTemplate = strpos($tpl_name, 'Rejsz') === 0;
@@ -63,6 +63,15 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		{
 			$base_link .= '&due[]='.$tpl_params['ver_id'];
 		}
+		
+		return $base_link;
+	}
+	
+	/**
+		Parse data.
+	*/
+	public function parse($tpl_params, $plugin_conf) {
+		$base_link = $this->getBase($tpl_params);
 
 		// devs...
 		$todo_dev_base = $base_link . $plugin_conf['devs_status'];
@@ -122,7 +131,7 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 			$iso_links = ' • '.str_replace('{count}', $tpl_params['karta_count'], $plugin_conf['iso_link_format']);
 		}
 		
-		$data = ''
+		$code = ''
 			.'[['.$base_link.'|Otwarte]]'
 			.' • [['.$todo_dev_base.$plugin_conf['devs_order'].'|TODO programiści]]'.$devs
 			.' • [['.$base_link.'&status[]=4|TODO testerzy]]'
@@ -132,6 +141,43 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 			.$iso_links
 		;
 		
-		return $data;
+		return array(
+			'code' => $code,
+			'base_link' => $base_link,
+		);
 	}
+	
+	/**
+		Is reRender is implemented.
+	*/
+	public static function hasReRender()
+	{
+		return true;
+	}
+	
+	/**
+		Re-render during page rendering.
+		
+		Avoid heavy computations.
+		
+		@param $data is dokuwiki code or whatever returned from the parse function.
+	*/
+	public function reRender($data) {
+		global $user;
+		
+		$code = $data['code'];
+		
+		// anon gets no extra info
+		if ($user->isAnon()) {
+			return $code;
+		}
+		
+		$base_link = $data['base_link'];
+		
+		// me link (current user)
+		$todo_myself_base = $base_link . '&dev=' . $user->id;
+		$code .= ' • [['.$todo_myself_base.'|TODO moje]]';
+		
+		return $code;
+	}	
 }

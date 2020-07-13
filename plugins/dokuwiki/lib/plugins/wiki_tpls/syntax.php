@@ -108,6 +108,7 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
 	
 	/**
 	 * Handle the match
+	 * Note! this is cached.
 	 */
 	function handle($dokuwikicode, $state, $pos, &$handler)
 	{
@@ -137,21 +138,39 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
 		//
 		if (!empty($parserClass)) {
 			$parser = new $parserClass($tpl_name);
-			$data = $parser->parse($tpl_params, $plugin_conf);
+			$data = array(
+				'parsed' => $parser->parse($tpl_params, $plugin_conf),
+				'parserClass' => $parserClass,
+				'tpl_name' => $tpl_name,
+			);
 		}
 		else {
-			$data = '__NIEZNANY_SZABLON__:'.$tpl_name;
+			$data = array(
+				'parsed' => '__NIEZNANY_SZABLON__:'.$tpl_name,
+			);
 		}
 		return $data;
 	}			
  
 	/**
 	 * Create output
+	 * This is calculated upon every run (every page refresh).
 	 */
 	function render($mode, &$renderer, $data)
 	{
+		//echo "\n\npre-rendered:";
+		//var_export($data);
+		$dokuCode = is_array($data) ? $data['parsed'] : $data;
+		if (!empty($data['parserClass'])) {
+			$className = $data['parserClass'];
+			$method = array($className, 'hasReRender');
+			if (is_callable($method) && call_user_func($method)) {
+				$parser = new $className($data['tpl_name']);
+				$dokuCode = $parser->reRender($dokuCode);
+			}
+		}
 		// render content
-        $html = TextFormatter::render($data);
+        $html = TextFormatter::render($dokuCode);
 		$html = preg_replace('#^\s*<p>\s*#im', '', $html);
 		$html = preg_replace('#\s*</?p>\s*$#im', '', $html);
 		// output
