@@ -65,7 +65,16 @@
 
       <br />
       <textarea class="text" name="reminder_message"
-        rows="10" cols="72">{Req::val('reminder_message', L('defaultreminder') . "\n\n" . CreateURL('details', $task_details['task_id']))}</textarea>
+        rows="10" cols="72">{Req::val('reminder_message', L('defaultreminder') 
+		. "\n\n" 
+		. $task_details['item_summary']
+		. " (".$task_details['due_in_version_name'].")"
+		. "\n" 
+		. CreateURL('details', $task_details['task_id']))
+		. "\n\n"
+		. L('duedate') . ": "
+		. formatDate($task_details['due_date'], false, L('undecided'))
+		}</textarea>
       <br />
       <button type="submit">{L('addreminder')}</button>
     </div>
