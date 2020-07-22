@@ -50,18 +50,18 @@
       <input type="hidden" name="task_id" value="{$task_details['task_id']}" />
 
         <label class="default multisel" for="to_user_id">{L('remindthisuser')}</label>
-        {!tpl_userselect('to_user_id', Req::val('to_user_id'), 'to_user_id')}
+        {!tpl_userselect('to_user_id', Req::val('to_user_id', $user->infos['user_name']), 'to_user_id')}
       <br />
 
       <label for="timeamount1">{L('thisoften')}</label>
-      <input class="text" type="text" value="{Req::val('timeamount1')}" id="timeamount1" name="timeamount1" size="3" maxlength="3" />
+      <input class="text" type="text" value="{Req::val('timeamount1', 2)}" id="timeamount1" name="timeamount1" size="3" maxlength="3" />
       <select class="adminlist" name="timetype1">
-        {!tpl_options(array(3600 => L('hours'), 86400 => L('days'), 604800 => L('weeks')), Req::val('timetype1'))}
+        {!tpl_options(array(3600 => L('hours'), 86400 => L('days'), 604800 => L('weeks')), Req::val('timetype1', 86400))}
       </select>
 
       <br />
 
-      {!tpl_datepicker('timeamount2', L('startat'), Req::val('timeamount2'))}
+      {!tpl_datepicker('timeamount2', L('startat'), Req::val('timeamount2', date('Y-m-d', strtotime('+2 day'))))}
 
       <br />
       <textarea class="text" name="reminder_message"
