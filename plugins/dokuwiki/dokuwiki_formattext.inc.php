@@ -198,6 +198,8 @@ class dokuwiki_TextFormatter
 				;
 				$strBugExtraInfoText = ""
 					."\\n====Informacje dodatkowe===="
+			        ."\\n  * ilość zgłoszeń: 1"
+			        ."\\n    * BB#"
 					."\\n  * czas wykonania: (G/D/T/M/+/-)"
 				;
 				
