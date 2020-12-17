@@ -744,6 +744,15 @@ class Flyspray
             return;
         }
 
+		// Nux: constant session
+		$sessname = 'FSSESSID'.FS_PREFIX_CODE;
+		session_name($sessname);
+		session_start();
+		if (!isset($_SESSION['SESSNAME']))
+		{
+			$_SESSION['SESSNAME'] = $sessname;	// backward compat
+		}
+		/*
         $names = array( 'GetFirefox',
                         'UseLinux',
                         'NoMicrosoft',
@@ -779,6 +788,7 @@ class Flyspray
             session_start();
             $_SESSION['SESSNAME'] = $sessname;
         }
+		*/
     }  // }}}
 
     // Compare tasks {{{
