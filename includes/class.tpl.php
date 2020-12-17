@@ -362,6 +362,37 @@ function tpl_summarylink($item_summary)
     return $item_summary;
 }
 // Nux-end
+// Nux-start: parse summary to add a client details frame
+function tpl_summary_client_details_frame($item_summary)
+{
+    global $conf;
+	
+	$frame_url = "";
+	
+	$item_summary = htmlspecialchars($item_summary);
+	
+	if (!empty($conf['mol']) && !empty($conf['mol']['klienci_frame_base_url']))
+	{
+		$licenses = array();
+		if (preg_match_all("#\[([a-z]*[0-9]{3,}.*?)\]#", $item_summary, $matches)) {
+			$licenses = array_merge($licenses, $matches[1]);
+		}
+		if (preg_match_all("#lic\.\s+([a-z]*[0-9]+)\s*$#", $item_summary, $matches)) {
+			$licenses = array_merge($licenses, $matches[1]);
+		}
+		// fliter out special license
+		$licenses = array_filter($licenses, function($l) {
+			return intval($l) != 1;
+		});
+		
+		if (!empty($licenses)) {
+			$frame_url = $conf['mol']['klienci_frame_base_url']."short_license_info.php?nrs=" . implode(",", $licenses);
+		}
+	}
+	
+    return $frame_url;
+}
+// Nux-end
 
 // }}}
 // {{{ some useful plugins
