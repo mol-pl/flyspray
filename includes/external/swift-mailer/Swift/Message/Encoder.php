@@ -134,7 +134,7 @@ class Swift_Message_Encoder
       trigger_error("The file passed MUST be an instance of Swift_File.");
       return;
     }
-    $cache =& Swift_CacheFactory::getCache();
+    $cache = Swift_CacheFactory::getCache();
     $chunk -= 2;
     $chunk = $this->getHcf($chunk, 4);
     $loop = false;
@@ -148,7 +148,7 @@ class Swift_Message_Encoder
       $cache->write("b64", $next);
     }
     $file->reset();
-    $os =& $cache->getOutputStream("b64");
+    $os = $cache->getOutputStream("b64");
     return $os;
   }
   /**
@@ -264,14 +264,14 @@ class Swift_Message_Encoder
       trigger_error("The file passed MUST be an instance of Swift_File.");
       return;
     }
-    $cache =& Swift_CacheFactory::getCache();
+    $cache = Swift_CacheFactory::getCache();
     while (false !== $bytes = $file->readln())
     {
       $next = $this->rawQPEncode($bytes, true);
       preg_match_all('/.{1,'.($chunk-6).'}([^=]{0,3})?/', $next, $next);
       if (count($next[0])) $cache->write("qp", implode("=" . $le, $next[0]));
     }
-    $os =& $cache->getOutputStream("qp");
+    $os = $cache->getOutputStream("qp");
     return $os;
   }
   /**
@@ -301,11 +301,11 @@ class Swift_Message_Encoder
       trigger_error("The file passed MUST be an instance of Swift_File.");
       return;
     }
-    $cache =& Swift_CacheFactory::getCache();
+    $cache = Swift_CacheFactory::getCache();
     $ret = "";
     while (false !== $byte = $file->read(8192)) $ret .= $this->fixLE($byte, $le);
     $cache->write("7b", wordwrap($ret, $chunk-2, $le, 1));
-    $os =& $cache->getOutputStream("7b");
+    $os = $cache->getOutputStream("7b");
     return $os;
   }
   /**
@@ -335,11 +335,11 @@ class Swift_Message_Encoder
       trigger_error("The file passed MUST be an instance of Swift_File.");
       return;
     }
-    $cache =& Swift_CacheFactory::getCache();
+    $cache = Swift_CacheFactory::getCache();
     $ret = "";
     while (false !== $byte = $file->read(8192)) $ret .= $this->fixLE($byte, $le);
     $cache->write("8b", wordwrap($ret, $chunk-2, $le, 1));
-    $os =& $cache->getOutputStream("8b");
+    $os = $cache->getOutputStream("8b");
     return $os;
   }
   /**

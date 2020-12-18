@@ -41,33 +41,33 @@ class Swift_Plugin_VerboseSending extends Swift_Events_Listener
    */
   function sendPerformed(&$e)
   {
-    $recipients =& $e->getRecipients();
+    $recipients = $e->getRecipients();
     $failed = $e->getFailedRecipients();
-    $it =& $recipients->getIterator("to");
+    $it = $recipients->getIterator("to");
     while ($it->hasNext())
     {
       $it->next();
       $address = $it->getValue();
       $pass = !in_array($address->getAddress(), $failed);
-      $view =& $this->getView();
+      $view = $this->getView();
       $view->paintResult($address->getAddress(), $pass);
     }
-    $it =& $recipients->getIterator("cc");
+    $it = $recipients->getIterator("cc");
     while ($it->hasNext())
     {
       $it->next();
       $address = $it->getValue();
       $pass = !in_array($address->getAddress(), $failed);
-      $view =& $this->getView();
+      $view = $this->getView();
       $view->paintResult($address->getAddress(), $pass);
     }
-    $it =& $recipients->getIterator("cc");
+    $it = $recipients->getIterator("cc");
     while ($it->hasNext())
     {
       $it->next();
       $address = $it->getValue();
       $pass = !in_array($address->getAddress(), $failed);
-      $view =& $this->getView();
+      $view = $this->getView();
       $view->paintResult($address->getAddress(), $pass);
     }
   }
@@ -77,7 +77,7 @@ class Swift_Plugin_VerboseSending extends Swift_Events_Listener
    */
   function setView(&$view)
   {
-    $this->view =& $view;
+    $this->view = $view;
   }
   /**
    * Get the View component.

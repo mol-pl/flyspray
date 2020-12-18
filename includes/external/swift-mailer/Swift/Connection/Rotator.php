@@ -56,12 +56,12 @@ class Swift_Connection_Rotator extends Swift_ConnectionBase
       trigger_error("Swift_Connection_Rotator::addConnection expects parameter 1 to be instance of Swift_Connection.");
       return;
     }
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Adding new connection of type '" . get_class($connection) . "' to rotator.");
     }
-    $this->connections[] =& $connection;
+    $this->connections[] = $connection;
   }
   /**
    * Rotate to the next working connection
@@ -69,7 +69,7 @@ class Swift_Connection_Rotator extends Swift_ConnectionBase
    */
   function nextConnection()
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add(" <==> Rotating connection.");

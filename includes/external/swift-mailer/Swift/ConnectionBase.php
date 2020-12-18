@@ -39,7 +39,7 @@ class Swift_ConnectionBase extends Swift_Connection /*abstract*/
    */
   function setExtension($name, $options=array())
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("SMTP extension '" . $name . "' reported with attributes [" . implode(", ", $options) . "].");
@@ -89,7 +89,7 @@ class Swift_ConnectionBase extends Swift_Connection /*abstract*/
   function setRequiresEHLO($set)
   {
     $this->isESMTP = (bool) $set;
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Forcing ESMTP mode.  HELO is EHLO.");

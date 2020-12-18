@@ -35,7 +35,7 @@ class Swift_Exception
    */
   function __construct($message)
   {
-    if (($log =& Swift_LogContainer::getLog()) && $log->isEnabled())
+    if (($log = Swift_LogContainer::getLog()) && $log->isEnabled())
     {
       $message .= "<h3>Log Information</h3>";
       $message .= "<pre>" . htmlentities($log->dump(true)) . "</pre>";

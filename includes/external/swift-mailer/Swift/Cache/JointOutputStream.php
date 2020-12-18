@@ -35,7 +35,7 @@ class Swift_Cache_JointOutputStream extends Swift_Cache_OutputStream
    */
   function __construct(&$streams)
   {
-    $this->streams =& $streams;
+    $this->streams = $streams;
   }
   /**
    * Add a new output stream
@@ -43,7 +43,7 @@ class Swift_Cache_JointOutputStream extends Swift_Cache_OutputStream
    */
   function addStream(&$stream)
   {
-    $this->streams[] =& $stream;
+    $this->streams[] = $stream;
   }
   /**
    * Read data from all streams as if they are one stream

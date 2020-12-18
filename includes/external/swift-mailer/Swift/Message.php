@@ -64,7 +64,7 @@ class Swift_Message extends Swift_Message_Mime
   
   function __construct($subject="", $body=null, $type="text/plain", $encoding=null, $charset=null)
   {
-    $this->Swift_Message_Mime();
+    parent::__construct();
     $this->setReturnPath(null);
     $this->setTo("");
     $this->setFrom("");
@@ -114,7 +114,7 @@ class Swift_Message extends Swift_Message_Mime
   function setReference($where, $key, &$ref)
   {
     if ($ref === $this) $this->references[$where][$key] = false;
-    else $this->references[$where][$key] =& $ref;
+    else $this->references[$where][$key] = $ref;
   }
   /**
    * Get a reference to an object (for complex reasons).
@@ -480,7 +480,7 @@ class Swift_Message extends Swift_Message_Mime
    */
   function &getBody()
   {
-    $data =& $this->getData();
+    $data = $this->getData();
     return $data;
   }
   /**
@@ -522,18 +522,18 @@ class Swift_Message extends Swift_Message_Mime
       {
         case SWIFT_MIME_LEVEL_ALTERNATIVE:
           $sign = (strtolower($child->getContentType()) == "text/plain") ? -1 : 1;
-          $parentRef =& $this->getReference("parent", "alternative");
+          $parentRef = $this->getReference("parent", "alternative");
           $id = $parentRef->addChild($child, $id, $sign);
           $this->setReference("alternative", $id, $child);
           break;
         case SWIFT_MIME_LEVEL_RELATED:
           $id = "cid:" . $child->getContentId();
-          $parentRef =& $this->getReference("parent", "related");
+          $parentRef = $this->getReference("parent", "related");
           $id = $parentRef->addChild($child, $id, 1);
           $this->setReference("related", $id, $child);
           break;
         case SWIFT_MIME_LEVEL_MIXED: default:
-          $parentRef =& $this->getReference("parent", "mixed");
+          $parentRef = $this->getReference("parent", "mixed");
           $id = $parentRef->addChild($child, $id, 1);
           $this->setReference("mixed", $id, $child);
           break;
@@ -564,17 +564,17 @@ class Swift_Message extends Swift_Message_Mime
       switch (true)
       {
         case array_key_exists($id, $this->references["alternative"]):
-          $parentRef =& $this->getReference("parent", "alternative");
+          $parentRef = $this->getReference("parent", "alternative");
           $parentRef->removeChild($id);
           unset($this->references["alternative"][$id]);
           break;
         case array_key_exists($id, $this->references["related"]):
-          $parentRef =& $this->getReference("parent", "related");
+          $parentRef = $this->getReference("parent", "related");
           $parentRef->removeChild($id);
           unset($this->references["related"][$id]);
           break;
         case array_key_exists($id, $this->references["mixed"]):
-          $parentRef =& $this->getReference("parent", "mixed");
+          $parentRef = $this->getReference("parent", "mixed");
           $parentRef->removeChild($id);
           unset($this->references["mixed"][$id]);
           break;
@@ -615,7 +615,7 @@ class Swift_Message extends Swift_Message_Mime
   {
     $new = new Swift_Message_Part();
     $new->setContentType($type);
-    $parentRef =& $this->getReference("parent", $new_branch);
+    $parentRef = $this->getReference("parent", $new_branch);
     $parentRef->addChild($new, $tag, -1);
     unset($parentRef);//?
     switch ($new_branch)
@@ -632,21 +632,21 @@ class Swift_Message extends Swift_Message_Mime
     
     foreach ($from as $id => $ref)
     {
-      if (!$ref) $ref =& $this;
+      if (!$ref) $ref = $this;
       $sign = (strtolower($ref->getContentType()) == "text/plain"
         || strtolower($ref->getContentType()) == $nested_type) ? -1 : 1;
       switch ($new_branch)
       {
         case "related":
-          $relRef =& $this->getReference("related", $tag);
+          $relRef = $this->getReference("related", $tag);
           $relRef->addChild($from[$id], $id, $sign);
           break;
         case "mixed":
-          $mixRef =& $this->getReference("mixed", $tag);
+          $mixRef = $this->getReference("mixed", $tag);
           $mixRef->addChild($from[$id], $id, $sign);
           break;
       }
-      $parentRef =& $this->getReference("parent", $old_branch);
+      $parentRef = $this->getReference("parent", $old_branch);
       $parentRef->removeChild($id);
     }
     unset($this->references["parent"][$old_branch]);
@@ -707,28 +707,28 @@ class Swift_Message extends Swift_Message_Mime
   {
     foreach ($from as $id => $ref)
     {
-      if (!$ref) $ref =& $this;
+      if (!$ref) $ref = $this;
       $sign = (strtolower($ref->getContentType()) == "text/html"
         || strtolower($ref->getContentType()) == "multipart/alternative") ? -1 : 1;
-      $parentRef =& $this->getReference("parent", $new_branch);
+      $parentRef = $this->getReference("parent", $new_branch);
       $parentRef->addChild($from[$id], $id, $sign);
       unset($parentRef); //?
       switch ($new_branch)
       {
         case "related":
-          $relRef =& $this->getReference("related", $tag);
+          $relRef = $this->getReference("related", $tag);
           $relRef->removeChild($id);
           break;
         case "mixed":
-          $parentRef =& $this->getReference("parent", $old_branch);
+          $parentRef = $this->getReference("parent", $old_branch);
           $parentRef->removeChild($id);
           unset($parentRef); //?
           break;
       }
     }
-    $parentRef =& $this->getReference("parent", $new_branch);
+    $parentRef = $this->getReference("parent", $new_branch);
     $parentRef->removeChild($tag);
-    $mixed =& $this->getReference("parent", $new_branch);
+    $mixed = $this->getReference("parent", $new_branch);
     $this->setReference("parent", $old_branch, $mixed);
     switch ($new_branch)
     {
@@ -750,18 +750,18 @@ class Swift_Message extends Swift_Message_Mime
       case (!empty($this->references["mixed"]) && !empty($this->references["related"]) && !empty($this->references["alternative"])):
         if (array_keys($this->references["related"]) == array("_alternative"))
         {
-          $parentRef =& $this->getReference("parent", "related");
-          $alt =& $parentRef->getChild("_alternative");
+          $parentRef = $this->getReference("parent", "related");
+          $alt = $parentRef->getChild("_alternative");
           unset($parentRef); //?
-          $parentRef =& $this->getReference("parent", "mixed");
+          $parentRef = $this->getReference("parent", "mixed");
           $parentRef->addChild($alt, "_alternative", -1);
           unset($parentRef); //?
           $this->setReference("mixed", "_alternative", $alt);
-          $parentRef =& $this->getReference("parent", "related");
+          $parentRef = $this->getReference("parent", "related");
           $parentRef->removeChild("_alternative");
           unset($parentRef); //?
           unset($this->references["related"]["_alternative"]);
-          $parentRef =& $this->getReference("parent", "mixed");
+          $parentRef = $this->getReference("parent", "mixed");
           $parentRef->removeChild("_related");
           unset($this->references["mixed"]["_related"]);
         }
@@ -807,7 +807,7 @@ class Swift_Message extends Swift_Message_Mime
   {
     if (Swift_Errors::halted()) return;
     
-    $data =& $this->getData();
+    $data = $this->getData();
     if (!($enc = $this->getEncoding()))
     {
       $this->setEncoding("8bit");

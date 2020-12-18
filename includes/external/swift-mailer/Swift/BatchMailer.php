@@ -61,7 +61,7 @@ class Swift_BatchMailer
    */
   function setSwift(&$swift)
   {
-    $this->swift =& $swift;
+    $this->swift = $swift;
   }
   /**
    * Get the Swift instance which is running.

@@ -35,7 +35,7 @@ class Swift_Message_EmbeddedFile extends Swift_Message_Attachment
    */
   function __construct($data=null, $name=null, $type="application/octet-stream", $cid=null, $encoding="base64")
   {
-    $this->Swift_Message_Attachment($data, $name, $type, $encoding, "inline");
+    parent::__construct($data, $name, $type, $encoding, "inline");
     
     if ($cid === null)
     {

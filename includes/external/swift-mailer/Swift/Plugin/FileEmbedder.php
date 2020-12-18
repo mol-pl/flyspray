@@ -272,7 +272,7 @@ class Swift_Plugin_FileEmbedder extends Swift_Events_Listener
     $url = strtolower($url);
     if (!isset($this->registeredFiles[$url])) $this->registeredFiles[$url] = array("cids" => array(), "obj" => null);
     $this->registeredFiles[$url]["cids"][] = $cid;
-    if (empty($this->registeredFiles[$url]["obj"])) $this->registeredFiles[$url]["obj"] =& $file;
+    if (empty($this->registeredFiles[$url]["obj"])) $this->registeredFiles[$url]["obj"] = $file;
   }
   /**
    * Turn on or off remote file embedding.
@@ -321,7 +321,7 @@ class Swift_Plugin_FileEmbedder extends Swift_Events_Listener
     $lower_url = strtolower($url);
     if (array_key_exists($lower_url, $this->registeredFiles))
     {
-      $registered =& $this->registeredFiles[$lower_url];
+      $registered = $this->registeredFiles[$lower_url];
       foreach ($registered["cids"] as $cid)
       {
         if ($this->message->hasChild($cid))
@@ -366,7 +366,7 @@ class Swift_Plugin_FileEmbedder extends Swift_Events_Listener
     $lower_path = strtolower($path);
     if (array_key_exists($lower_path, $this->registeredFiles))
     {
-      $registered =& $this->registeredFiles[$lower_path];
+      $registered = $this->registeredFiles[$lower_path];
       foreach ($registered["cids"] as $cid)
       {
         if ($this->message->hasChild($cid))
@@ -400,12 +400,12 @@ class Swift_Plugin_FileEmbedder extends Swift_Events_Listener
    */
   function beforeSendPerformed(&$e)
   {
-    $this->message =& $e->getMessage();
+    $this->message = $e->getMessage();
     
     foreach ($this->message->listChildren() as $id)
     {
-      $part =& $this->message->getChild($id);
-      $body =& $part->getData();
+      $part = $this->message->getChild($id);
+      $body = $part->getData();
       if (!is_string($body) || substr(strtolower($part->getContentType()), 0, 5) != "text/") continue;
       
       foreach ($this->definitions as $tag_name => $def)

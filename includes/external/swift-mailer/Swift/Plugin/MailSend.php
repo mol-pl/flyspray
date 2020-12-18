@@ -96,7 +96,7 @@ class Swift_Plugin_MailSend extends Swift_Events_Listener
    */
   function beforeSendPerformed(&$e)
   {
-    $message =& $e->getMessage();
+    $message = $e->getMessage();
     $message->uncacheAll();
     $this->oldLE = $message->getLE();
     if (!$this->isWindows() && $this->oldLE != "\n") $message->setLE("\n");
@@ -109,8 +109,8 @@ class Swift_Plugin_MailSend extends Swift_Events_Listener
    */
   function sendPerformed(&$e)
   {
-    $message =& $e->getMessage();
-    $recipients =& $e->getRecipients();
+    $message = $e->getMessage();
+    $recipients = $e->getRecipients();
     
     $to = array();
     foreach ($recipients->getTo() as $addr)
@@ -129,7 +129,7 @@ class Swift_Plugin_MailSend extends Swift_Events_Listener
     if (!empty($bcc)) $message->headers->set("Bcc", $bcc);
     $bcc = null;
     
-    $body_data =& $message->buildData();
+    $body_data = $message->buildData();
     $message_body = $body_data->readFull();
     
     $subject_enc = $message->headers->has("Subject") ? $message->headers->getEncoded("Subject") : "";
@@ -137,7 +137,7 @@ class Swift_Plugin_MailSend extends Swift_Events_Listener
     $message->headers->set("To", null);
     $message->headers->set("Subject", null);
     
-    $sender =& $e->getSender();
+    $sender = $e->getSender();
     $this->returnPath = $sender->build();
     if ($message->headers->has("Return-Path")) $this->returnPath = $message->headers->get("Return-Path");
     if (preg_match("~<([^>]+)>[^>]*\$~", $this->returnPath, $matches)) $this->returnPath = $matches[1];

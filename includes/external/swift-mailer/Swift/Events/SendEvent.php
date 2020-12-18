@@ -54,9 +54,9 @@ class Swift_Events_SendEvent extends Swift_Events
    */
   function __construct(&$message, &$list, &$from, $sent=0)
   {
-    $this->message =& $message;
-    $this->recipients =& $list;
-    $this->sender =& $from;
+    $this->message = $message;
+    $this->recipients = $list;
+    $this->sender = $from;
     $this->sent = $sent;
   }
   /**

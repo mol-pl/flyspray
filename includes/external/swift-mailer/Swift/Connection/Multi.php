@@ -52,13 +52,13 @@ class Swift_Connection_Multi extends Swift_ConnectionBase
       trigger_error("Swift_Connection_Multi::addConnection expects parameter 1 to be instance of Swift_Connection.");
       return false;
     }
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Adding new connection of type '" . get_class($connection) . "' to the multi-redundant connection.");
     }
-    if ($id !== null) $this->connections[$id] =& $connection;
-    else $this->connections[] =& $connection;
+    if ($id !== null) $this->connections[$id] = $connection;
+    else $this->connections[] = $connection;
   }
   /**
    * Read a full response from the buffer
@@ -96,7 +96,7 @@ class Swift_Connection_Multi extends Swift_ConnectionBase
    */
   function start()
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     $fail_messages = array();
     foreach ($this->connections as $id => $conn)
     {

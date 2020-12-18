@@ -93,7 +93,7 @@ class Swift_Plugin_AntiFlood extends Swift_Events_Listener
    */
   function sendPerformed(&$e)
   {
-    $swift =& $e->getSwift();
+    $swift = $e->getSwift();
     $this->count++;
     if ($this->count >= $this->getThreshold())
     {

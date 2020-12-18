@@ -99,12 +99,12 @@ class Swift_Message_Mime
   function __construct()
   {
     Swift_ClassLoader::load("Swift_Message_Encoder");
-    $this->_encoder =& Swift_Message_Encoder::instance();
+    $this->_encoder = Swift_Message_Encoder::instance();
     Swift_ClassLoader::load("Swift_Message_Headers");
     $headers = new Swift_Message_Headers();
     $this->setHeaders($headers);
     Swift_ClassLoader::load("Swift_CacheFactory");
-    $this->cache =& Swift_CacheFactory::getCache();
+    $this->cache = Swift_CacheFactory::getCache();
   }
   /**
    * Compute a unique boundary
@@ -129,7 +129,7 @@ class Swift_Message_Mime
    */
   function setHeaders(&$headers)
   {
-    $this->headers =& $headers;
+    $this->headers = $headers;
   }
   /**
    * Set the line ending character to use
@@ -215,7 +215,7 @@ class Swift_Message_Mime
         break;
     }
     
-    $data =& $this->getData();
+    $data = $this->getData();
     if ($non_ascii && is_string($data) && !$this->_encoder->is7BitAscii($data))
     {
       $this->headers->set("Content-Transfer-Encoding", $encoding);
@@ -250,7 +250,7 @@ class Swift_Message_Mime
   function setData($data)
   {
     $this->cache->clear("body");
-    if (is_a($data, "Swift_File")) $this->data =& $data;
+    if (is_a($data, "Swift_File")) $this->data = $data;
     else $this->data = (string) $data;
   }
   /**
@@ -270,7 +270,7 @@ class Swift_Message_Mime
   function &buildData()
   {
     Swift_ClassLoader::load("Swift_Cache_JointOutputStream");
-    $encoder =& $this->_encoder;
+    $encoder = $this->_encoder;
     
     if (!empty($this->children)) //If we've got some mime parts we need to stick them onto the end of the message
     {
@@ -293,14 +293,14 @@ class Swift_Message_Mime
     //Try using a cached version to save some cycles (at the expense of memory)
     if ($this->cache->has("body"))
     {
-      $body =& $this->cache->getOutputStream("body");
+      $body = $this->cache->getOutputStream("body");
       $joint_os->addStream($body);
-      $append =& $this->cache->getOutputStream("append");
+      $append = $this->cache->getOutputStream("append");
       $joint_os->addStream($append);
       return $joint_os;
     }
     
-    $data =& $this->getData();
+    $data = $this->getData();
     
     $is_file = (is_a($this->getData(), "Swift_File"));
     switch ($this->getEncoding())
@@ -366,9 +366,9 @@ class Swift_Message_Mime
         }
         break;
     }
-    $body =& $this->cache->getOutputStream("body");
+    $body = $this->cache->getOutputStream("body");
     $joint_os->addStream($body);
-    $append =& $this->cache->getOutputStream("append");
+    $append = $this->cache->getOutputStream("append");
     $joint_os->addStream($append);
     return $joint_os;
   }
@@ -407,14 +407,14 @@ class Swift_Message_Mime
     if ($after == -1)
     {
       $new = array();
-      $new[$id] =& $mime;
+      $new[$id] = $mime;
       foreach ($this->listChildren() as $k)
       {
-        $new[$k] =& $this->children[$k];
+        $new[$k] = $this->children[$k];
       }
-      $this->children =& $new;
+      $this->children = $new;
     }
-    else $this->children[$id] =& $mime;
+    else $this->children[$id] = $mime;
     
     return $id;
   }
@@ -484,16 +484,16 @@ class Swift_Message_Mime
   function &build()
   {
     $this->preBuild();
-    $data =& $this->buildData();
+    $data = $this->buildData();
     $i = array();
     $joint_os = new Swift_Cache_JointOutputStream($i);
     $this->cache->clear("headers");
     $this->cache->write("headers", $this->headers->build());
-    $headers =& $this->cache->getOutputStream("headers");
+    $headers = $this->cache->getOutputStream("headers");
     $joint_os->addStream($headers);
     $this->cache->clear("dbl_le");
     $this->cache->write("dbl_le", str_repeat($this->LE, 2));
-    $dbl_le =& $this->cache->getOutputStream("dbl_le");
+    $dbl_le = $this->cache->getOutputStream("dbl_le");
     $joint_os->addStream($dbl_le);
     $joint_os->addStream($data);
     return $joint_os;

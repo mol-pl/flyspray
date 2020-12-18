@@ -29,7 +29,7 @@ class Swift_Message_Attachment extends Swift_Message_Mime
    */
   function __construct($data=null, $name=null, $type="application/octet-stream", $encoding="base64", $disposition="attachment")
   {
-    $this->Swift_Message_Mime();
+    parent::__construct();
     
     $this->setContentType($type);
     $this->setEncoding($encoding);
@@ -148,7 +148,7 @@ class Swift_Message_Attachment extends Swift_Message_Mime
     {
       if (is_a($this->getData(), "Swift_File"))
       {
-        $data =& $this->getData();
+        $data = $this->getData();
         $this->setFileName($data->getFileName());
       }
       else

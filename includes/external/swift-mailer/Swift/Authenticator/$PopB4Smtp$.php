@@ -29,7 +29,7 @@ class Swift_Authenticator_PopB4Smtp extends Swift_Authenticator
    */
   function __construct($conn=null, $port=110, $encryption=0)
   {
-    if (is_object($conn)) $this->connection =& $conn;
+    if (is_object($conn)) $this->connection = $conn;
     else
     {
       Swift_ClassLoader::load("Swift_Authenticator_PopB4Smtp_Pop3Connection");
@@ -46,7 +46,7 @@ class Swift_Authenticator_PopB4Smtp extends Swift_Authenticator
    */
   function isAuthenticated($user, $pass, &$swift)
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Trying POP3 Before SMTP authentication.  Disconnecting from SMTP first.");

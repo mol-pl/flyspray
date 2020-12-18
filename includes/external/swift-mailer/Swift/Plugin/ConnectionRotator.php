@@ -72,7 +72,7 @@ class Swift_Plugin_ConnectionRotator extends Swift_Events_Listener
    */
   function sendPerformed(&$e)
   {
-    $swift =& $e->getSwift();
+    $swift = $e->getSwift();
     if (!method_exists($swift->connection, "nextConnection"))
     {
       trigger_error("The ConnectionRotator plugin cannot be used with connections other than Swift_Connection_Rotator.");
@@ -101,8 +101,8 @@ class Swift_Plugin_ConnectionRotator extends Swift_Events_Listener
    */
   function disconnectPerformed(&$e)
   {
-    $conn =& $e->getConnection();
-    $swift =& $e->getSwift();
+    $conn = $e->getConnection();
+    $swift = $e->getSwift();
     $active = $conn->getActive();
     $conn->nextConnection();
     while ($conn->getActive() != $active)

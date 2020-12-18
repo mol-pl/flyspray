@@ -50,7 +50,7 @@ class Swift_Errors
    */
   function halted()
   {
-    $me =& Swift_Errors::getInstance();
+    $me = Swift_Errors::getInstance();
     return $me->halt;
   }
   /**
@@ -58,7 +58,7 @@ class Swift_Errors
    */
   function reset()
   {
-    $me =& Swift_Errors::getInstance();
+    $me = Swift_Errors::getInstance();
     $me->errors = array();
     $me->halt = false;
     $me->try = array();
@@ -69,8 +69,8 @@ class Swift_Errors
    */
   function trigger(&$e)
   {
-    $me =& Swift_Errors::getInstance();
-    $me->errors[] =& $e;
+    $me = Swift_Errors::getInstance();
+    $me->errors[] = $e;
     $me->halt = true;
     foreach (array_reverse(array_keys($me->try)) as $type)
     {
@@ -105,9 +105,9 @@ class Swift_Errors
    */
   function expect(&$e, $type="Swift_Exception")
   {
-    $me =& Swift_Errors::getInstance();
+    $me = Swift_Errors::getInstance();
     $e = null;
-    $me->try[$type][] =& $e;
+    $me->try[$type][] = $e;
   }
   /**
    * Clear anything that may have been expected matching $type
@@ -115,7 +115,7 @@ class Swift_Errors
    */
   function clear($type)
   {
-    $me =& Swift_Errors::getInstance();
+    $me = Swift_Errors::getInstance();
     if (isset($me->try[$type]))
     {
       foreach (array_reverse(array_keys($me->try[$type])) as $i)
@@ -131,10 +131,10 @@ class Swift_Errors
    */
   function getLast()
   {
-    $me =& Swift_Errors::getInstance();
+    $me = Swift_Errors::getInstance();
     if (count($me->errors))
     {
-      $last =& $me->errors[(count($me->errors)-1)];
+      $last = $me->errors[(count($me->errors)-1)];
       return $last->getMessage();
     }
   }

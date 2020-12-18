@@ -33,7 +33,7 @@ class Swift_Cache_OutputStream
    */
   function __construct(&$cache, $key)
   {
-    $this->cache =& $cache;
+    $this->cache = $cache;
     $this->key = $key;
   }
   /**

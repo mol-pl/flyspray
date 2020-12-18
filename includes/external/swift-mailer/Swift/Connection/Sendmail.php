@@ -131,7 +131,7 @@ class Swift_Connection_Sendmail extends Swift_ConnectionBase
    */
   function findSendmail()
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Sendmail path auto-detection in progress.  Trying `which sendmail`");
@@ -297,7 +297,7 @@ class Swift_Connection_Sendmail extends Swift_ConnectionBase
    */
   function start()
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Trying to start a sendmail process.");
@@ -327,7 +327,7 @@ class Swift_Connection_Sendmail extends Swift_ConnectionBase
     
     $i = count($GLOBALS["_SWIFT_PROC"]);
     $GLOBALS["_SWIFT_PROC"][$i] = proc_open($this->getCommand(), $pipes_spec, $this->pipes);
-    $this->proc =& $GLOBALS["_SWIFT_PROC"][$i];
+    $this->proc = $GLOBALS["_SWIFT_PROC"][$i];
     
     if (!$this->isAlive())
     {
@@ -341,7 +341,7 @@ class Swift_Connection_Sendmail extends Swift_ConnectionBase
    */
   function stop()
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Terminating sendmail process.");

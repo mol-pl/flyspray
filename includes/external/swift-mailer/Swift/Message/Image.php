@@ -34,7 +34,7 @@ class Swift_Message_Image extends Swift_Message_EmbeddedFile
       trigger_error("Swift_Message_Image requires input file to be of type Swift_File.");
       return;
     }
-    $this->Swift_Message_EmbeddedFile($data, $name, $type, $cid, $encoding);
+    parent::__construct($data, $name, $type, $cid, $encoding);
   }
   /**
    * Set data for the image

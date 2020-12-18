@@ -32,7 +32,7 @@ class Swift_Plugin_EasySwiftResponseTracker extends Swift_Events_Listener
    */
   function __construct(&$obj)
   {
-    $this->target =& $obj;
+    $this->target = $obj;
   }
   /**
    * Response listener method

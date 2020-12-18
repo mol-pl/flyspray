@@ -31,7 +31,7 @@ class Swift_LogContainer
       trigger_error("Swift_LogContainer::setLog() expects parameter 1 to be of type Swift_Log.");
       return;
     }
-    $GLOBALS["_SWIFT_LOG"] =& $log;
+    $GLOBALS["_SWIFT_LOG"] = $log;
   }
   /**
    * Returns the current instance of the log, or lazy-loads the default one.

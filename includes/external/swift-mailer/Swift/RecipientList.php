@@ -69,8 +69,8 @@ class Swift_RecipientList extends Swift_AddressContainer
     
     if (in_array($where, array("to", "cc", "bcc")))
     {
-      $container =& $this->$where;
-      $container[$address_str] =& $address;
+      $container = $this->$where;
+      $container[$address_str] = $address;
     }
   }
   /**
@@ -118,7 +118,7 @@ class Swift_RecipientList extends Swift_AddressContainer
   {
     if (in_array($where, array("to", "cc", "bcc")))
     {
-      $this->iterators[$where] =& $it;
+      $this->iterators[$where] = $it;
     }
   }
   /**

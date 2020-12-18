@@ -28,7 +28,7 @@ class Swift_Message_Part extends Swift_Message_Mime
    */
   function __construct($data=null, $type="text/plain", $encoding=null, $charset=null)
   {
-    $this->Swift_Message_Mime();
+    parent::__construct();
     
     $this->setContentType($type);
     $this->setEncoding($encoding);
@@ -67,7 +67,7 @@ class Swift_Message_Part extends Swift_Message_Mime
    */
   function &getBody()
   {
-    $data =& $this->getData();
+    $data = $this->getData();
     return $data;
   }
   /**
@@ -111,7 +111,7 @@ class Swift_Message_Part extends Swift_Message_Mime
   function preBuild()
   {
     if (!($enc = $this->getEncoding())) $this->setEncoding("8bit");
-    $data =& $this->getData();
+    $data = $this->getData();
     if ($this->getCharset() === null && !$this->numChildren())
     {
       if (is_string($data) && $this->_encoder->isUTF8($data))

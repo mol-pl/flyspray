@@ -28,7 +28,7 @@ class Swift_Events /*abstract*/
    */
   function setSwift(&$swift)
   {
-    $this->swift =& $swift;
+    $this->swift = $swift;
   }
   /**
    * Get the current instance of swift

@@ -209,8 +209,8 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
       trigger_error("Swift_Connection_SMTP::attachAuthenticator expects parameter 1 to be instance of Swift_Authenticator.");
       return;
     }
-    $this->authenticators[$auth->getAuthExtensionName()] =& $auth;
-    $log =& Swift_LogContainer::getLog();
+    $this->authenticators[$auth->getAuthExtensionName()] = $auth;
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Authentication mechanism '" . $auth->getAuthExtensionName() . "' attached.");
@@ -315,7 +315,7 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
     if ($this->encryption == $this->ENC_TLS) $server = "tls://" . $server;
     elseif ($this->encryption == $this->ENC_SSL) $server = "ssl://" . $server;
     
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Trying to connect to SMTP server at '" . $server . ":" . $this->port);
@@ -333,8 +333,8 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
       Swift_Errors::trigger(new Swift_ConnectionException($error_msg));
       return;
     }
-    $this->errno =& $errno;
-    $this->errstr =& $errstr;
+    $this->errno = $errno;
+    $this->errstr = $errstr;
   }
   /**
    * Get the smtp error string as recorded by fsockopen()
@@ -366,7 +366,7 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
    */
   function runAuthenticators($user, $pass, &$swift)
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Trying to authenticate with username '" . $user . "'.");
@@ -454,7 +454,7 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
    */
   function stop()
   {
-    $log =& Swift_LogContainer::getLog();
+    $log = Swift_LogContainer::getLog();
     if ($log->hasLevel(SWIFT_LOG_EVERYTHING))
     {
       $log->add("Closing down SMTP connection.");

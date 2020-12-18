@@ -115,11 +115,11 @@ class Swift_Message_Headers
     if (!isset($this->lowerHeaders[$lname]))
     {
       $this->headers[$name] = null;
-      $this->lowerHeaders[$lname] =& $this->headers[$name];
+      $this->lowerHeaders[$lname] = $this->headers[$name];
     }
     $this->cached[$lname] = null;
     Swift_ClassLoader::load("Swift_Message_Encoder");
-    $encoder =& Swift_Message_Encoder::instance();
+    $encoder = Swift_Message_Encoder::instance();
     if (is_array($value))
     {
       foreach ($value as $v)
@@ -287,7 +287,7 @@ class Swift_Message_Headers
  		else
     {
       Swift_ClassLoader::load("Swift_Message_Encoder");
-      $encoder =& Swift_Message_Encoder::instance();
+      $encoder = Swift_Message_Encoder::instance();
       if (!$this->getCharset() && $encoder->isUTF8($value)) $this->setCharset("utf-8");
       if (!isset($this->attributes[$lheader])) $this->attributes[$lheader] = array();
       if ($value !== null) $this->attributes[$lheader][$name] = (string) $value;
@@ -378,7 +378,7 @@ class Swift_Message_Headers
     if (!$this->getCharset()) $this->setCharset("iso-8859-1");
     
     Swift_ClassLoader::load("Swift_Message_Encoder");
-    $encoder =& Swift_Message_Encoder::instance();
+    $encoder = Swift_Message_Encoder::instance();
     
     //I'll try as best I can to walk through this...
     
@@ -501,7 +501,7 @@ class Swift_Message_Headers
   function buildAttributes($header_line, $header_name)
   {
     Swift_ClassLoader::load("Swift_Message_Encoder");
-    $encoder =& Swift_Message_Encoder::instance();
+    $encoder = Swift_Message_Encoder::instance();
     
     $lines = explode($this->LE, $header_line);
     $used_len = strlen($lines[count($lines)-1]);

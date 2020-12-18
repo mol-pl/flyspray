@@ -107,8 +107,8 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
    */
   function beforeSendPerformed(&$e)
   {
-    $message =& $e->getMessage();
-    $recipients =& $e->getRecipients();
+    $message = $e->getMessage();
+    $recipients = $e->getRecipients();
     $to = array_keys($recipients->getTo());
     if (count($to) > 0) $to = $to[0];
     else return;
@@ -173,7 +173,7 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
         "body" => false,
         "children" => array()
       );
-      $child =& $mime->getChild($id);
+      $child = $mime->getChild($id);
       $this->recursiveReplace($child, $replacements, $store["children"][$id]);
     }
   }
@@ -194,7 +194,7 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
    */
   function sendPerformed(&$e)
   {
-    $message =& $e->getMessage();
+    $message = $e->getMessage();
     $this->recursiveRestore($message, $this->store);
     $this->store = null;
   }
@@ -222,7 +222,7 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
     //Restore children
     foreach ($store["children"] as $id => $child_store)
     {
-      $child =& $mime->getChild($id);
+      $child = $mime->getChild($id);
       $this->recursiveRestore($child, $child_store);
     }
   }
@@ -243,7 +243,7 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
     }
     elseif (is_a($replacements, "Swift_Plugin_Decorator_Replacements"))
     {
-      $this->replacements =& $replacements;
+      $this->replacements = $replacements;
     }
     else
     {

@@ -31,7 +31,7 @@ class Swift_Events_ConnectEvent extends Swift_Events
    */
   function __construct(&$connection)
   {
-    $this->connection =& $connection;
+    $this->connection = $connection;
   }
   /**
    * Get the connection object
