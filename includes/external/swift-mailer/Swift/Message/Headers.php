@@ -431,8 +431,9 @@ class Swift_Message_Headers
       
       if (false !== $p = strpos($encoded_value[$key], $this->LE))
       {
-        $encoded_value[$key] = preg_replace_callback("/<([^>]+)>/", function($matches) {
-          return str_replace($this->LE, "", "<$1>");
+        $le_temp = $this->LE;
+        $encoded_value[$key] = preg_replace_callback("/<([^>]+)>/", function($matches) use ($le_temp) {
+          return str_replace($le_temp, "", "<".$m[1].">");
         }, $encoded_value[$key]);
       }
       
