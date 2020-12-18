@@ -108,7 +108,7 @@ class EasySwift
    * @param Swift_Connection The connection to use
    * @param string The domain name of this server (not the SMTP server)
    */
-  function EasySwift(&$connection, $domain=null)
+  function __construct(&$connection, $domain=null)
   {
     if (!is_a($connection, "Swift_Connection") && !is_a($connection, "SimpleMock"))
     {
@@ -116,7 +116,7 @@ class EasySwift
       return;
     }
     Swift_Errors::expect($e, "Swift_ConnectionException");
-      if (!$e) $this->swift =& new Swift($connection, $domain, SWIFT_ENABLE_LOGGING);
+      if (!$e) $this->swift = new Swift($connection, $domain, SWIFT_ENABLE_LOGGING);
       Swift_ClassLoader::load("Swift_Plugin_EasySwiftResponseTracker");
       if (!$e) $this->swift->attachPlugin(new Swift_Plugin_EasySwiftResponseTracker($this), "_ResponseTracker");
     if ($e) {
@@ -227,7 +227,7 @@ class EasySwift
    */
   function newMessage()
   {
-    $msg =& new Swift_Message();
+    $msg = new Swift_Message();
     $this->message =& $msg;
     $this->partIds = array();
     $this->attachmentIds = array();
@@ -297,7 +297,7 @@ class EasySwift
    */
   function newRecipientList($list=false)
   {
-    if (!$list) $list =& new Swift_RecipientList();
+    if (!$list) $list = new Swift_RecipientList();
     $this->recipients =& $list;
   }
   /**
@@ -478,7 +478,7 @@ class EasySwift
     }
     else return $false;
     
-    $swift_address =& new Swift_Address($address, $name);
+    $swift_address = new Swift_Address($address, $name);
     return $swift_address;
   }
   /**

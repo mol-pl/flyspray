@@ -118,7 +118,7 @@ class dbObject {
 	/**
 	* NOP
 	*/
-	function dbObject( &$parent, $attributes = NULL ) {
+	function __construct( &$parent, $attributes = NULL ) {
 		$this->parent =& $parent;
 	}
 	
@@ -248,7 +248,7 @@ class dbTable extends dbObject {
 	* @param string $prefix DB Object prefix
 	* @param array $attributes Array of table attributes.
 	*/
-	function dbTable( &$parent, $attributes = NULL ) {
+	function __construct( &$parent, $attributes = NULL ) {
 		$this->parent =& $parent;
 		$this->name = $this->prefix($attributes['NAME']);
 	}
@@ -364,7 +364,7 @@ class dbTable extends dbObject {
 	*/
 	function &addIndex( $attributes ) {
 		$name = strtoupper( $attributes['NAME'] );
-		$this->indexes[$name] =& new dbIndex( $this, $attributes );
+		$this->indexes[$name] = new dbIndex( $this, $attributes );
 		return $this->indexes[$name];
 	}
 	
@@ -376,7 +376,7 @@ class dbTable extends dbObject {
 	*/
 	function &addData( $attributes ) {
 		if( !isset( $this->data ) ) {
-			$this->data =& new dbData( $this, $attributes );
+			$this->data = new dbData( $this, $attributes );
 		}
 		return $this->data;
 	}
@@ -640,7 +640,7 @@ class dbIndex extends dbObject {
 	*
 	* @internal
 	*/
-	function dbIndex( &$parent, $attributes = NULL ) {
+	function __construct( &$parent, $attributes = NULL ) {
 		$this->parent =& $parent;
 		
 		$this->name = $this->prefix ($attributes['NAME']);
@@ -784,7 +784,7 @@ class dbData extends dbObject {
 	*
 	* @internal
 	*/
-	function dbData( &$parent, $attributes = NULL ) {
+	function __construct( &$parent, $attributes = NULL ) {
 		$this->parent =& $parent;
 	}
 	
@@ -983,7 +983,7 @@ class dbQuerySet extends dbObject {
 	* @param object $parent Parent object
 	* @param array $attributes Attributes
 	*/
-	function dbQuerySet( &$parent, $attributes = NULL ) {
+	function __construct( &$parent, $attributes = NULL ) {
 		$this->parent =& $parent;
 			
 		// Overrides the manual prefix key
@@ -1299,7 +1299,7 @@ class adoSchema {
 	*
 	* @param object $db ADOdb database connection object.
 	*/
-	function adoSchema( &$db ) {
+	function __construct( &$db ) {
 		// Initialize the environment
 		$this->mgq = get_magic_quotes_runtime();
 		set_magic_quotes_runtime(0);

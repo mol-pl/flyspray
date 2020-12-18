@@ -24,7 +24,7 @@ class DokuHTTPClient extends HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function DokuHTTPClient(){
+    function __construct(){
         global $dokuConf;
 
         // call parent constructor
@@ -88,7 +88,7 @@ class HTTPClient {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function HTTPClient(){
+    function __construct(){
         $this->agent        = 'Mozilla/4.0 (compatible; DokuWiki HTTP Client; '.PHP_OS.')';
         $this->timeout      = 15;
         $this->cookies      = array();
@@ -250,7 +250,7 @@ class HTTPClient {
         $this->resp_headers = $this->_parseHeaders($r_headers);
         if(isset($this->resp_headers['set-cookie'])){
             foreach ((array) $this->resp_headers['set-cookie'] as $c){
-                list($key, $value, $foo) = split('=', $cookie);
+                list($key, $value, $foo) = explode('=', $cookie);
                 $this->cookies[$key] = $value;
             }
         }

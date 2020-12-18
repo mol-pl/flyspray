@@ -162,7 +162,7 @@ having count(*) > 100)",'These are sql statements that should be using bind vari
 	);
 	
 	
-	function perf_oci8(&$conn)
+	function __construct(&$conn)
 	{
 		$savelog = $conn->LogSQL(false);	
 		$this->version = $conn->ServerInfo();

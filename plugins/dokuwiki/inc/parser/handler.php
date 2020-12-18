@@ -18,8 +18,8 @@ class Doku_Handler {
 
     var $rewriteBlocks = TRUE;
 
-    function Doku_Handler() {
-        $this->CallWriter = & new Doku_Handler_CallWriter($this);
+    function __construct() {
+        $this->CallWriter = new Doku_Handler_CallWriter($this);
     }
 
     function _addCall($handler, $args, $pos) {
@@ -41,7 +41,7 @@ class Doku_Handler {
         }
 
         if ( $this->rewriteBlocks ) {
-            $B = & new Doku_Handler_Block();
+            $B = new Doku_Handler_Block();
             $this->calls = $B->process($this->calls);
         }
 
@@ -205,7 +205,7 @@ class Doku_Handler {
 
                 $this->_footnote = true;
 
-                $ReWriter = & new Doku_Handler_Nest($this->CallWriter,'footnote_close');
+                $ReWriter = new Doku_Handler_Nest($this->CallWriter,'footnote_close');
                 $this->CallWriter = & $ReWriter;
                 $this->_addCall('footnote_open', array(), $pos);
             break;
@@ -233,7 +233,7 @@ class Doku_Handler {
     function listblock($match, $state, $pos) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
-                $ReWriter = & new Doku_Handler_List($this->CallWriter);
+                $ReWriter = new Doku_Handler_List($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
                 $this->_addCall('list_open', array($match), $pos);
             break;
@@ -287,7 +287,7 @@ class Doku_Handler {
     function preformatted($match, $state, $pos) {
         switch ( $state ) {
             case DOKU_LEXER_ENTER:
-                $ReWriter = & new Doku_Handler_Preformatted($this->CallWriter);
+                $ReWriter = new Doku_Handler_Preformatted($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
                 $this->_addCall('preformatted_start',array(), $pos);
             break;
@@ -320,7 +320,7 @@ class Doku_Handler {
         switch ( $state ) {
 
             case DOKU_LEXER_ENTER:
-                $ReWriter = & new Doku_Handler_Quote($this->CallWriter);
+                $ReWriter = new Doku_Handler_Quote($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
                 $this->_addCall('quote_start',array($match), $pos);
             break;
@@ -558,7 +558,7 @@ class Doku_Handler {
 
             case DOKU_LEXER_ENTER:
 
-                $ReWriter = & new Doku_Handler_Table($this->CallWriter);
+                $ReWriter = new Doku_Handler_Table($this->CallWriter);
                 $this->CallWriter = & $ReWriter;
 
                 $this->_addCall('table_start', array(), $pos);
@@ -701,7 +701,7 @@ class Doku_Handler_CallWriter {
 
     var $Handler;
 
-    function Doku_Handler_CallWriter(& $Handler) {
+    function __construct(& $Handler) {
         $this->Handler = & $Handler;
     }
 
@@ -740,7 +740,7 @@ class Doku_Handler_Nest {
      * @param  string     $close          closing instruction name, this is required to properly terminate the
      *                                    syntax mode if the document ends without a closing pattern
      */
-    function Doku_Handler_Nest(& $CallWriter, $close="nest_close") {
+    function __construct(& $CallWriter, $close="nest_close") {
         $this->CallWriter = & $CallWriter;
 
         $this->closingInstruction = $close;
@@ -776,7 +776,7 @@ class Doku_Handler_List {
     var $listCalls = array();
     var $listStack = array();
 
-    function Doku_Handler_List(& $CallWriter) {
+    function __construct(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
     }
 
@@ -971,7 +971,7 @@ class Doku_Handler_Preformatted {
 
 
 
-    function Doku_Handler_Preformatted(& $CallWriter) {
+    function __construct(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
     }
 
@@ -1023,7 +1023,7 @@ class Doku_Handler_Quote {
 
     var $quoteCalls = array();
 
-    function Doku_Handler_Quote(& $CallWriter) {
+    function __construct(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
     }
 
@@ -1119,7 +1119,7 @@ class Doku_Handler_Table {
     var $firstCell = FALSE;
     var $lastCellType = 'tablecell';
 
-    function Doku_Handler_Table(& $CallWriter) {
+    function __construct(& $CallWriter) {
         $this->CallWriter = & $CallWriter;
     }
 
@@ -1429,7 +1429,7 @@ class Doku_Handler_Block {
      *
      * @author Andreas Gohr <andi@splitbrain.org>
      */
-    function Doku_Handler_Block(){
+    function __construct(){
         global $DOKU_PLUGINS;
         //check if syntax plugins were loaded
         if(empty($DOKU_PLUGINS['syntax'])) return;

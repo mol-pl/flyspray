@@ -49,7 +49,7 @@ class Swift_Cache
   function &getOutputStream($key)
   {
     Swift_ClassLoader::load("Swift_Cache_OutputStream");
-    $os =& new Swift_Cache_OutputStream($this, $key);
+    $os = new Swift_Cache_OutputStream($this, $key);
     return $os;
   }
 }

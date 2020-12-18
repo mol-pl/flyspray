@@ -46,7 +46,7 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
    * Ctor.
    * @param mixed Replacements as a 2-d array or Swift_Plugin_Decorator_Replacements instance.
    */
-  function Swift_Plugin_Decorator($replacements=null)
+  function __construct($replacements=null)
   {
     $this->setReplacements($replacements);
   }
@@ -235,11 +235,11 @@ class Swift_Plugin_Decorator extends Swift_Events_Listener
     if ($replacements === null)
     {
       $r = array();
-      $this->replacements =& new Swift_Plugin_Decorator_Replacements($r);
+      $this->replacements = new Swift_Plugin_Decorator_Replacements($r);
     }
     elseif (is_array($replacements))
     {
-      $this->replacements =& new Swift_Plugin_Decorator_Replacements($replacements);
+      $this->replacements = new Swift_Plugin_Decorator_Replacements($replacements);
     }
     elseif (is_a($replacements, "Swift_Plugin_Decorator_Replacements"))
     {

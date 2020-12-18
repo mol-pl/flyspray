@@ -96,12 +96,12 @@ class Swift_Message_Mime
   /**
    * Constructor
    */
-  function Swift_Message_Mime()
+  function __construct()
   {
     Swift_ClassLoader::load("Swift_Message_Encoder");
     $this->_encoder =& Swift_Message_Encoder::instance();
     Swift_ClassLoader::load("Swift_Message_Headers");
-    $headers =& new Swift_Message_Headers();
+    $headers = new Swift_Message_Headers();
     $this->setHeaders($headers);
     Swift_ClassLoader::load("Swift_CacheFactory");
     $this->cache =& Swift_CacheFactory::getCache();
@@ -486,7 +486,7 @@ class Swift_Message_Mime
     $this->preBuild();
     $data =& $this->buildData();
     $i = array();
-    $joint_os =& new Swift_Cache_JointOutputStream($i);
+    $joint_os = new Swift_Cache_JointOutputStream($i);
     $this->cache->clear("headers");
     $this->cache->write("headers", $this->headers->build());
     $headers =& $this->cache->getOutputStream("headers");

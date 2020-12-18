@@ -35,7 +35,7 @@ class Swift_Address extends Swift_AddressContainer
    * @param string The address portion
    * @param string The personal name, optional
    */
-  function Swift_Address($address, $name=null)
+  function __construct($address, $name=null)
   {
     $this->setAddress($address);
     if ($name !== null) $this->setName($name);

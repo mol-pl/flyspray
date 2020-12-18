@@ -44,7 +44,7 @@ class Swift_Plugin_MailSend extends Swift_Events_Listener
    * Constructor.
    * @param string 5th mail() function parameter as a sprintf() formatted string where %s is the sender.
    */
-  function Swift_Plugin_MailSend($params="-oi -f %s")
+  function __construct($params="-oi -f %s")
   {
     $this->setAdditionalParams($params);
     $this->setOS(PHP_OS);

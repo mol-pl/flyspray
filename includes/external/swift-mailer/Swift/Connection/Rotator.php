@@ -38,7 +38,7 @@ class Swift_Connection_Rotator extends Swift_ConnectionBase
   /**
    * Constructor
    */
-  function Swift_Connection_Rotator($connections=array())
+  function __construct($connections=array())
   {
     foreach ($connections as $id => $conn)
     {

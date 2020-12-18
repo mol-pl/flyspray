@@ -33,7 +33,7 @@ class Swift_Cache_JointOutputStream extends Swift_Cache_OutputStream
    * Ctor
    * @param array An array of Swift_Cache_OutputStream instances
    */
-  function Swift_Cache_JointOutputStream(&$streams)
+  function __construct(&$streams)
   {
     $this->streams =& $streams;
   }

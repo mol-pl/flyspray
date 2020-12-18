@@ -74,12 +74,6 @@ class ADODB_Active_Record {
 		return ADODB_SetDatabaseAdapter($db);
 	}
 	
-	// php4 constructor
-	function ADODB_Active_Record($table = false, $pkeyarr=false, $db=false)
-	{
-		ADODB_Active_Record::__construct($table,$pkeyarr,$db);
-	}
-	
 	// php5 constructor
 	function __construct($table = false, $pkeyarr=false, $db=false)
 	{

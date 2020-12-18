@@ -31,7 +31,7 @@ class Swift_Cache_OutputStream
    * @param Swift_Cache The cache to read from
    * @param string The key for the cached data
    */
-  function Swift_Cache_OutputStream(&$cache, $key)
+  function __construct(&$cache, $key)
   {
     $this->cache =& $cache;
     $this->key = $key;

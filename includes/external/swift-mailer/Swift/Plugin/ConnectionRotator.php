@@ -44,7 +44,7 @@ class Swift_Plugin_ConnectionRotator extends Swift_Events_Listener
    * Constructor
    * @param int The number of emails to send before rotating
    */
-  function Swift_Plugin_ConnectionRotator($threshold=1)
+  function __construct($threshold=1)
   {
     $this->setThreshold($threshold);
   }

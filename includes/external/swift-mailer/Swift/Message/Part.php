@@ -26,7 +26,7 @@ class Swift_Message_Part extends Swift_Message_Mime
    * @param string The encoding format used
    * @param string The charset used
    */
-  function Swift_Message_Part($data=null, $type="text/plain", $encoding=null, $charset=null)
+  function __construct($data=null, $type="text/plain", $encoding=null, $charset=null)
   {
     $this->Swift_Message_Mime();
     

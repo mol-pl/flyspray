@@ -34,7 +34,7 @@ class Swift_Cache_Disk extends Swift_Cache
   /**
    * Ctor
    */
-  function Swift_Cache_Disk()
+  function __construct()
   {
      $this->prefix = md5(uniqid(microtime(), true));
      if(PHP_VERSION < 5) register_shutdown_function(array(&$this, "__destruct"));

@@ -16,7 +16,7 @@ class User
                              'unchangedwithindays', 'unchangedwithinhours', 
                              'tags', 'projects',
 	);
-    function User($uid = 0)
+    function __construct($uid = 0)
     {
         global $db;
 

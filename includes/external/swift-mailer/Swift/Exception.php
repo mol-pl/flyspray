@@ -33,7 +33,7 @@ class Swift_Exception
    * Constructor
    * @param string The error message
    */
-  function Swift_Exception($message)
+  function __construct($message)
   {
     if (($log =& Swift_LogContainer::getLog()) && $log->isEnabled())
     {

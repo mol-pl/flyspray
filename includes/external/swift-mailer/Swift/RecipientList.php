@@ -64,7 +64,7 @@ class Swift_RecipientList extends Swift_AddressContainer
     {
       $address_str = (string) $address;
       $address_str = trim(strtolower($address_str));
-      $address =& new Swift_Address($address_str, $name);
+      $address = new Swift_Address($address_str, $name);
     }
     
     if (in_array($where, array("to", "cc", "bcc")))
@@ -105,7 +105,7 @@ class Swift_RecipientList extends Swift_AddressContainer
     }
     elseif (in_array($where, array("to", "cc", "bcc")))
     {
-      $it =& new Swift_Iterator_Array($this->$where);
+      $it = new Swift_Iterator_Array($this->$where);
       return $it;
     }
     return $null;

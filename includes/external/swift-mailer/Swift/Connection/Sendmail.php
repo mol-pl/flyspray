@@ -69,7 +69,7 @@ class Swift_Connection_Sendmail extends Swift_ConnectionBase
    * @param string The command to execute
    * @param int The timeout in seconds before giving up
    */
-  function Swift_Connection_Sendmail($command="/usr/sbin/sendmail -bs", $timeout=10)
+  function __construct($command="/usr/sbin/sendmail -bs", $timeout=10)
   {
     if(PHP_VERSION < 5) register_shutdown_function(array(&$this, "__destruct"));
     $this->setCommand($command);

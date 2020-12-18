@@ -101,7 +101,7 @@ class Swift_Connection_SMTP extends Swift_ConnectionBase
    * @param int The remote port to connect to
    * @param int The encryption level to use
    */
-  function Swift_Connection_SMTP($server="localhost", $port=null, $encryption=null)
+  function __construct($server="localhost", $port=null, $encryption=null)
   {
     if(PHP_VERSION < 5) register_shutdown_function(array(&$this, "__destruct"));
     $this->setServer($server);

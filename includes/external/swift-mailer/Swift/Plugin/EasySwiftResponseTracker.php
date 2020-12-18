@@ -30,7 +30,7 @@ class Swift_Plugin_EasySwiftResponseTracker extends Swift_Events_Listener
    * Constructor
    * @param EasySwift The instance of EasySwift to run against
    */
-  function Swift_Plugin_EasySwiftResponseTracker(&$obj)
+  function __construct(&$obj)
   {
     $this->target =& $obj;
   }

@@ -31,7 +31,7 @@ class Swift_Plugin_VerboseSending extends Swift_Events_Listener
    * Ctor.
    * @param Swift_Plugin_VerboseSending_AbstractView The view object to display the result
    */
-  function Swift_Plugin_VerboseSending(&$view)
+  function __construct(&$view)
   {
     $this->setView($view);
   }

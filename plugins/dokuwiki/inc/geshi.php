@@ -411,7 +411,7 @@ class GeSHi
      *               {@link GeSHi::set_language_path()}
      * @since 1.0.0
 	 */
-	function GeSHi ($source, $language, $path = '')
+	function __construct ($source, $language, $path = '')
 	{
         $this->set_source($source);
         $this->set_language_path($path);
@@ -1992,8 +1992,6 @@ class GeSHi
 	{
 		$stuff_to_parse = ' ' . @htmlspecialchars($stuff_to_parse, ENT_COMPAT, $this->encoding);
         $stuff_to_parse_pregquote = preg_quote($stuff_to_parse, '/');
-		$func = '$this->change_case';
-		$func2 = '$this->add_url_to_keyword';
 
 		//
 		// Regular expressions
@@ -2050,20 +2048,29 @@ class GeSHi
 							// Basically, we don't put the styles in yet because then the styles themselves will
 							// get highlighted if the language has a CSS keyword in it (like CSS, for example ;))
 							$styles = "/$k/";
+							
+							// PHP 5.3 compatibility (note - the functions must not be private)
+							$self = $this;
+							//$func = '$this->change_case';
+							//$func2 = '$this->add_url_to_keyword';
 							if ($this->language_data['CASE_SENSITIVE'][$k]) {
-								$stuff_to_parse = preg_replace(
-                                    "/([^a-zA-Z0-9\$_\|\#;>|^])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])/e",
-                                    "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END')",
-                                    $stuff_to_parse
+								$stuff_to_parse = preg_replace_callback(
+                                    "/([^a-zA-Z0-9\$_\|\#;>|^])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])/"
+									, function($m) use ($self) {
+										return $m[1] . $self->add_url_to_keyword($m[2], '$k', 'BEGIN') . '<|$styles>' . $self->change_case($m[2]) . '|>' . $self->add_url_to_keyword($m[2], '$k', 'END');
+									}
+									, $stuff_to_parse
                                 );
 							} else {
 								// Change the case of the word.
                                 // hackage again... must... release... 1.2...
                                 if ('smarty' == $this->language) { $hackage = '\/'; } else { $hackage = ''; }
-								$stuff_to_parse = preg_replace(
-                                    "/([^a-zA-Z0-9\$_\|\#;>$hackage|^])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])/ie",
-                                    "'\\1' . $func2('\\2', '$k', 'BEGIN') . '<|$styles>' . $func('\\2') . '|>' . $func2('\\2', '$k', 'END')",
-                                    $stuff_to_parse
+								$stuff_to_parse = preg_replace_callback(
+                                    "/([^a-zA-Z0-9\$_\|\#;>$hackage|^])($keyword)(?=[^a-zA-Z0-9_<\|%\-&])/i"
+									, function($m) use ($self) {
+										return $m[1] . $self->add_url_to_keyword($m[2], '$k', 'BEGIN') . '<|$styles>' . $self->change_case($m[2]) . '|>' . $self->add_url_to_keyword($m[2], '$k', 'END');
+									}
+									, $stuff_to_parse
                                 );
 							}
 							$stuff_to_parse = substr($stuff_to_parse, 0, strlen($stuff_to_parse) - 1);

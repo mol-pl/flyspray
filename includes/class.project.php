@@ -5,7 +5,7 @@ class Project
     var $id = 0;
     var $prefs = array();
 
-    function Project($id)
+    function __construct($id)
     {
         global $db, $fs;
 

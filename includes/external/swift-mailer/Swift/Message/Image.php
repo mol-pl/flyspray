@@ -27,7 +27,7 @@ class Swift_Message_Image extends Swift_Message_EmbeddedFile
    * @param string The Content-ID to use, optional
    * @param string The encoding format to use, optional
    */
-  function Swift_Message_Image($data=null, $name=null, $type="application/octet-stream", $cid=null, $encoding="base64")
+  function __construct($data=null, $name=null, $type="application/octet-stream", $cid=null, $encoding="base64")
   {
     if (!is_a($data, "Swift_File"))
     {

@@ -29,7 +29,7 @@ class Swift_Plugin_Decorator_Replacements
    * Ctor.
    * @param array The replacements as a 2-d array, optional
    */
-  function Swift_Plugin_Decorator_Replacements($replacements = array())
+  function __construct($replacements = array())
   {
     $this->setReplacements($replacements);
   }

@@ -47,7 +47,7 @@ class Swift_File
    * @param string The path the the file
    * @throws Swift_FileException If the file cannot be found
    */
-  function Swift_File($path)
+  function __construct($path)
   {
     $this->setPath($path);
     $this->magic_quotes = get_magic_quotes_runtime();

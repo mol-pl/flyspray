@@ -33,7 +33,7 @@ class Swift_Message_EmbeddedFile extends Swift_Message_Attachment
    * @param string The Content-ID to use, optional
    * @param string The encoding format to use, optional
    */
-  function Swift_Message_EmbeddedFile($data=null, $name=null, $type="application/octet-stream", $cid=null, $encoding="base64")
+  function __construct($data=null, $name=null, $type="application/octet-stream", $cid=null, $encoding="base64")
   {
     $this->Swift_Message_Attachment($data, $name, $type, $encoding, "inline");
     

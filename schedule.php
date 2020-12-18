@@ -33,8 +33,8 @@ touch(Flyspray::get_tmp_dir() . '/flysprayreminders.run');
 $tmp_error_reporting_level = error_reporting ();
 error_reporting (0);
 
-$notify =& new Notifications;
-$user =& new User(0);
+$notify = new Notifications;
+$user = new User(0);
 $now = time();
 
 error_reporting ($tmp_error_reporting_level);

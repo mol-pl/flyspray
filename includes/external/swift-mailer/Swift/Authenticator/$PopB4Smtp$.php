@@ -27,13 +27,13 @@ class Swift_Authenticator_PopB4Smtp extends Swift_Authenticator
    * @param int The remote port number
    * @param int The level of encryption to use
    */
-  function Swift_Authenticator_PopB4Smtp($conn=null, $port=110, $encryption=0)
+  function __construct($conn=null, $port=110, $encryption=0)
   {
     if (is_object($conn)) $this->connection =& $conn;
     else
     {
       Swift_ClassLoader::load("Swift_Authenticator_PopB4Smtp_Pop3Connection");
-      $this->connection =& new Swift_Authenticator_PopB4Smtp_Pop3Connection($conn, $port, $encryption);
+      $this->connection = new Swift_Authenticator_PopB4Smtp_Pop3Connection($conn, $port, $encryption);
     }
   }
   /**

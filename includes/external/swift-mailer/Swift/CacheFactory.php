@@ -37,7 +37,7 @@ class Swift_CacheFactory
   {
     $className = $GLOBALS["_SWIFT_CACHE_CLASS_"];
     Swift_ClassLoader::load($className);
-    $instance =& new $className();
+    $instance = new $className();
     return $instance;
   }
 }

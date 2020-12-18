@@ -40,7 +40,7 @@ class Swift_Connection_NativeMail extends Swift_ConnectionBase
    * Ctor.
    * @param string The 5th parameter in mail() as a sprintf() formatted string where %s is the sender address. This only comes into effect if safe_mode is OFF.
    */
-  function Swift_Connection_NativeMail($additional_params="-oi -f %s")
+  function __construct($additional_params="-oi -f %s")
   {
     $this->setAdditionalMailParams($additional_params);
   }
@@ -50,7 +50,7 @@ class Swift_Connection_NativeMail extends Swift_ConnectionBase
    */
   function postConnect(&$instance)
   {
-    $this->plugin =& new Swift_Plugin_MailSend($this->getAdditionalMailParams());
+    $this->plugin = new Swift_Plugin_MailSend($this->getAdditionalMailParams());
     $instance->attachPlugin($this->plugin, "_MAIL_SEND");
   }
   /**

@@ -37,7 +37,7 @@ class Swift_Iterator_Array
    * Ctor.
    * @param array The array to iterate over.
    */
-  function Swift_Iterator_Array($input)
+  function __construct($input)
   {
     $input = (array) $input;
     $this->keys = array_keys($input);

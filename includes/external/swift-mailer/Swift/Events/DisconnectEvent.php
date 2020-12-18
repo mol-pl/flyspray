@@ -29,7 +29,7 @@ class Swift_Events_DisconnectEvent extends Swift_Events
    * Constructor
    * @param Swift_Connection The dead connection
    */
-  function Swift_Events_DisconnectEvent(&$connection)
+  function __construct(&$connection)
   {
     $this->connection =& $connection;
   }

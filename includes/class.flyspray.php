@@ -66,7 +66,7 @@ class Flyspray
      * @return void
      * @version 1.0
      */
-    function Flyspray()
+    function __construct()
     {
         global $db;
 
@@ -753,16 +753,16 @@ class Flyspray
 			$_SESSION['SESSNAME'] = $sessname;	// backward compat
 		}
 		/*
-        $names = array( 'GetFirefox',
-                        'UseLinux',
-                        'NoMicrosoft',
-                        'ThinkB4Replying',
-                        'FreeSoftware',
-                        'ReadTheFAQ',
-                        'RTFM',
-                        'VisitAU',
-                        'SubliminalAdvertising',
-                      );
+		$names = array( 'GetFirefox',
+						'UseLinux',
+						'NoMicrosoft',
+						'ThinkB4Replying',
+						'FreeSoftware',
+						'ReadTheFAQ',
+						'RTFM',
+						'VisitAU',
+						'SubliminalAdvertising',
+					  );
 
         foreach ($names as $val)
         {

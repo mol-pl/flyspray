@@ -51,7 +51,7 @@ class Swift_BatchMailer
    * Constructor.
    * @param Swift The current instance of Swift
    */
-  function Swift_BatchMailer(&$swift)
+  function __construct(&$swift)
   {
     $this->setSwift($swift);
   }

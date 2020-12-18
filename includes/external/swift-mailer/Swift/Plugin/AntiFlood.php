@@ -40,7 +40,7 @@ class Swift_Plugin_AntiFlood extends Swift_Events_Listener
    * @param int Number of emails to send before re-connecting
    * @param int The timeout in seconds between connections
    */
-  function Swift_Plugin_AntiFlood($threshold, $wait=0)
+  function __construct($threshold, $wait=0)
   {
     $this->setThreshold($threshold);
     $this->setWait($wait);

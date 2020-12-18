@@ -52,7 +52,7 @@ class Swift_Events_SendEvent extends Swift_Events
    * @param Swift_Address The sender address
    * @param int The number of addresses sent to
    */
-  function Swift_Events_SendEvent(&$message, &$list, &$from, $sent=0)
+  function __construct(&$message, &$list, &$from, $sent=0)
   {
     $this->message =& $message;
     $this->recipients =& $list;

@@ -343,7 +343,7 @@ class Swift_Plugin_FileEmbedder extends Swift_Events_Listener
       return $matches[1] . $matches[3] . $matches[4];
     }
     $filename = preg_replace("~^.*/([^/]+)\$~s", "\$1", $url);
-    $att =& new Swift_Message_EmbeddedFile($filedata, $filename, $this->getType($ext));
+    $att = new Swift_Message_EmbeddedFile($filedata, $filename, $this->getType($ext));
     $id = $this->message->attach($att);
     $this->registerFile($url, $id, $att);
     return $matches[1] . $id . $matches[4];
@@ -380,7 +380,7 @@ class Swift_Plugin_FileEmbedder extends Swift_Events_Listener
       return $matches[1] . $cid . $matches[4];
     }
     $filename = basename($path);
-    $att =& new Swift_Message_EmbeddedFile(new Swift_File($path), $filename, $this->getType($ext));
+    $att = new Swift_Message_EmbeddedFile(new Swift_File($path), $filename, $this->getType($ext));
     $id = $this->message->attach($att);
     $this->registerFile($path, $id, $att);
     return $matches[1] . $id . $matches[4];

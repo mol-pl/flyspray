@@ -35,7 +35,7 @@ class Swift_Events_CommandEvent extends Swift_Events
    * @param string The command being sent
    * @param int The expected code
    */
-  function Swift_Events_CommandEvent($string, $code=null)
+  function __construct($string, $code=null)
   {
     $this->setString($string);
     $this->setCode($code);

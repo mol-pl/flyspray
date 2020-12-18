@@ -44,15 +44,15 @@ class dokuwiki_TextFormatter
 		//
 
         // Create a renderer
-        $Renderer = & new Doku_Renderer_XHTML();
+        $Renderer = new Doku_Renderer_XHTML();
 
         if (!is_string($instructions) || strlen($instructions) < 1) {
             $modes = p_get_parsermodes();
             
-            $Parser = & new Doku_Parser();
+            $Parser = new Doku_Parser();
             
             // Add the Handler
-            $Parser->Handler = & new Doku_Handler();
+            $Parser->Handler = new Doku_Handler();
             
             // Add modes to parser
             foreach($modes as $mode){
@@ -266,7 +266,7 @@ class dokuwiki_TextFormatter
 		//
 		return '
 			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.js?1542"></script>
-			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.config.js?1343"></script>
+			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.config.js?1347"></script>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'**\', \'**\', \''.$textareaId.'\'); return false;">
 		  		<img src="'.$baseurl.'plugins/dokuwiki/img/format-text-bold.png" align="bottom" alt="Pogrubienie" title="Pogrubienie" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'//\', \'//\', \''.$textareaId.'\'); return false;">

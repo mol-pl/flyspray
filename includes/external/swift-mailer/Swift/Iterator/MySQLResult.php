@@ -42,7 +42,7 @@ class Swift_Iterator_MySQLResult
    * Ctor.
    * @param resource The resultset iterate over.
    */
-  function Swift_Iterator_MySQLResult($rs)
+  function __construct($rs)
   {
     $this->resultSet = $rs;
     $this->numRows = mysql_num_rows($rs);

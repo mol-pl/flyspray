@@ -33,7 +33,7 @@ class Swift_Connection_Multi extends Swift_ConnectionBase
   /**
    * Constructor
    */
-  function Swift_Connection_Multi($connections=array())
+  function __construct($connections=array())
   {
     foreach ($connections as $id => $conn)
     {

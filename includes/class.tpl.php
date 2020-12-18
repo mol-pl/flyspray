@@ -1053,7 +1053,7 @@ class Url {
 	var $url = '';
 	var $parsed;
 
-	function url($url = '') {
+	function __construct($url = '') {
 		$this->url = $url;
 		$this->parsed = parse_url($this->url);
 	}

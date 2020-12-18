@@ -27,7 +27,7 @@ class Swift_Message_Attachment extends Swift_Message_Mime
    * @param string The encoding format used
    * @param string The charset used
    */
-  function Swift_Message_Attachment($data=null, $name=null, $type="application/octet-stream", $encoding="base64", $disposition="attachment")
+  function __construct($data=null, $name=null, $type="application/octet-stream", $encoding="base64", $disposition="attachment")
   {
     $this->Swift_Message_Mime();
     
