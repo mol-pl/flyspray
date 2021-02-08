@@ -17,7 +17,7 @@
 
 if (empty($conf['general']['notifications_use_phpmailer']))
 {
-	require_once dirname(__FILE__) . '/external/swift-mailer/Swift.php';
+	require_once dirname(__FILE__) . '/external/swift-mailer-5/lib/swift_required.php';
 }
 else
 {
@@ -283,14 +283,19 @@ class Notifications {
 			return;
 		}
 
+		//echo "<pre>SendEmail(".implode(';', $to).", $subject)</pre>";
+
 		// Swift mailer setup
 		if (empty($conf['general']['notifications_use_phpmailer']))
 		{
 			// Do we want to use a remote mail server?
 			if (!empty($fs->prefs['smtp_server'])) {
 
-				Swift_ClassLoader::load('Swift_Connection_SMTP');
-				$swiftconn = new Swift_Connection_SMTP($fs->prefs['smtp_server']);
+				$serverPort = explode(':', $fs->prefs['smtp_server']);
+				$swiftconn = Swift_SmtpTransport::newInstance($serverPort[0]);
+				if (count($serverPort) > 1) {
+					$swiftconn->setPort($serverPort[1]);
+				}
 
 				if ($fs->prefs['smtp_user']) {
 					$swiftconn->setUsername($fs->prefs['smtp_user']);
@@ -301,24 +306,25 @@ class Notifications {
 				}
 			// Use php's built-in mail() function
 			} else {
-				Swift_ClassLoader::load('Swift_Connection_NativeMail');
-				$swiftconn = new Swift_Connection_NativeMail();
+				$swiftconn = Swift_MailTransport::newInstance();
 			}
+
+			$swift = new Swift_Mailer($swiftconn);
 
 			if(defined( 'FS_MAIL_LOGFILE')) {
-				$log =& Swift_LogContainer::getLog();
-				$log->setLogLevel(SWIFT_LOG_EVERYTHING);
+				$log = new Swift_Plugins_Loggers_ArrayLogger();
+				$swift->registerPlugin(new Swift_Plugins_LoggerPlugin($log));
 			}
 
-			$swift = new Swift($swiftconn);
+			$preferences = Swift_Preferences::getInstance();
+			// mailer cache directory
+			$preferences->setTempDir(Flyspray::get_tmp_dir())->setCacheType('disk');
+			// mailer charset
+			//$preferences->setCharset('utf-8');
 
-			Swift_CacheFactory::setClassName("Swift_Cache_Disk");
-			Swift_Cache_Disk::setSavePath(Flyspray::get_tmp_dir());
-
-			$message = new Swift_Message($subject, $body);
-			$message->headers->setCharset('utf-8');
-			$message->headers->set('Precedence', 'list');
-			$message->headers->set('X-Mailer', 'Flyspray');
+			$message = Swift_Message::newInstance($subject)->setBody($body);
+			$message->getHeaders()->addTextHeader('Precedence', 'list');
+			$message->getHeaders()->addTextHeader('X-Mailer', 'Flyspray');
 
 			if ($proj->prefs['notify_reply']) {
 				$message->setReplyTo($proj->prefs['notify_reply']);
@@ -338,8 +344,8 @@ class Notifications {
 			// see http://cr.yp.to/immhf/thread.html this does not seems to work though :(
 			if (empty($conf['general']['notifications_use_phpmailer']))
 			{
-				$message->headers->set('In-Reply-To', $inreplyto);
-				$message->headers->set('References', $inreplyto);
+				$message->getHeaders()->addTextHeader('In-Reply-To', $inreplyto);
+				$message->getHeaders()->addTextHeader('References', $inreplyto);
 			}
 			else
 			{
@@ -348,16 +354,19 @@ class Notifications {
 			}
 		}
 
+		// remove duplicates - e.g. when someone is assigned and has notifications for the task set.
+		$to = array_unique($to);
+
 		// send with Swift
 		if (empty($conf['general']['notifications_use_phpmailer']))
 		{
-			$recipients = new Swift_RecipientList();
-			// now accepts string , array or Swift_Address.
-			$recipients->addTo($to);
-			$message->build();
-			$retval = (bool) $swift->batchsend($message, $recipients,
-						new Swift_Address($fs->prefs['admin_email'], '['.$proj->prefs['project_title'].']'));
-
+			$message->setFrom(array($fs->prefs['admin_email'] => '['.$proj->prefs['project_title'].']'));
+			$retval = true;
+			foreach ($to as $toaddr)
+			{
+				$message->setTo($toaddr);
+				$retval &= (bool) $swift->send($message);
+			}
 			if(defined('FS_MAIL_LOGFILE')) {
 				if(is_writable(dirname(FS_MAIL_LOGFILE))) {
 					if($fh = fopen(FS_MAIL_LOGFILE, 'ab')) {
@@ -366,15 +375,11 @@ class Notifications {
 						fclose($fh);
 					}
 				}
-
 			}
-			$swift->disconnect();
 		}
 		// send with PHP mailer
 		else
 		{
-			// remove duplicates - e.g. when someone is assigned and has notifications for the task set.
-			$to = array_unique($to);
 
 			// send one by one (this is needed because some might be external and some might be internal...)
 			// TODO: make batch send and filter mails on $nmail side
