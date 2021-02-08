@@ -63,7 +63,7 @@ class Swift_Message_Attachment extends Swift_Message_Mime
    * @param boolean If the stream is a file, should it's filename be used?
    * @throws Swift_FileException If the stream cannot be read
    */
-  function setData($data, $read_filename=true)
+  function setData(&$data, $read_filename=true)
   {
     parent::setData($data);
     if ($read_filename && (is_a($data, "Swift_file")))

@@ -247,7 +247,7 @@ class Swift_Message_Mime
    * $data can be an object of Swift_File or a string
    * @param mixed The body of the document
    */
-  function setData($data)
+  function setData(&$data)
   {
     $this->cache->clear("body");
     if (is_a($data, "Swift_File")) $this->data = $data;

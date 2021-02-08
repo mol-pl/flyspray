@@ -58,7 +58,7 @@ class Swift_ConnectionBase extends Swift_Connection /*abstract*/
   /**
    * Execute any needed logic after connecting and handshaking
    */
-  function postConnect(/*Swift*/ $instance) {}
+  function postConnect(/*Swift*/ &$instance) {}
   /**
    * Get the list of attributes supported by the given extension
    * @param string The name of the connection
