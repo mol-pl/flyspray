@@ -5,6 +5,9 @@ function detailsInit() {
   var title = document.getElementsByTagName('title')[0];
   title = title.textContent || title.text; //IE uses .text
   var arr = /\d+/.exec(title);
+  if  (!arr) {
+    return;
+  }
   Cookie.setVar('current_task',arr[0]);
   if (!$('details')) {
     // make sure the page is not in edit mode

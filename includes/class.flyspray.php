@@ -697,13 +697,15 @@ class Flyspray
      * @return bool
      * @version 1.0
      */
-    function setCookie($name, $val, $time = null)
+    function setCookie($name, $val, $time = null, $httponly = false)
     {
         $url = parse_url($GLOBALS['baseurl']);
         if (!is_int($time)) {
             $time = time()+60*60*24*30;
         }
-        return setcookie($name, $val, $time, $url['path']);
+        // setcookie ( string $name , string $value = "" , int $expires = 0 , string $path = "" , string $domain = "" , bool $secure = false , bool $httponly = false ) : bool
+        $secure = false;
+        return setcookie($name, $val, $time, $url['path'], "", $secure, $httponly);
     } // }}}
     // Reminder daemon {{{
     /**

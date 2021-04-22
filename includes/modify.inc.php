@@ -726,7 +726,7 @@ switch ($action = Req::val('action'))
             // If the user is changing their password, better update their cookie hash
             if ($user->id == Post::val('user_id')) {
                 Flyspray::setcookie('flyspray_passhash',
-                        crypt($new_hash, $conf['general']['cookiesalt']), time()+3600*24*30);
+                        crypt($new_hash, $conf['general']['cookiesalt']), time()+3600*24*30, true);
             }
         }
 
