@@ -103,7 +103,7 @@ class dokuwiki_TextFormatter
 		//
 		// Nux: FIX http(s)
 		//
-		$return = preg_replace ('#(href=[\'\"])https?://(192\.168\.0\.23|prl(\.mol\.com\.pl)?)/#', '$1//prl.mol.com.pl/', $return);
+		$return = preg_replace ('#(href=[\'\"])https?://(192\.168\.0\.23|prl(\.mol\.com\.pl)?)/#', '$1//pp.mol.com.pl/', $return);
 		//
 		// Nux: FIX http(s) :END
 		//
