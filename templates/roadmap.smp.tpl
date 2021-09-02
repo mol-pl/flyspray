@@ -26,6 +26,12 @@
 		td>p,div>p {
 			margin-top: 0px;
 		}
+		longcell {
+			display: block;
+			max-width: 40vw;
+			max-height: 60vh;
+			overflow: auto;
+		}
 		.comment {
 			border:1px dotted grey;
 			padding: 2px 4px;
@@ -94,14 +100,14 @@
 				<td>{$task['category_name']}</td>
 				<td>{$task['assigned_to_name']}</td>
 				<td>{$task['item_summary']}</td>
-				<td>{!smp_render($task['detailed_desc'])}</td>
-				<td>
+				<td><longcell>{!smp_render($task['detailed_desc'])}</longcell></td>
+				<td><longcell>
 					<?php if(!empty($task['comments'])): ?>
 						<?php foreach($task['comments'] as $c): ?>
 							<div class="comment">{!smp_render($c['comment_text'])}</div>
 						<?php endforeach; ?>
 					<?php endif; ?>
-				</td>
+				</longcell></td>
 			</tr>
 		<?php endforeach; ?>
 	</table>

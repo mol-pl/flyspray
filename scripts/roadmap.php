@@ -110,16 +110,36 @@ if (Get::val('txt')) {
 	// simple render
 	function smp_render($txt) {
 		$patterns = array (
-			'/(^|\n)  [*-](.*)/',	// listy
-			'/(((^|\n) [ ]+.+)+)/e',	// pre
-			'/\n/'	// nl2br
+			array(
+				'from' => '/(^|\n)((?:  )+)[*-](.*)/',	// listy
+				'to'   => function($matches){
+					$level = substr($matches[2], 2);
+					$level = str_replace("  ", '&nbsp;&nbsp;', $level);
+					$content = $matches[3];
+					return $matches[1].$level.'&bull;'.$content;
+				},
+			),
+			array(
+				'from' => '/(((^|\n) [ ]+.+)+)/',	// pre
+				'to'   => function($matches){
+					return '<pre>'.str_replace("\n", '', $matches[1]).'</pre>';
+				},
+			),
+			array(
+				'from' => '/\n/',	// nl2br
+				'to'   => "<br/>\n",
+			),
 		);
-		$replace = array (
-			"\\1&bull; \\2",
-			"'<pre>'.str_replace(\"\\n\", '', '\\1').'</pre>'",
-			"<br/>\n"
-		);
-		return preg_replace($patterns, $replace, $txt);
+		foreach ($patterns as $pattern) {
+			$from = $pattern['from'];
+			$to = $pattern['to'];
+			if (is_callable($to)) {
+				$txt = preg_replace_callback($from, $to, $txt);
+			} else {
+				$txt = preg_replace($from, $to, $txt);
+			}
+		}
+		return $txt;
 	}
 	// preapre data
 	function severity_sort($a, $b)
