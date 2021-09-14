@@ -8,6 +8,16 @@
  */
 (function ($) {
 	$.widget("custom.combobox", {
+		options: {
+			/**
+			 * Formatter for values in the autocomplete menu.
+			 * 
+			 * The function will take `item` parameter.
+			 * Must return html.
+			 */
+			formatter: null,
+		},
+
 		_create: function () {
 			this.wrapper = $("<span>")
 				.addClass("custom-combobox")
@@ -36,7 +46,18 @@
 					classes: {
 						"ui-tooltip": "ui-state-highlight"
 					}
-				});
+				})
+			;
+
+			if (typeof this.options.formatter === 'function') {
+				var me = this;
+				this.input.autocomplete( "instance" )._renderItem = function( ul, item ) {
+					var html = me.options.formatter(item);
+					return $( "<li>" )
+					  .append( "<div>"+html+"</div>" )
+					  .appendTo( ul );
+				}
+			}
 
 			this._on(this.input, {
 				autocompleteselect: function (event, ui) {

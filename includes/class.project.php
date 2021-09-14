@@ -235,6 +235,31 @@ class Project
     }
 
 	/**
+	 * Folded list categories tree.
+	 * 
+	 * To be used in select.
+	 */
+    function listCategoriesFoldedTree($project_id = null, $hide_hidden = true, $remove_root = true)
+    {
+		$tree = $this->listCategoriesTree($project_id, $hide_hidden, $remove_root);
+		foreach ($tree as &$cat) {
+			$cat[0] = $cat['category_id'];
+			// sub-cats
+			if (!empty($cat['parents'])) {
+				$cat[1] = $cat['parents'][0]['name'] .' → '. $cat['category_name'];
+				if ($cat['depth'] > 1) {
+					$cat[1] = str_repeat('... ', $cat['depth']-1) . $cat[1];
+				}
+				$cat[1] = '↳ ' . $cat[1];
+			// main cats
+			} else {
+				$cat[1] = '** '. $cat['category_name'] . ' **';
+			}
+		}
+		return $tree;
+	}
+
+	/**
 	 * List categories tree.
 	 * 
 	 * Mostly the same as `listCategories`.
@@ -244,8 +269,6 @@ class Project
 	 * 
 	 * Example row/node (note that id will be a first level key here):
 		91 => array (
-			'0' => '91',
-			'1' => 'GUI components',
 			'category_id' => '91',
 			'category_name' => 'GUI components',
 			'project_id' => '15',
@@ -279,8 +302,6 @@ class Project
 		$prevByDepth = array();
 		foreach($cats as $cat) {
 			$r = array(
-				'0' => $cat['category_id'],
-				'1' => $cat['category_name'],
 				'category_id' => $cat['category_id'],
 				'category_name' => $cat['category_name'],
 				'project_id' => $cat['project_id'],

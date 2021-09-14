@@ -24,7 +24,7 @@
 		
 		<?php
 			// Nux: Auto-hide if only a single category is available
-			$projListCategories = $proj->listCategories();
+			$projListCategories = $proj->listCategoriesFoldedTree();
 			$projListCategoriesStyle = '';
 			if (count($projListCategories) <= 1) {
 				$projListCategoriesStyle = 'display:none';
