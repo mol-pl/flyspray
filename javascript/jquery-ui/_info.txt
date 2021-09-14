@@ -1,1 +1,6 @@
-datepicker used in jsgantt form
+Themes:
+* ui-lightness -- datepicker used in jsgantt form.
+* ui-base -- used in main Flyspray. At least for now for selects (drop down menu and combobox).
+
+Used all available components. No need for trimming in local env.
+https://jqueryui.com/download/
