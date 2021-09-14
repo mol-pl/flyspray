@@ -24,7 +24,7 @@ function initCollapser(tr, tr_next) {
             if (row !== tr) {
                 //console.log('skip: ', row);
             } else {
-                console.log('got section row: ', row);
+                //console.log('got section row: ', row);
                 foundMyself = true;
             }
             continue;
@@ -32,10 +32,10 @@ function initCollapser(tr, tr_next) {
 
         // hide until next section
         if (row === tr_next) {
-            console.log('done: ', row);
+            //console.log('done: ', row);
             break;
         } else {
-            console.log('to hide: ', row);
+            //console.log('to hide: ', row);
             tableCollapser.add(row);
         }
     }
