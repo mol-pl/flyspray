@@ -234,6 +234,87 @@ class Project
         }
     }
 
+	/**
+	 * List categories tree.
+	 * 
+	 * Mostly the same as `listCategories`.
+	 * But it adds `parents` key.
+	 * 
+	 * Note that this is a memory heavy version.
+	 * 
+	 * Example row/node (note that id will be a first level key here):
+		91 => array (
+			'0' => '91',
+			'1' => 'GUI components',
+			'category_id' => '91',
+			'category_name' => 'GUI components',
+			'project_id' => '15',
+			'category_owner' => '0',
+			'used_in_tasks' => '5',
+			'depth' => 2,
+			'parents' => array (
+				array (
+					'id' => '66',
+					'name' => 'GUI',
+					'depth' => 1,
+					'parents' => array (
+						array (
+							'id' => '65',
+							'name' => 'Generic (other)',
+							'depth' => 0,
+							'parents' => array (),
+						),
+					),
+				),
+			),
+		),
+	 */
+    function listCategoriesTree($project_id = null, $hide_hidden = true, $remove_root = true)
+    {
+		$depth = false;
+		$cats = $this->listCategories($project_id, $hide_hidden, $remove_root, $depth);
+
+		$tree = array();
+		$prev = null;
+		$prevByDepth = array();
+		foreach($cats as $cat) {
+			$r = array(
+				'0' => $cat['category_id'],
+				'1' => $cat['category_name'],
+				'category_id' => $cat['category_id'],
+				'category_name' => $cat['category_name'],
+				'project_id' => $cat['project_id'],
+				'category_owner' => $cat['category_owner'],
+				'used_in_tasks' => $cat['used_in_tasks'],
+				'depth' => $cat['depth'],
+				'parents' => array(),
+			);
+			if (!is_null($prev)) {
+				if ($prev['depth'] > $r['depth']) {
+					if (isset($prevByDepth[$r['depth']])) {
+						$prev = $prevByDepth[$r['depth']];
+					}
+				}
+
+				if ($prev['depth'] < $r['depth']) {
+					$r['parents'][] = $prev;
+				} else if ($prev['depth'] == $r['depth'] && !empty($prev['parents'])) {
+					$r['parents'] = $prev['parents'];
+				}
+			}
+			$tree[$r['category_id']] = $r;
+	
+			// lite version of the row/node
+			$prev = array(
+				'id' => $cat['category_id'],
+				'name' => $cat['category_name'],
+				'depth' => $cat['depth'],
+				'parents' => $r['parents'],
+			);
+			$prevByDepth[$prev['depth']] = $prev;
+		}
+		return $tree;
+	}
 
     function listCategories($project_id = null, $hide_hidden = true, $remove_root = true, $depth = true)
     {
