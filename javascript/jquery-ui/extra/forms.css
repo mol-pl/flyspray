@@ -1,0 +1,31 @@
+/**
+	Extra jUI styles.
+	
+	Adjusted for task-details (add/edit task), but probably mostly universal.
+	Might need to look out for full width in some forms though.
+	
+	NOT aiming to support IE.
+*/
+
+/* combobox */
+.custom-combobox {
+	display: flex;
+	width: 100%;
+	box-sizing: border-box;
+}
+.custom-combobox-toggle {
+	margin-left: -1px;
+	padding: 0;
+}
+.custom-combobox-input {
+	margin: 0;
+	padding: 5px 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+/* select menu */
+.ui-selectmenu-button.ui-button {
+	width: 100%;
+	box-sizing: border-box;
+}

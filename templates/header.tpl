@@ -30,13 +30,22 @@
 	<link rel="apple-touch-icon" href="{$baseurl}themes/logo_app/logo128.png">
 
     <script type="text/javascript" src="{$baseurl}javascript/prototype/prototype.js"></script>
-    <script type="text/javascript" src="{$baseurl}javascript/jquery-min.js"></script>
-	<script type="text/javascript">
-	//<![CDATA[
-	var $j = jQuery.noConflict();
-	//]]>
+	
+	<!-- jQuery + UI base -->
+	<script src="{$baseurl}javascript/jquery-ui/js/jquery.js"></script>
+	<script src="{$baseurl}javascript/jquery-ui/js/jquery-ui.js"></script>
+	<link rel="stylesheet" href="{$baseurl}javascript/jquery-ui/css/ui-base/jquery-ui.css" media="screen" />
+	<!-- jUI extras -->
+	<script src="{$baseurl}javascript/jquery-ui/extra/combobox.js"></script>
+	<link rel="stylesheet" href="{$baseurl}javascript/jquery-ui/extra/forms.css" media="screen" />
+	<script src="{$baseurl}javascript/jquery-ui/extra/init.js"></script>
+	<!-- jQuery extras -->
+	<script>
+		// avoid conflict with Prototype JavaScript framework
+		var $jQuery = jQuery.noConflict();
 	</script>
-    <script type="text/javascript" src="{$baseurl}javascript/jquery-ext.js?1135"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/jquery-ext.js?1135"></script>
+	
     <script type="text/javascript" src="{$baseurl}javascript/script.aculo.us/scriptaculous.js"></script>
 	
     <?php if ('index' == $do || 'details' == $do): ?>
