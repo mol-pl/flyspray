@@ -28,6 +28,24 @@
 			this._createShowAllButton();
 		},
 
+		/**
+		 * Render single menu item.
+		 */
+		_renderItem: function( ul, item ) {
+			if (typeof this.options.formatter === 'function') {
+				var html = this.options.formatter(item);
+				var $li = $( "<li>" )
+					.append( "<div>"+html+"</div>" )
+			} else {
+				var $li = $( "<li>" )
+					.append( $("<div>").text(item.label) )
+			}
+			if (item.selected) {
+				$li.addClass('ui-selected');
+			}
+			return $li.appendTo( ul );
+		},
+
 		_createAutocomplete: function () {
 			var selected = this.element.children(":selected"),
 				value = selected.val() ? selected.text() : "";
@@ -50,15 +68,7 @@
 				})
 			;
 
-			if (typeof this.options.formatter === 'function') {
-				var me = this;
-				this.input.autocomplete( "instance" )._renderItem = function( ul, item ) {
-					var html = me.options.formatter(item);
-					return $( "<li>" )
-					  .append( "<div>"+html+"</div>" )
-					  .appendTo( ul );
-				}
-			}
+			this.input.autocomplete( "instance" )._renderItem = $.proxy(this, "_renderItem");
 
 			this._on(this.input, {
 				autocompleteselect: function (event, ui) {
@@ -113,6 +123,7 @@
 					return {
 						label: text,
 						value: text,
+						selected: this.selected ? true : false,
 						option: this
 					};
 			}));

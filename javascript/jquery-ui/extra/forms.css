@@ -7,7 +7,7 @@
 	NOT aiming to support IE.
 */
 
-/* combobox */
+/* combobox styles */
 .custom-combobox {
 	display: flex;
 	width: 100%;
@@ -23,9 +23,15 @@
 	width: 100%;
 	box-sizing: border-box;
 }
+.ui-autocomplete .ui-selected {
+	border: 1px solid #003eff;
+	background: #007fff;
+	color: #ffffff;
+}
 
-/* select menu */
+/* select menu tweaks */
 .ui-selectmenu-button.ui-button {
 	width: 100%;
 	box-sizing: border-box;
 }
+
