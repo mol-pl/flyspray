@@ -26,6 +26,16 @@
 			classes: {},
 		},
 
+		/**
+		 * Refresh value from select.
+		 */
+		refresh: function () {
+			var selected = this.element.children(":selected"),
+				value = selected.val() ? selected.text() : "";
+
+			this.input.val(value);
+		},
+
 		_create: function () {
 			this.wrapper = $("<span>")
 				.addClass("custom-combobox")

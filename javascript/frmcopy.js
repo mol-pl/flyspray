@@ -335,6 +335,7 @@ frmcp.setInputFromData = function(elInput, data)
 					wasCopied = true;
 				}
 			}
+			this.refreshSelect(elInput);
 		break;
 	}
 	// add class
@@ -351,6 +352,19 @@ frmcp.setInputFromData = function(elInput, data)
 	}
 	//
 	return wasCopied;
+}
+
+/**
+ * jUI refresh.
+ * @param {Element} elInput 
+ */
+ frmcp.refreshSelect = function (elInput) {
+	if (jQuery(elInput).selectmenu("instance") != undefined) {
+		jQuery(elInput).selectmenu("refresh");
+	}
+	if (jQuery(elInput).combobox("instance") != undefined) {
+		jQuery(elInput).combobox("refresh");
+	}
 }
 
 /*
