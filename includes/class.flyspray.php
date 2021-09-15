@@ -718,7 +718,23 @@ class Flyspray
         // setcookie ( string $name , string $value = "" , int $expires = 0 , string $path = "" , string $domain = "" , bool $secure = false , bool $httponly = false ) : bool
 		// Nux: Force secure cookie in secure context
         $secure = self::isSecure();
-        return setcookie($name, $val, $time, $url['path'], "", $secure, $httponly);
+		$path = $url['path'];
+		$samesite = 'none';
+		// samesite=lax for in insecure context (assuming local/test site).
+		if (!$secure) {
+			$samesite = 'lax';
+		}
+		if (PHP_VERSION_ID < 70300) {
+			return setcookie($name, $val, $time, "$path; samesite=$samesite", "", $secure, $httponly);
+		} else {
+			return setcookie($name, $val, array (
+                'expires' => $time,
+                'path' => $path,
+                'secure' => $secure,
+                'httponly' => $httponly,
+                'samesite' => $samesite,
+            ));
+		}
     } // }}}
     // Reminder daemon {{{
     /**
