@@ -17,7 +17,7 @@
     <?php foreach ($fs->projects as $project): ?>
     <link rel="section" type="text/html" href="{$baseurl}?project={$project[0]}" />
     <?php endforeach; ?>
-    <link media="screen" href="{$this->themeUrl()}theme.css?1839" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$this->themeUrl()}theme.css?2224" rel="stylesheet" type="text/css" />
     <link media="print"  href="{$this->themeUrl()}theme_print.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 1.0 Feed"
           href="{$baseurl}feed.php?feed_type=rss1&amp;project={$proj->id}" />
@@ -63,7 +63,7 @@
     <script type="text/javascript" src="{$baseurl}javascript/tabs.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/sel_t.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/sftJSmsg.js"></script>
-    <script type="text/javascript" src="{$baseurl}javascript/functions.js?1259"></script>
+    <script type="text/javascript" src="{$baseurl}javascript/functions.js?2224"></script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/calendar_stripped.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/calendar-setup_stripped.js"> </script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/lang/calendar-{substr(L('locale'), 0, 2)}.js"></script>
@@ -79,7 +79,7 @@
 
 	<!-- Form copy -->
 	<script type="text/javascript" src="{$baseurl}javascript/framemsg.js"></script>
-	<script type="text/javascript" src="{$baseurl}javascript/frmcopy.js"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/frmcopy.js?2224"></script>
 	<script type="text/javascript">
 	//<![CDATA[
 	oPostman.reMsgSourceBaseUrls = {!$conf['formcopy']['reMsgSourceBaseUrls']};

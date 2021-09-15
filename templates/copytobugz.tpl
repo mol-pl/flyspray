@@ -10,13 +10,13 @@
 	<meta name="copyright" content="Maciej Jaros" />
 
 	<link rel="stylesheet" type="text/css" media="screen" href="{$baseurl}/javascript/frmcopy.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="{$baseurl}/themes/Bluey/theme.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="{$baseurl}/themes/Bluey/theme.css?2224" />
 
 	<script type="text/javascript" src="{$baseurl}/javascript/varia.js"></script>
 	<script type="text/javascript" src="{$baseurl}/javascript/json2.js"></script>
 
 	<script type="text/javascript" src="{$baseurl}/javascript/framemsg.js"></script>
-	<script type="text/javascript" src="{$baseurl}/javascript/frmcopy.js"></script>
+	<script type="text/javascript" src="{$baseurl}/javascript/frmcopy.js?2224"></script>
 	<script type="text/javascript">
 	//<![CDATA[
 	oPostman.strDestFrameBaseUrl = '{!$postman['strDestFrameBaseUrl']}';

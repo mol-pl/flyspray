@@ -38,14 +38,14 @@
     <script type="text/javascript" src="{$baseurl}javascript/tabs.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/sel_t.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/sftJSmsg.js"></script>
-    <script type="text/javascript" src="{$baseurl}javascript/functions.js?1648"></script>
+    <script type="text/javascript" src="{$baseurl}javascript/functions.js?2224"></script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/calendar_stripped.js"></script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/calendar-setup_stripped.js"> </script>
     <script type="text/javascript" src="{$baseurl}javascript/jscalendar/lang/calendar-{substr(L('locale'), 0, 2)}.js"></script>
 
 	<!-- Form copy -->
 	<script type="text/javascript" src="{$baseurl}/javascript/framemsg.js"></script>
-	<script type="text/javascript" src="{$baseurl}/javascript/frmcopy.js"></script>
+	<script type="text/javascript" src="{$baseurl}/javascript/frmcopy.js?2224"></script>
 	<script type="text/javascript">
 	//<![CDATA[
 	oPostman.reMsgSourceBaseUrls = {!$conf['formcopy']['reMsgSourceBaseUrls']};
