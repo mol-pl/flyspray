@@ -687,6 +687,18 @@ class Flyspray
 
         return ($auth_details['account_enabled'] && $auth_details['group_open']) ? 0 : -1;
     } // }}}
+    // Is secure {{{
+    /**
+     * Checks if current request is in secure context.
+     * @access public static
+     * @return bool
+     * @version 1.0
+     */
+	public static function isSecure() {
+		return
+		  (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+		  || $_SERVER['SERVER_PORT'] == 443;
+	} // }}}
     // Set cookie {{{
     /**
      * Sets a cookie, automatically setting the URL
@@ -704,7 +716,8 @@ class Flyspray
             $time = time()+60*60*24*30;
         }
         // setcookie ( string $name , string $value = "" , int $expires = 0 , string $path = "" , string $domain = "" , bool $secure = false , bool $httponly = false ) : bool
-        $secure = false;
+		// Nux: Force secure cookie in secure context
+        $secure = self::isSecure();
         return setcookie($name, $val, $time, $url['path'], "", $secure, $httponly);
     } // }}}
     // Reminder daemon {{{
