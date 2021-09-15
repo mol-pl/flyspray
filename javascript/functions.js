@@ -531,40 +531,75 @@ function selectMove(id, step) {
     }
 }
 var Cookie = {
-  getVars: function(prefix) {
-    var cookie = document.cookie;
-    if (cookie.length > 0) {
-      cookie += ';';
-    }
-	else {
-		return {};
+	getVars: function (prefix) {
+		var cookie = document.cookie;
+		if (cookie.length > 0) {
+			cookie += ';';
+		} else {
+			return {};
+		}
+		ret_obj = {};
+		var re = (prefix) ? new RegExp(prefix + '(.+?)\=(.*?);', 'g') : /(.+?)\=(.*?);/g;
+		cookie.replace(re, function (a, name, val) {
+			ret_obj[name] = val;
+		});
+		return ret_obj;
+	},
+	getVar: function (name) {
+		var cookie = document.cookie;
+		if (cookie.length > 0) {
+			cookie += ';';
+		}
+		re = new RegExp(name + '\=(.*?);');
+		if (cookie.match(re)) {
+			return RegExp.$1;
+		} else {
+			return '';
+		}
+	},
+	/**
+	 * Set cookie variable.
+	 * @param {String} name Cookie name.
+	 * @param {String} value Value for the cookie.
+	 * @param {String} expire Expiry date in UTC format (create date and use `date.toUTCString()`).
+	 * 	Defaults to session cookie.
+	 * @param {String} path Path context of the cookie.
+	 * 	Defaults to base path for Flyspray.
+	 * @param {String} sameSite SameSite value.
+	 * 	Defaults to Lax for insecure context and None for https.
+	 */
+	setVar: function (name, value, expire, path, sameSite) {
+		var isSecure = location.protocol === 'https:';
+
+		// default path
+		if (typeof path != 'string') {
+			path = jsglobal_base_url.replace(/.+:\/\/[^/]+/, '');
+		}
+
+		// base cookie
+		var cookieString = name + '=' + value + ';path=' + path;
+
+		// options
+		if (typeof expire == 'string') {
+			cookieString += ';expires='+expire;
+		}
+		if (typeof sameSite != 'string') {
+			sameSite = isSecure ? 'None' : 'Lax';
+		}
+		cookieString += ';SameSite='+sameSite;
+
+		// https
+		if (isSecure) {
+			cookieString += '; Secure';
+		}
+		console.log({cookieString:cookieString});
+
+		document.cookie = cookieString;
+	},
+	removeVar: function (name) {
+		var date = new Date(12);
+		document.cookie = name + '=;expires=' + date.toUTCString();
 	}
-	ret_obj = {};
-	var re = (prefix) ? new RegExp(prefix + '(.+?)\=(.*?);', 'g') : /(.+?)\=(.*?);/g;
-    cookie.replace(re, function(a, name, val) {
-		ret_obj[name] = val;
-	});
-    return ret_obj;
-  },
-  getVar: function(name) {
-    var cookie = document.cookie;
-    if (cookie.length > 0) {
-      cookie += ';';
-    }
-    re = new RegExp(name + '\=(.*?);' );
-    if (cookie.match(re)) {
-      return RegExp.$1;
-    } else {
-      return '';
-    }
-  },
-  setVar: function(name,value,expire,path) {
-    document.cookie = name + '=' + value;
-  },
-  removeVar: function(name) {
-    var date = new Date(12);
-    document.cookie = name + '=;expires=' + date.toUTCString();
-  }
 };
 function setUpSearchBox() {
   if ($('advancedsearch')) {

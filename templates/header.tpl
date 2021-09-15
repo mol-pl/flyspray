@@ -57,6 +57,7 @@
 	<script type="text/javascript">
 	//<![CDATA[
 	var jsglobal_theme_url = '{$this->themeUrl()}';
+	var jsglobal_base_url = '{$baseurl}';
 	//]]>
 	</script>
     <script type="text/javascript" src="{$baseurl}javascript/tabs.js"></script>
