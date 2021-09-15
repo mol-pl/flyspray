@@ -300,12 +300,19 @@ function adduserselect(url, user, selectid, error, skipUpdateValueField)
 		}
 	}});
 }
-function checkok(url, message, form) {
+function checkok(url, message, formId) {
+	// html form validation
+	var form = document.getElementById(formId);
+	if (!form.checkValidity()) {
+		form.reportValidity();	// should focus invalid input or display some info
+		return false;
+	}
 
+	// check with server (e.g. check if task was modified when editing)
     var myAjax = new Ajax.Request(url, {method: 'get', onComplete:function(originalRequest)
 	{
         if(originalRequest.responseText == 'ok' || confirm(message)) {
-            $(form).submit();
+            form.submit();
         }
 	}});
     return false;

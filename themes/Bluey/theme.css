@@ -248,6 +248,10 @@ input.required {
 	border:solid 2px red;
 }
 
+input:invalid {
+	outline: 2px solid red;
+}
+
 select {
 	border:1px solid gray;
 }

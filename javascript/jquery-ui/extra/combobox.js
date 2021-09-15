@@ -12,7 +12,7 @@
 			/**
 			 * Formatter for values in the autocomplete menu.
 			 * 
-			 * The function will take `item` parameter.
+			 * The function will take `item` parameter (note that the item object is built in `_source`).
 			 * Must return html.
 			 */
 			formatter: null,
@@ -36,6 +36,7 @@
 				.appendTo(this.wrapper)
 				.val(value)
 				.attr("title", "")
+				.prop("required", true)
 				.addClass("custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left")
 				.autocomplete({
 					delay: 0,
