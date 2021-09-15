@@ -11,3 +11,4 @@ mail.class.php
 .workdir/tags/copy_tags.sql
 /logs
 /.workdir/main-url-change
+/.workdir/jquery-ui-forms-deploy
