@@ -238,18 +238,33 @@ class Project
 	 * Folded list categories tree.
 	 * 
 	 * To be used in select.
+	 * Note that tpl_options() uses [0] as value and [1] as label.
+	 * 
+	 * @param bool $just_parent If true then only a parent name will be added to label ([1]).
+	 * 	Defaults to adding all ancestors as label.
 	 */
-    function listCategoriesFoldedTree($project_id = null, $hide_hidden = true, $remove_root = true)
+    function listCategoriesFoldedTree($project_id = null, $hide_hidden = true, $remove_root = true, $just_parent=false)
     {
 		$tree = $this->listCategoriesTree($project_id, $hide_hidden, $remove_root);
 		foreach ($tree as &$cat) {
 			$cat[0] = $cat['category_id'];
 			// sub-cats
 			if (!empty($cat['parents'])) {
-				$cat[1] = $cat['parents'][0]['name'] .' → '. $cat['category_name'];
-				if ($cat['depth'] > 1) {
-					$cat[1] = str_repeat('... ', $cat['depth']-1) . $cat[1];
+
+				if ($just_parent) {
+					$cat[1] = $cat['parents'][0]['name'] .' → '. $cat['category_name'];
+					if ($cat['depth'] > 1) {
+						$cat[1] = str_repeat('... ', $cat['depth']-1) . $cat[1];
+					}
+				} else {
+					$cat[1] = $cat['category_name'];
+					$subcat = $cat['parents'];
+					while (!empty($subcat)) {
+						$cat[1] = $subcat[0]['name'] .' → '. $cat[1];
+						$subcat = $subcat[0]['parents'];
+					}
 				}
+
 				$cat[1] = '↳ ' . $cat[1];
 			// main cats
 			} else {
