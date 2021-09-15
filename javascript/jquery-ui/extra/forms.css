@@ -23,7 +23,7 @@
 	width: 100%;
 	box-sizing: border-box;
 }
-.ui-autocomplete .ui-selected {
+.custom-combobox-menu .ui-selected {
 	border: 1px solid #003eff;
 	background: #007fff;
 	color: #ffffff;
@@ -35,3 +35,8 @@
 	box-sizing: border-box;
 }
 
+/* specific for categories */
+.select-categories .ui-menu-item {
+	padding: .2em 0;
+	border-bottom: 1px dotted lightgray;
+}

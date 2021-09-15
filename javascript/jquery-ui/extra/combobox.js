@@ -16,6 +16,14 @@
 			 * Must return html.
 			 */
 			formatter: null,
+
+			/**
+			 * Extra classes to add to the menu.
+			 * 
+			 * E.g. property: 'ui-autocomplete' : 'my-class-blah', to `my-class-blah` to the menu.
+			 * See: https://api.jqueryui.com/autocomplete/#option-classes
+			 */
+			classes: {},
 		},
 
 		_create: function () {
@@ -50,6 +58,12 @@
 			var selected = this.element.children(":selected"),
 				value = selected.val() ? selected.text() : "";
 
+			if (typeof this.options.classes['ui-autocomplete'] == 'string') {
+				this.options.classes['ui-autocomplete'] = 'custom-combobox-menu ' + this.options.classes['ui-autocomplete'];
+			} else {
+				this.options.classes['ui-autocomplete'] = 'custom-combobox-menu';
+			}
+
 			this.input = $("<input>")
 				.appendTo(this.wrapper)
 				.val(value)
@@ -59,6 +73,7 @@
 				.autocomplete({
 					delay: 0,
 					minLength: 0,
+					classes: this.options.classes,
 					source: $.proxy(this, "_source")
 				})
 				.tooltip({

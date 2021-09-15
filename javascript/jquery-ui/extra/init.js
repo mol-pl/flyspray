@@ -26,9 +26,13 @@
 		// special formatting for categories
 		$('#taskfields select#category')
 			.combobox({
+				classes: {
+					'ui-autocomplete' : 'select-categories',
+				},
 				formatter: function(item) {
 					var html = item.label
-						.replace(/\*\*\s*(.+?)\s*\*\*/g, '<b>$1</b>')
+						.replace(/\*\*\s*(.+?)\s*\*\*/g, '<div class="topcat"><b>$1</b></div>')
+						.replace(/((.+) → (.+))/, '<div class="subcat">$3<br><small>$1</small></div>')
 					;
 					return html;
 				}
