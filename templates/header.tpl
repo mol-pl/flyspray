@@ -166,9 +166,10 @@
 		id="intromessage_hider"
 		style="float:right; cursor:pointer;"
 		src="{$this->themeUrl()}/edit_remove.png"
-		onclick="toogleCookieHideShow('intromessage')" /></div>
+		onclick="savedHideShow.toogle('intromessage')" /></div>
 	  <div id="intromessage">{!TextFormatter::render($proj->prefs['intro_message'], false, 'msg', $proj->id,
                                ($proj->prefs['last_updated'] < $proj->prefs['cache_update']) ? $proj->prefs['pm_instructions'] : '')}</div>
+	  <script>savedHideShow.quickSetUp('intromessage')</script>
 	  <script>initCollapsers('#intromessage')</script>
       <?php endif; ?>
     

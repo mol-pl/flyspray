@@ -51,50 +51,170 @@ function escapeframemodeInit()
 	}
 }
 
-//
-// Added by Nux - toogle Show/Hide and remeber with a cookie
-//
-function toogleCookieHideShow(boxid)
+/**
+ * Toogle Show/Hide and remeber in local storage.
+ * 
+ * Added by Nux
+ */
+function SavedHideShow() {
+	var state_base_name = 'fs_showHide_state_';
+	var storage_key_boxes = 'fs_showHide_boxes';
+
+	Object.defineProperty(this, 'state_base_name', { get: function() { return state_base_name; } });
+	Object.defineProperty(this, 'storage_key_boxes', { get: function() { return storage_key_boxes; } });
+
+	/**
+	 * State key (for storage).
+	 * @param {String} boxid 
+	 * @returns Storage state key.
+	 */
+	this.getStateKey = function(boxid) {
+		return state_base_name + boxid;
+	}
+
+	/**
+	 * Get value from storage.
+	 * @param {String} box_key from getStateKey.
+	 * @returns value, defaults to '1'
+	 */
+	this.getStateValue = function(box_key) {
+		var state = localStorage.getItem(box_key);
+		if (state == null) {
+			state = '1';
+		}
+		return state;
+	}
+	/**
+	 * Save value to storage.
+	 * @param {String} box_key from getStateKey.
+	 * @param {String} state 1/0
+	 */
+	this.setStateValue = function(box_key, state) {
+		localStorage.setItem(box_key, state);
+	}
+
+	/**
+	 * Save box name (for restoring on-load)
+	 * @param {String} boxid 
+	 */
+	this.addBox = function(boxid) {
+		var boxes = this.getBoxes();
+		if (boxes.indexOf(boxid) < 0) {
+			boxes.push(boxid);
+		}
+		localStorage.setItem(storage_key_boxes, boxes.join(','));
+	}
+	this.getBoxes = function() {
+		var boxes_data = localStorage.getItem(storage_key_boxes);
+		var boxes = [];
+		if (boxes_data != null && typeof boxes_data == 'string') {
+			boxes = boxes_data.split(',');
+		}
+		return boxes;
+	}
+}
+/**
+ * Toogle the box.
+ * 
+ * Note! You MUST provide an image element for hiding the box.
+ * The id of the image must be: boxid+'_hider'.
+ * 
+ * @param {String} boxid 
+ */
+SavedHideShow.prototype.toogle = function(boxid)
 {
 	//debugger;
-	var state_cookie_name = '_h_state_'+boxid;
-	var state = Cookie.getVar(state_cookie_name);
-	var img_el = $(boxid+'_hider');
-	if ('1' == state || '' == state)
+	var box_key = this.getStateKey(boxid);
+	var state = this.getStateValue(box_key);
+
+	// save box name (for onload)
+	this.addBox(boxid);
+
+	if ('1' == state)
 	{
-		hidestuff(boxid);
-		img_el.src = jsglobal_theme_url + 'edit_add.png';
-		img_el.parentNode.style.height = '20px';
-		Cookie.setVar(state_cookie_name,'0');
+		this.hide(boxid);
 	}
 	else
 	{
-		img_el.src = jsglobal_theme_url + 'edit_remove.png';
-		img_el.parentNode.style.height = '0px';
-		showstuff(boxid);
-		Cookie.setVar(state_cookie_name,'1');
+		this.show(boxid);
 	}
 }
-function setUpCookieHideShow()
+/**
+ * Hide the box.
+ * @param {String} boxid 
+ * @param {Boolean} restoring If true then state will not be saved.
+ */
+SavedHideShow.prototype.hide = function(boxid, restoring)
 {
-	//debugger;
-	var cookies = Cookie.getVars('_h_state_');
-	for (var boxid in cookies)
-	{
-		if ($(boxid))
-		{
-			var state = cookies[boxid];
-			var img_el = $(boxid+'_hider');
-			if ('0' == state)
-			{
-				img_el.src = jsglobal_theme_url + 'edit_add.png';
-				img_el.parentNode.style.height = '20px';
-				hidestuff(boxid);
-			}
+	var box_key = this.getStateKey(boxid);
+	var img_el = document.getElementById(boxid+'_hider');
+	
+	var box_el = document.getElementById(boxid);
+	if (box_el) {
+		box_el.style.display = 'none';
+		img_el.src = jsglobal_theme_url + 'edit_add.png';
+		img_el.parentNode.style.height = '20px';
+		if (!restoring) {
+			this.setStateValue(box_key,'0');
 		}
 	}
 }
-addEvent(window,'load',setUpCookieHideShow);
+/**
+ * Show the box.
+ * @param {String} boxid 
+ * @param {Boolean} restoring If true then state will not be saved.
+ */
+SavedHideShow.prototype.show = function(boxid, restoring)
+{
+	var box_key = this.getStateKey(boxid);
+	var img_el = document.getElementById(boxid+'_hider');
+
+	var box_el = document.getElementById(boxid);
+	if (box_el) {
+		box_el.style.display = 'block';
+		img_el.src = jsglobal_theme_url + 'edit_remove.png';
+		img_el.parentNode.style.height = '0px';
+		if (!restoring) {
+			this.setStateValue(box_key,'1');
+		}
+	}
+}
+/**
+ * Initial setup.
+ */
+SavedHideShow.prototype.setUp = function()
+{
+	//debugger;
+	var boxes = this.getBoxes();
+	for (var index = 0; index < boxes.length; index++) {
+		var boxid = boxes[index];
+		this.quickSetUp(boxid);
+	}
+}
+/**
+ * Quick setup for less flickering.
+ * 
+ * Add this just after the box and the image.
+ * This is optional, but advised.
+ * 
+ * @param {String} boxid 
+ */
+SavedHideShow.prototype.quickSetUp = function(boxid)
+{
+	if (typeof boxid === 'string')
+	{
+		var box_key = this.getStateKey(boxid);
+		var state = this.getStateValue(box_key);
+		if ('0' == state)
+		{
+			this.hide(boxid, true);
+		}
+	}
+}
+var savedHideShow = new SavedHideShow();
+jQuery(function(){
+	savedHideShow.setUp();
+});
 
 // Set up the task list onclick handler
 addEvent(window,'load',setUpTasklistTable);
