@@ -338,8 +338,19 @@ frmcp.setInputFromData = function(elInput, data)
 			this.refreshSelect(elInput);
 		break;
 	}
-	// add class
-	//debugger;
+
+	// add status classes
+	this.setupInputStatus(elInput, wasCopied);
+
+	return wasCopied;
+}
+
+/**
+ * Setup input status after copying.
+ * @private
+ * @param {Element} elInput 
+ */
+frmcp.setupInputStatus = function (elInput, wasCopied) {
 	var reRemover = new RegExp('(^| +)('+this.strCopyDoneClassName+'|'+this.strCopyErrorClassName+')($| +)');
 	elInput.className = elInput.className.replace (reRemover, ' ');
 	if (wasCopied)
@@ -350,15 +361,31 @@ frmcp.setInputFromData = function(elInput, data)
 	{
 		elInput.className += ' '+this.strCopyErrorClassName;
 	}
-	//
-	return wasCopied;
+
+	// Do colours for labels (at least for non-text boxes).
+	if (typeof elInput.id === 'string') {
+		// jUI adds "-button" for selectmenu.
+		var label = document.querySelector('[for='+elInput.id+'],[for='+elInput.id+'-button]');
+		if (label) {
+			label.className = label.className.replace (reRemover, ' ');
+			if (wasCopied)
+			{
+				label.className += ' '+this.strCopyDoneClassName;
+			}
+			else
+			{
+				label.className += ' '+this.strCopyErrorClassName;
+			}
+		}
+	}
 }
 
 /**
  * jUI refresh.
+ * @private
  * @param {Element} elInput 
  */
- frmcp.refreshSelect = function (elInput) {
+frmcp.refreshSelect = function (elInput) {
 	if (jQuery(elInput).selectmenu("instance") != undefined) {
 		jQuery(elInput).selectmenu("refresh");
 	}

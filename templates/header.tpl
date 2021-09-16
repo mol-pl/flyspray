@@ -81,7 +81,7 @@
 
 	<!-- Form copy -->
 	<script type="text/javascript" src="{$baseurl}javascript/framemsg.js"></script>
-	<script type="text/javascript" src="{$baseurl}javascript/frmcopy.js?2224"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/frmcopy.js?1611"></script>
 	<script type="text/javascript">
 	//<![CDATA[
 	oPostman.reMsgSourceBaseUrls = {!$conf['formcopy']['reMsgSourceBaseUrls']};
