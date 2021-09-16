@@ -74,8 +74,10 @@
     <script type="text/javascript" src="{$baseurl}javascript/jsdiff-history.js"></script>
 	
 	<!-- Table collapser helpers -->
+	<?php if (isset($conf['general']['enable_intro_collapser']) && $conf['general']['enable_intro_collapser']=='1'): ?>
 	<script type="text/javascript" src="{$baseurl}javascript/table-collapser.js"></script>
 	<script type="text/javascript" src="{$baseurl}javascript/table-collapser-init.js"></script>
+	<?php endif; ?>
 
 	<!-- Form copy -->
 	<script type="text/javascript" src="{$baseurl}javascript/framemsg.js"></script>
@@ -171,7 +173,9 @@
 	  <div id="intromessage">{!TextFormatter::render($proj->prefs['intro_message'], false, 'msg', $proj->id,
                                ($proj->prefs['last_updated'] < $proj->prefs['cache_update']) ? $proj->prefs['pm_instructions'] : '')}</div>
 	  <script>savedHideShow.quickSetUp('intromessage')</script>
-	  <script>initCollapsers('#intromessage')</script>
+      <?php if (isset($conf['general']['enable_intro_collapser']) && $conf['general']['enable_intro_collapser']=='1'): ?>
+        <script>initCollapsers('#intromessage')</script>
       <?php endif; ?>
+    <?php endif; ?>
     
     <?php endif; ?>
