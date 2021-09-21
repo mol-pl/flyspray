@@ -10,7 +10,7 @@
 /* combobox styles */
 .custom-combobox {
 	display: flex;
-	width: 100%;
+	max-width: 400px;
 	box-sizing: border-box;
 }
 .custom-combobox-toggle {

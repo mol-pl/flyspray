@@ -9,22 +9,23 @@
 	 * Init task add/edit selects (comboboxes and dropdown menus).
 	 */
 	$(function(){
-		$('#taskfields select')
+		$('#taskdetails form select')
 			.not( "#rassigned_to" )
 			.not( "#tasktype" )
 			.not( "#category" )
 			.not( "#severity" )
 			.not( "#priority" )
 			.not( "#percent" )
+			.not( '[name="project_id"]' )
 			.combobox()
 		;
-		$('#taskfields select')
+		$('#taskdetails form select')
 			.filter( "#tasktype, #severity, #priority, #percent" )
 			.selectmenu()
 		;
 
 		// special formatting for categories
-		$('#taskfields select#category')
+		$('#taskdetails form select#category')
 			.combobox({
 				classes: {
 					'ui-autocomplete' : 'select-categories',
