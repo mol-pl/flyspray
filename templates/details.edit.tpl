@@ -4,7 +4,7 @@
 		<h2 class="summary severity{Req::val('task_severity', $task_details['task_severity'])}">
 		  <a href="{CreateUrl('details', $task_details['task_id'])}">{FS_PREFIX_CODE}#{$task_details['task_id']}</a>
 		  <input class="text frmcopyme severity{Req::val('task_severity', $task_details['task_severity'])}" type="text"
-			name="item_summary" size="80" maxlength="100"
+			name="item_summary" size="80" maxlength="130"
 			value="{Req::val('item_summary', $task_details['item_summary'])}" />
 		  <?php if (!empty($conf['general']['extra_anon_notify'])): ?>
 		  <label>e-mail klienta:</label>

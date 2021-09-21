@@ -4,7 +4,7 @@
     <h2 class="severity{Req::val('task_severity', 2)} summary" id="edit_summary">
       <label for="itemsummary">{L('summary')}</label>
       <input id="itemsummary" class="text severity{Req::val('task_severity', 2)}" type="text" value="{Req::val('item_summary')}"
-        name="item_summary" size="80" maxlength="100" />
+        name="item_summary" size="80" maxlength="130" />
     </h2>
 
     <table><tr><td id="taskfieldscell"><?php // small layout table ?>
