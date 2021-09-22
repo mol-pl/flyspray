@@ -28,6 +28,11 @@ function nuxPostman(oParams)
 		this.reMsgSourceBaseUrls = oParams.reMsgSourceBaseUrls;
 	}
 	
+	function hasConsole()
+	{
+		return (typeof(window.console)=="object" && typeof(window.console.log)=="function");
+	}
+	
 	/*
 		Send given message (strMsg) - should be run outside the frame
 	*/
@@ -35,10 +40,10 @@ function nuxPostman(oParams)
 	{
 		var httpsUrl = this.strDestFrameBaseUrl.replace(/^http:/, 'https:');
 		// debug
-		if (typeof(window.console)=="object" && typeof(window.console.log)=="function")
+		if (hasConsole())
 		{
-			console.log ('send to:'+this.strDestFrameBaseUrl);
-			console.log ('send to(2):'+httpsUrl);
+			console.log ('[Postman] send to:'+this.strDestFrameBaseUrl);
+			console.log ('[Postman] send to(2):'+httpsUrl);
 		}
 		
 		var winFrame = document.getElementById(this.strDestFrameId).contentWindow;
@@ -64,9 +69,9 @@ function nuxPostman(oParams)
 		window.addEventListener("message", function(e)
 		{
 			// debug
-			if (typeof(window.console)=="object" && typeof(window.console.log)=="function")
+			if (hasConsole())
 			{
-				console.log ('received from:'+e.origin);
+				console.log ('[Postman] received from:'+e.origin);
 				//debugger;
 			}
 			
@@ -74,11 +79,19 @@ function nuxPostman(oParams)
 			{
 				if (e.origin.search(_this.reMsgSourceBaseUrls)<0)
 				{
+					if (hasConsole())
+					{
+						console.warn('[Postman] Origin not matched', _this.reMsgSourceBaseUrls);
+					}
 					return;
 				}
 			}
 			else if (e.origin !== _this.strMsgSourceBaseUrl)
 			{
+				if (hasConsole())
+				{
+					console.warn('[Postman] Origin not matched', _this.strMsgSourceBaseUrl);
+				}
 				return;
 			}
 			funMsgReceiver(e.data);
