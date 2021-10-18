@@ -17,6 +17,7 @@
 			.not( "#priority" )
 			.not( "#percent" )
 			.not( '[name="project_id"]' )
+			.not( '[name="resolution_reason"]' )
 			.combobox()
 		;
 		$('#taskdetails form select')
