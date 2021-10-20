@@ -50,7 +50,7 @@ class syntax_plugin_newline extends DokuWiki_Syntax_Plugin {
 
     function connectTo($mode) {
         // Word boundaries?
-        $this->Lexer->addSpecialPattern("[^ \t\n\v\f\r][\r]?(?=\n[^ \t\n\v\f\r<>])",$mode,'plugin_newline');
+        $this->Lexer->addSpecialPattern('[^ \t\n\v\f\r][\r]?(?=\n[^ \t\n\v\f\r<>])',$mode,'plugin_newline');
         //$this->Lexer->addSpecialPattern("\S+\n\S+",$mode,'plugin_newline');
     }
 

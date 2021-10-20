@@ -124,7 +124,7 @@ class Doku_LexerParallelRegex {
         if (count($this->_patterns) == 0) {
             return false;
         }
-
+		
         if (! preg_match($this->_getCompoundedRegex(), $subject, $matches)) {
             $split = array($subject, "", "");
             return false;
@@ -238,7 +238,7 @@ class Doku_LexerParallelRegex {
      *    @access private
      */
     function _getPerlMatchingFlags() {
-        return ($this->_case ? "msS" : "msSi");
+        return ($this->_case ? "umsS" : "umsSi");
     }
 }
 
