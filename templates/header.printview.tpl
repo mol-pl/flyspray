@@ -22,6 +22,14 @@
 	      href="{$baseurl}feed.php?feed_type=atom&amp;project={$proj->id}" />
 
     <script type="text/javascript" src="{$baseurl}javascript/prototype/prototype.js"></script>
+	
+	<!-- jQuery base -->
+	<script src="{$baseurl}javascript/jquery-ui/js/jquery.js"></script>
+	<script>
+		// avoid conflict with Prototype JavaScript framework
+		var $jQuery = jQuery.noConflict();
+	</script>
+	
     <script type="text/javascript" src="{$baseurl}javascript/script.aculo.us/scriptaculous.js"></script>
     <?php if ('index' == $do || 'details' == $do): ?>
         <script type="text/javascript" src="{$baseurl}javascript/{$do}.js"></script>
