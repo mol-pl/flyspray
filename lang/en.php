@@ -846,6 +846,7 @@ Regards,',
 'comment_done_long'       => 'Mark comment as done/irrelevant',
 'comment_undone'          => 'Reactivate',
 'comment_undone_long'     => 'Bring back comment marked as done',
-);
 
-?>
+'closeerror.notasksfound' => 'No tasks found to close.',
+'closeerror.notallclosed' => 'Only some of the tasks have been closed.',
+);

@@ -179,12 +179,26 @@ switch ($action = Req::val('action'))
 			)
 		);
 		$tasks_to_close_arr = $db->fetchAllArray($tasks_to_close);
+		$closed_count = 0;
 		foreach($tasks_to_close_arr as &$task)
 		{
-			Backend::close_task($task['task_id'], Post::val('resolution_reason'), Post::val('closure_comment', ''), Post::val('mark100', false));
+			if (Backend::close_task($task['task_id'], Post::val('resolution_reason'), Post::val('closure_comment', ''), Post::val('mark100', false))) {
+				$closed_count++;
+			}
+		}
+		$wanted_count = count($tasks_to_close_arr);
+		if ($closed_count == $wanted_count && $wanted_count > 0) {
+			$_SESSION['SUCCESS'] = "[$closed_count] " . L('taskclosedmsg');
+		} else {
+			if ($wanted_count <= 0) {
+				Flyspray::show_error(L('closeerror.notasksfound'));
+			} else {
+				Flyspray::show_error("[$closed_count/".$wanted_count."] "
+					. L('closeerror.notallclosed')
+				);
+			}
 		}
 
-        $_SESSION['SUCCESS'] = L('taskclosedmsg');
         break;
 
     case 'reopen':

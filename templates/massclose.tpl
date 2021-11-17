@@ -49,7 +49,7 @@
 				<input type="hidden" name="task_type" value="{$task_details['task_type']}" />
 				<input type="hidden" name="item_status" value="{$task_details['item_status']}" />
 				<input type="hidden" name="closedby_version" value="{$task_details['closedby_version']}" />
-				<input type="hidden" name="project_id" value="{$task_details['cproj']}" />
+				<input type="hidden" name="project_id" value="{$task_details['project_id']}" />
 
 				<label class="default text" for="closure_comment" style="display:block">{L('closurecomment')}<br /><small>{L('closurecomment_duplicate')}</small></label>
 				
