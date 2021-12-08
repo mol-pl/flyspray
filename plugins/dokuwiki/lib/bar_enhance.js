@@ -309,6 +309,23 @@ function cNuxbar(objName)
 	*/
 	this.insertTemplates = function(elTplsParent, txtarea_id)
 	{
+		var jsEscape = function (text)
+		{
+			return text
+				.replace(/"/g, "&quot;")
+				.replace(/'/g, "\\&#039;")
+			;
+		}
+		var htmlEscape = function (text)
+		{
+			return text
+				.replace(/&/g, "&amp;")
+				.replace(/"/g, "&quot;")
+				.replace(/</g, "&lt;")
+				.replace(/</g, "&gt;")
+			;
+		}
+		
 		var strHtml = '';
 		for (var i=0; i<_this.arrInsertTpls.length; i++)
 		{
@@ -331,6 +348,7 @@ function cNuxbar(objName)
 			var strPreText = '';
 			var strPostText = '';
 			
+			// Some text to insert use $|$ to place cursor (by default at the end).
 			var reCursor = /^(.*?)\$\|\$(.+)/;
 			if (tpl.strText.search(reCursor)>=0)
 			{
@@ -343,8 +361,8 @@ function cNuxbar(objName)
 			}
 			
 			strHtml += ''
-				+'<a title="'+tpl.strHint+'" tabindex="-1" href="javascript:surroundText(\''+strPreText+'\', \''+strPostText+'\', \''+txtarea_id+'\')">'
-					+tpl.strLabel
+				+'<a title="'+htmlEscape(tpl.strHint)+'" tabindex="-1" href="javascript:surroundText(\''+jsEscape(strPreText)+'\', \''+jsEscape(strPostText)+'\', \''+txtarea_id+'\')">'
+					+htmlEscape(tpl.strLabel)
 				+'</a>'
 			;
 		}

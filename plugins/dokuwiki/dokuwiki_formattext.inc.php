@@ -264,9 +264,10 @@ class dokuwiki_TextFormatter
 		//
 		// Return toolbar HTML
 		//
+		$barConfigJs = empty($_REQUEST['bar_test']) ? 'bar_enhance.config.js' : 'bar_enhance.config.test.js';
 		return '
-			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.js?1542"></script>
-			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.config.js?1347"></script>
+			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.js?1521"></script>
+			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/'.$barConfigJs.'?1533"></script>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'**\', \'**\', \''.$textareaId.'\'); return false;">
 		  		<img src="'.$baseurl.'plugins/dokuwiki/img/format-text-bold.png" align="bottom" alt="Pogrubienie" title="Pogrubienie" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'//\', \'//\', \''.$textareaId.'\'); return false;">
