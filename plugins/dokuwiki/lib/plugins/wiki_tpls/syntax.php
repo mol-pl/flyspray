@@ -48,6 +48,8 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
 		$myConf = array(
 			'template_classes' => array(),
 			'devs_status' => '&status[]=1&status[]=2&status[]=3&status[]=5&status[]=9',
+			'test_status' => '&status[]=4',
+			'pm_status' => '&status[]=13&status[]=1&status[]=9&status[]=6',
 			'devs_order' => '&order=assignedto&sort=asc',
 			'single_dev_order' => '&order=assignedto&sort=asc',
 			'iso_link_format' => '[[iso>inc/forms/KARTA_PROJEKTU.jsp?id_typ=6&id_form=3&count={count}|Karta projektu]]',
@@ -57,6 +59,7 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
  		if (FS_PREFIX_CODE == 'RZ')
 		{
 			$myConf['devs_status'] = '&status[]=2&status[]=3&status[]=5&status[]=14';
+			$myConf['test_status'] = '&status[]=4&status[]=15';
 			$myConf['devs_order'] = $myConf['single_dev_order'] = '&order=priority&sort=desc&order2=severity&sort2=desc';
 		}
 		

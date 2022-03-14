@@ -73,6 +73,9 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 	public function parse($tpl_params, $plugin_conf) {
 		$base_link = $this->getBase($tpl_params);
 
+		$tpl_name = $this->tplName;
+		$isRejszTemplate = strpos($tpl_name, 'Rejsz') === 0;
+
 		// devs...
 		$todo_dev_base = $base_link . $plugin_conf['devs_status'];
 		$devs = '';
@@ -132,10 +135,10 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		}
 		
 		$code = ''
-			.'[['.$base_link.'|Otwarte]]'
-			.' • [['.$todo_dev_base.$plugin_conf['devs_order'].'|TODO programiści]]'.$devs
-			.' • [['.$base_link.'&status[]=4|TODO testerzy]]'
-			.(!$isRejszTemplate ? '' : ' • [['.$base_link.'&status[]=13&status[]=1&status[]=9|TODO PM]]')
+			.'[[' . $base_link . '|Otwarte]]'
+			.' • [[' . $todo_dev_base . $plugin_conf['devs_order'] . '|TODO programiści]]'.$devs
+			.' • [[' . $base_link . $plugin_conf['test_status'] .'|TODO testerzy]]'
+			.(!$isRejszTemplate ? '' : ' • [[' . $base_link . $plugin_conf['pm_status'] . '|TODO PM]]')
 			.' • [['.$base_link.'&status[]=|Wszystkie]]'
 			.(empty($gantt_link) ? '' : ' • [['.$gantt_link.'|'.$gantt_title.']]')
 			.$iso_links
@@ -144,6 +147,9 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		return array(
 			'code' => $code,
 			'base_link' => $base_link,
+			//'devs_status' => $plugin_conf['devs_status'],
+			//'test_status' => $plugin_conf['test_status'],
+			'my_status' => $plugin_conf['devs_status'] . $plugin_conf['test_status'],
 		);
 	}
 	
@@ -176,7 +182,7 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		
 		// me link (current user)
 		$todo_myself_base = $base_link . '&dev=' . $user->id;
-		$code .= ' • [['.$todo_myself_base.'|TODO moje]]';
+		$code .= ' • [[' . $todo_myself_base . $data['my_status'] . '|TODO moje]]';
 		
 		return $code;
 	}	
