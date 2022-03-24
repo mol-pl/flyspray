@@ -25,20 +25,23 @@
 
 	<!-- when there is a single tag use it instead of project title -->
 	<h2 class="summary severity{$task_details['task_severity']}"
-	><?php if (!empty($task_details['tags']) && count($task_details['tags'])==1): ?>
-		<?php foreach ($task_details['tags'] as $tag_id): ?>
-			{!tpl_tagname($tag_id)}
-		<?php endforeach; ?>
-	<?php else: ?>
-		{$task_details['project_title']}
-	<?php endif; ?>
-	 - 
-	<?php if (array_get($conf['general'], 'address_rewriting')): ?>
-		<a href="{$baseurl}task/{$task_details['task_id']}">{FS_PREFIX_CODE}#{$task_details['task_id']}</a>
-	<?php else: ?>
-		<a href="{$baseurl}index.php?do=details&amp;task_id={$task_details['task_id']}">{FS_PREFIX_CODE}#{$task_details['task_id']}</a>
-	<?php endif; ?>
-	{!tpl_summarylink($task_details['item_summary'])}</h2>
+		><?php
+			if (!empty($task_details['tags']) && count($task_details['tags'])==1): 
+				?><?php 
+					foreach ($task_details['tags'] as $tag_id): 
+						?>{!tpl_tagname($tag_id)}<?php 
+					endforeach;
+				?><?php
+			else:
+				?>{$task_details['project_title']}<?php 
+			endif;
+		?> - <?php 
+			if (array_get($conf['general'], 'address_rewriting')): 
+				?><a href="{$baseurl}task/{$task_details['task_id']}">{FS_PREFIX_CODE}#{$task_details['task_id']}</a><?php 
+			else: 
+				?><a href="{$baseurl}index.php?do=details&amp;task_id={$task_details['task_id']}">{FS_PREFIX_CODE}#{$task_details['task_id']}</a><?php
+			endif;
+	?> {!tpl_summarylink($task_details['item_summary'])}</h2>
 
   <div id="taskcopy" style="float:right">
 		<form name="form_cp2bugz" action="{CreateURL('index')}" method="get" id="formcopy2bugz">
