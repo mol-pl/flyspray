@@ -620,7 +620,7 @@ Regards,',
 
 'priority6'               => 'Flash',
 'priority5'               => 'Immediate',
-'priority4'               => 'Urgent',
+'priority4'               => 'Very High',
 'priority3'               => 'High',
 'priority2'               => 'Normal',
 'priority1'               => 'Low',
