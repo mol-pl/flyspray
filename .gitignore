@@ -12,3 +12,5 @@ mail.class.php
 /logs
 /.workdir/main-url-change
 /.workdir/jquery-ui-forms-deploy
+/.logs
+/includes/external/phpmailer/*.log
