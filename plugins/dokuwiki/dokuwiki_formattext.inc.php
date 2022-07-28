@@ -348,7 +348,7 @@ class dokuwiki_TextFormatter
 			
 			<img src="'.$baseurl.'plugins/dokuwiki/img/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />
 
-			<span style="position:relative;top:-30px;left:-32px;float:right;"><a style="position:absolute;font-size:20px;margin-bottom:16px" title="Pomoc dotycząca formatowania tekstu" href="https://www.dokuwiki.org/pl:syntax" target="_blank">[?]</a></span>
+			<span style="float:right;"><a style="font-size:20px;" title="Pomoc dotycząca formatowania tekstu" href="https://www.dokuwiki.org/pl:syntax" target="_blank">[?]</a></span>
 
 		'.$strToolbarExtra;
 	}

@@ -12,9 +12,15 @@
 	&mdash;
 	<a href="#comments" class="collapsed-comments-collapse">{L('collapseall')}</a>
   </p>
-  <?php foreach($comments as $comment): ?>
+
+<?php foreach($comments as $comment): ?>
+<section 
+	class="comment-section"
+	id="comment{$comment['comment_id']}"
+>
+  <header class="commentby">
   <em>
-    <a name="comment{$comment['comment_id']}" id="comment{$comment['comment_id']}"
+    <a name="comment{$comment['comment_id']}" 
       href="{CreateURL('details', $task_details['task_id'])}#comment{$comment['comment_id']}">
       <img src="{$this->get_image('comment')}"
         title="{L('commentlink')}" alt="" />
@@ -45,6 +51,7 @@
       {L('delete')}</a>
     <?php endif ?>
   </span>
+  </header>
   <div class="comment
 	<?=( !empty($comment['done']) ? 'comment-done comment-collapsed' : '' )?>
   "
@@ -67,8 +74,8 @@
             $this->display('common.attachments.tpl', 'attachments', $comment_attachments[$comment['comment_id']]);
         }
   ?>
-
-  <?php endforeach; ?>
+</section>
+<?php endforeach; ?>
 
   <?php if ($user->perms('add_comments') && (!$task_details['is_closed'] || $proj->prefs['comment_closed'])): ?>
   <fieldset><legend>{L('addcomment')}</legend>

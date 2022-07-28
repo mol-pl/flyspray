@@ -1,5 +1,23 @@
 @import url("../../javascript/jscalendar/calendar-system.css");
 
+/* Nux: highlight anchor link target */
+.comment-section {
+	border: 1px solid #0004;
+	margin: 1em;
+}
+.commentby {
+	background-color: #0001;
+	display: block;
+	padding: 0.3em;
+}
+.comment {
+	background-color: #fff6;
+}
+.comment-section:target {
+	background-color: #ffffffa6;
+	border: 1px solid orange;
+}
+
 /* Nux: clear images and such */
 .commenttext:after {
 	content:" ";
@@ -27,12 +45,12 @@
     left: 0;
     height: 2em;
     width: 100%;
-	background: linear-gradient(transparent, #e6eef6, #e6eef6);
+	background: linear-gradient(transparent, #fffc, #fffe);
 	z-index: 1;
 }
 .collapsed-comment-toggle {
     position: absolute;
-    bottom: 0;
+    bottom: .5em;
     left: 1em;
     height: 1em;
 	z-index: 2;
@@ -257,7 +275,8 @@ select {
 }
 
 textarea {
-	width:99%;
+	width:100%;
+	box-sizing: border-box;
 }
 
 /* labels are used nearly in every form */
