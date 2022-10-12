@@ -51,13 +51,9 @@
 <body>
 
 <?php
-/*
-	// sf - tylko Flashowe
-	$url_status_base='index.php?do='.Get::val('do').'&project='.Get::val('project').'&smp_htm='.Get::val('smp_htm').'&sf='.Get::val('sf').'&ver_id='.Get::val('ver_id').'&status';
-	$url_version_base='index.php?do='.Get::val('do').'&project='.Get::val('project').'&smp_htm='.Get::val('smp_htm').'&sf='.Get::val('sf').'&status='.Get::val('status').'&ver_id';
-*/
-	$url_status_base='index.php?do='.Get::val('do').'&project='.Get::val('project').'&smp_htm='.Get::val('smp_htm').'&ver_id='.Get::val('ver_id').'&status';
-	$url_version_base='index.php?do='.Get::val('do').'&project='.Get::val('project').'&smp_htm='.Get::val('smp_htm').'&status='.Get::val('status').'&ver_id';
+	$url_smp_roadmap_base = CreateURL('roadmap', $proj->id, null, array('smp_htm' => Get::val('smp_htm')));
+	$url_status_base = $url_smp_roadmap_base.'&ver_id='.Get::val('ver_id').'&status';
+	$url_version_base = $url_smp_roadmap_base.'&status='.Get::val('status').'&ver_id';
 ?>
 <div style="font-size:90%"><a href="{$url_status_base}=any">{L('allstatuses')}</a>
 &bull; <a href="{$url_status_base}=open">{L('allopentasks')}</a>
