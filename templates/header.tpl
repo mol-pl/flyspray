@@ -17,7 +17,7 @@
     <?php foreach ($fs->projects as $project): ?>
     <link rel="section" type="text/html" href="{$baseurl}?project={$project[0]}" />
     <?php endforeach; ?>
-    <link media="screen" href="{$this->themeUrl()}theme.css?2224" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$this->themeUrl()}theme.css?1237" rel="stylesheet" type="text/css" />
     <link media="print"  href="{$this->themeUrl()}theme_print.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 1.0 Feed"
           href="{$baseurl}feed.php?feed_type=rss1&amp;project={$proj->id}" />
@@ -108,7 +108,18 @@
   </head>
   <body
 	data-userTimezone="<?=($user->isAnon() ? '' : $user->infos['time_zone'])?>" 
-	data-userRole="<?=($user->perms('is_admin') ? 'admin' : '')?>" 
+	data-userRole="<?=($user->perms('is_admin') ? 'admin' : '')?>"
+	class="
+		<?php if ($proj->id == 0): ?>
+			global-project
+		<?php endif; ?>
+		<?php if ( !empty($do) ): ?>
+			page-do-{$do}
+		<?php endif; ?>
+		<?php if ( strlen(Req::val('area', '')) > 0 ): ?>
+			page-area-{Req::val('area')}
+		<?php endif; ?>
+	"
     onload="
 	    perms = new Perms('permissions');
 		if (document.getElementById('mixedbar'))

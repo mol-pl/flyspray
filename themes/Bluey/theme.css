@@ -1,5 +1,20 @@
 @import url("../../javascript/jscalendar/calendar-system.css");
 
+:root {
+	/* dark color (border etc) */
+	--global-warning: #d75b00;
+}
+
+/* Nux: mark global settings as dangerous */
+.global-project #toolboxmenu,
+.global-project :is(#submenu a, div.tab, div.tbuttons, fieldset),
+.global-project #toolboxmenu a {
+	border-color: var(--global-warning);
+}
+#optionslink {
+	color: var(--global-warning);
+}
+
 /* Nux: highlight anchor link target */
 .comment-section {
 	border: 1px solid #0004;

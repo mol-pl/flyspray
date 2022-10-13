@@ -17,7 +17,12 @@
         <td>
           <label for="groupname">{L('groupname')}</label>
         </td>
-        <td><input id="groupname" class="text" type="text" name="group_name" size="20" maxlength="20" value="{Req::val('group_name', $group_details['group_name'])}" /></td>
+        <td>
+		  <input id="groupname" class="text" type="text" name="group_name" size="20" maxlength="20" value="{Req::val('group_name', $group_details['group_name'])}" />
+		  <?php if ($proj->id == 0): ?>
+		  <strong style="color:var(--global-warning)">(!) {L('globalgroup')}</strong>
+		  <?php endif; ?>
+		</td>
       </tr>
       <tr>
         <td><label for="groupdesc">{L('description')}</label></td>
@@ -189,6 +194,9 @@
           <?php endif; ?>
           {!tpl_options(Flyspray::listGroups($proj->id), null, false, null, $group_details['group_id'])}
         </select>
+		<?php if ($proj->id == 0): ?>
+		<strong style="color:var(--global-warning)">(!) {L('globalgroup')}</strong>
+		<?php endif; ?>
       </td>
     </tr>
   </table>
