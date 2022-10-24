@@ -95,3 +95,24 @@
 		margin: 0;
 	}
 }
+/* wrapping tabs (comments tab etc) */
+html #submenu {
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	top: 1px;
+}
+#submenu li {
+	width: auto;
+	height: auto;
+	box-sizing: border-box;
+}
+@media only screen and (max-width: 600px)  {
+	html #submenu {
+		row-gap: .8em;
+		margin: .8em 0;
+	}
+	#submenu li a.active {
+		border-bottom-color: gray;
+	}
+}
