@@ -100,12 +100,16 @@ html #submenu {
 	display: flex;
 	flex-wrap: wrap;
 	position: relative;
-	top: 1px;
+	top: 3px;
 }
 #submenu li {
 	width: auto;
 	height: auto;
 	box-sizing: border-box;
+	display: block;
+}
+#submenu a {
+	display: block;
 }
 @media only screen and (max-width: 600px)  {
 	html #submenu {
