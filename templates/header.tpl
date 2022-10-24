@@ -7,6 +7,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <?php if (!empty($conf['cliph']['css_url'])): ?>
 	<link media="screen" href="<?=$conf['cliph']['css_url']?>" rel="stylesheet" type="text/css" />
@@ -17,7 +18,7 @@
     <?php foreach ($fs->projects as $project): ?>
     <link rel="section" type="text/html" href="{$baseurl}?project={$project[0]}" />
     <?php endforeach; ?>
-    <link media="screen" href="{$this->themeUrl()}theme.css?1237" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$this->themeUrl()}theme.css?1430" rel="stylesheet" type="text/css" />
     <link media="print"  href="{$this->themeUrl()}theme_print.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 1.0 Feed"
           href="{$baseurl}feed.php?feed_type=rss1&amp;project={$proj->id}" />

@@ -45,14 +45,14 @@ function tpl_list_heading($colname, $format = "<th%s>%s</th>")
 {
     global $proj, $page;
     $imgbase = '<img src="%s" alt="%s" />';
-    $class   = '';
+    $classes   = '';
     $html    = eL($colname);
     if ($colname == 'comments' || $colname == 'attachments') {
         $html = sprintf($imgbase, $page->get_image(substr($colname, 0, -1)), $html);
     }
 
     if (Get::val('order') == $colname) {
-        $class  = ' class="orderby"';
+        $classes  = 'orderby';
         $sort1  = Get::safe('sort', 'desc') == 'desc' ? 'asc' : 'desc';
         $sort2  = Get::safe('sort2', 'desc');
         $order2 = Get::safe('order2');
@@ -69,6 +69,14 @@ function tpl_list_heading($colname, $format = "<th%s>%s</th>")
         $order2 = Get::safe('order');
     }
 
+	// Nux: extra classes
+	if (!empty($colname)) {
+		$classes .= ' colhead-' . htmlspecialchars($colname);
+	}
+	$class = '';
+	if (!empty($classes)) {
+		$class = ' class="'.trim($classes).'"';
+	}
 
     $new_order = array('order' => $colname, 'sort' => $sort1, 'order2' => $order2, 'sort2' => $sort2);
     $html = sprintf('<a title="%s" href="%s">%s</a>',
