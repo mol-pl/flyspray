@@ -18,7 +18,8 @@
     <?php foreach ($fs->projects as $project): ?>
     <link rel="section" type="text/html" href="{$baseurl}?project={$project[0]}" />
     <?php endforeach; ?>
-    <link media="screen" href="{$this->themeUrl()}theme.css?1430" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$this->themeUrl()}theme.css?1555" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$this->themeUrl()}a_mobile.css?1555" rel="stylesheet" type="text/css" />
     <link media="print"  href="{$this->themeUrl()}theme_print.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 1.0 Feed"
           href="{$baseurl}feed.php?feed_type=rss1&amp;project={$proj->id}" />
