@@ -120,3 +120,47 @@ html #submenu {
 		border-bottom-color: gray;
 	}
 }
+
+/* task details */
+@media only screen and (max-width: 750px)  {
+	/* basic info */
+	#taskdetails > table > tbody > tr {
+		display: flex;
+		flex-wrap: wrap-reverse;
+	}
+	div#taskfields table {
+		margin: 0;
+	}
+	td#taskfieldscell {
+		border-top: 1px solid #ccc;
+		border-right-style: none;
+		/* width: 100%; */
+	}
+	div#taskinfo {
+		width: auto;
+		min-height: auto;
+		float: none;
+	}
+
+	/* deps */
+	div#taskblocks,
+	div#taskdeps {
+		float: none;
+		width: auto;
+	}
+
+	/* extra info */
+	.notify_info {
+		float: none;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	/* code blocks */
+	pre.code {
+		max-height: 40vh;
+		max-width: 70vw;
+		box-sizing: border-box;
+	}
+}
+
