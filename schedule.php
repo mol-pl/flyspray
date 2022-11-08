@@ -97,16 +97,11 @@ unlink(Flyspray::get_tmp_dir() . '/flysprayreminders.run');
 if(isset($conf['general']['reminder_daemon']) && in_array($conf['general']['reminder_daemon'], range(1, 2))) {
 
 	if(php_sapi_name() === 'cli') {
+		// Nux: fix root for phpmailer, mail.class.php
+		$_SERVER['DOCUMENT_ROOT'] = dirname(dirname(__FILE__));
 		//once
 		send_reminders();
 
-	// Nux: remote z PRL
-    } elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] == '192.168.0.23') {
-		//keep going, execute the script in the background
-		ignore_user_abort(true);
-		set_time_limit(0);
-		send_reminders();
-	// Nux:END
     } elseif (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1'
               && $conf['general']['reminder_daemon'] == '2') {
 
