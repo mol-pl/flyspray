@@ -162,10 +162,18 @@ if ($proj->id && $user->perms('manage_project')) {
     $page->assign('pm_pendingreq_num', $count);
 }
 
+// project list sorter by activity
+// (with an activity divider)
 $sql = $db->Query(
         'SELECT  project_id, project_title, project_is_active, others_view,
-                 upper(project_title) AS sort_names
+				concat(
+				 case when project_is_active=1 then \'1.\'
+				 else \'3.\' end
+				,
+                 upper(project_title)
+				)  AS sort_names
            FROM  {projects}
+	UNION SELECT  -1, \'——\', 0, 1, \'2.inactive\'
        ORDER BY  sort_names');
 
 $fs->projects = array_filter($db->FetchAllArray($sql), array($user, 'can_view_project'));

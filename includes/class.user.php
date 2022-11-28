@@ -229,6 +229,11 @@ class User
             $proj = $proj['project_id'];
         }
 
+		// allow fake projects in the list (divider)
+		if ($proj == -1) {
+			return true;
+		}
+
         return $this->perms('view_tasks', $proj)
           || ($this->perms('project_is_active', $proj)
               && ($this->perms('others_view', $proj) || $this->perms('project_group', $proj)));
