@@ -66,3 +66,12 @@ Note. Required database change are in `.workdir/tags/` in files:
 
 Both are PostgreSQL specific and require some changes to work in MySQL (e.g. `serial` should be `auto_increment`, `character varying` should be `varchar`).
 Also, you need to change owner of tables to something else.
+
+### PHP7+ compatibility ###
+**Initial changes**: [feature/php7](https://github.com/mol-pl/flyspray/commits/feature/php7) branch.
+
+Although initial goal was PHP 7.4, some changes were future proof and latests version should work with PHP 8.0 and probably 8.1 too.
+
+This change also included Swift mailer update. It was not feasiable to make old version compatible with PHP7. So Swift v5.4 was added as `swift-mailer-5`. We use a custom PHP Mailer more, so not sure if Swift fully works with FS.
+
+Some changes were done outside of the feature branch after later testing. Especially for later PHP versions compatibility.
