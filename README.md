@@ -15,6 +15,7 @@ There are a lot of customization from the original and we are not in sync with t
 Highlights of differences from original:
 
 * PostgreSQL fixes (also for PG SQL 8.4 and above).
+* PHP7 and PHP8 compatibility.
 * Gantt export of selected task.
 * Mass close for tasks from given version (with given type).
 * Form copying to allow cross-domain copy of tasks between Flyspray installations.
