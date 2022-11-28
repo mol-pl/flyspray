@@ -1,0 +1,21 @@
+{
+	"files.encoding": "utf8",
+	"search.exclude": {
+		"_bkp/": true,
+		".logs/": true,
+		".workdir/": true,
+		"nbproject/": true,
+		"attachments/*_*": true,
+		"cache/": true,
+	},
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/.DS_Store": true,
+		"**/Thumbs.db": true,
+		"**/nbproject": true,
+		"attachments/*_*": true,
+	}
+}
