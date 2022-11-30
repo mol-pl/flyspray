@@ -109,8 +109,11 @@ body .serwis_templates a:hover
 	box-sizing: border-box;
 }
 /* Nux: extra width for version tense */
+:root {
+	--taskfieldscell-width: 250px;
+}
 #taskdetails #taskfieldscell {
-	min-width: 250px;
+	min-width: var(--taskfieldscell-width);
 }  
 
 /*
@@ -1500,7 +1503,14 @@ pre.code {
 	margin:1em;
 	overflow:auto;
 	max-height:30em;
-	max-width:600px;
+	/* max-width: 600px; */
+	width: 100%;
+	max-width: calc(100vw - 120px);
+	box-sizing: border-box;
+	margin-right: 40px;
+}
+#taskdetails pre.code {
+	max-width: calc(100vw - 120px - var(--taskfieldscell-width));
 }
 
 .good {
