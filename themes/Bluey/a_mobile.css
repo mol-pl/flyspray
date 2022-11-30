@@ -159,8 +159,11 @@ html #submenu {
 	/* code blocks */
 	pre.code {
 		max-height: 40vh;
-		max-width: 70vw;
+		max-width: calc(100vw - 120px);
 		box-sizing: border-box;
+	}
+	#taskdetails pre.code {
+		max-width: calc(100vw - 120px);
 	}
 }
 
