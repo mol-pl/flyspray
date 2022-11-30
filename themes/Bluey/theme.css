@@ -1504,7 +1504,7 @@ pre.code {
 	overflow:auto;
 	max-height:30em;
 	/* max-width: 600px; */
-	width: 100%;
+	width: calc(100% - 50px);
 	max-width: calc(100vw - 120px);
 	box-sizing: border-box;
 	margin-right: 40px;
