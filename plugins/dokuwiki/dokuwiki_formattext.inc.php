@@ -227,7 +227,7 @@ class dokuwiki_TextFormatter
 					<img src="'.$baseurl.'plugins/dokuwiki/img/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />
 
 					<a tabindex="-1" href="javascript:void(0);" onclick="nuxbar.mapInternalToExternal(\''.$textareaId.'\'); return false;">
-						<img src="'.$baseurl.'plugins/dokuwiki/img/Crystal_Clear_app_network_local.png" align="bottom" alt="Serv2URL" title="Mapuj zaznaczone plik (ścieżki) z Serv na zewnętrzny URL" border="0" /></a>
+						<img src="'.$baseurl.'plugins/dokuwiki/img/Crystal_Clear_app_network_local.png" align="bottom" alt="Http2URL" title="(udostępnianie dla klientów) Mapuje zaznaczone pliki z serwera plików (ścieżki) na zewnętrzny URL" border="0" /></a>
 
 					<div class="serwis_templates">
 						<img onload="nuxbar.insertTemplates(this.parentNode, \''.$textareaId.'\')" src="'.$baseurl.'themes/Bluey/ajax_load.gif" align="bottom" width="22" height="22" alt="Wczytywanie?" title="Wczytywanie szablonów odpowiedzi" border="0" />
@@ -265,9 +265,10 @@ class dokuwiki_TextFormatter
 		// Return toolbar HTML
 		//
 		$barConfigJs = empty($_REQUEST['bar_test']) ? 'bar_enhance.config.js' : 'bar_enhance.config.test.js';
+		$barConfigCacheId = '1535';
 		return '
-			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.js?1521"></script>
-			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/'.$barConfigJs.'?1533"></script>
+			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/bar_enhance.js?'.$barConfigCacheId.'"></script>
+			<script type="text/javascript" src="'.$baseurl.'plugins/dokuwiki/lib/'.$barConfigJs.'?'.$barConfigCacheId.'"></script>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'**\', \'**\', \''.$textareaId.'\'); return false;">
 		  		<img src="'.$baseurl.'plugins/dokuwiki/img/format-text-bold.png" align="bottom" alt="Pogrubienie" title="Pogrubienie" border="0" /></a>
 			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'//\', \'//\', \''.$textareaId.'\'); return false;">

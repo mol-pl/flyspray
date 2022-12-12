@@ -380,12 +380,13 @@ function cNuxbar(objName)
 		
 		if (txt.length<1)
 		{
-			alert('Zaznacz tekst z wewnętrzną ścieżką (z Serv)');
+			alert('Zaznacz tekst z wewnętrzną ścieżką (z serwera plików)');
 		}
 		
 		// flip slashes
 		txt = txt.replace(/\\/g, '/');
 
+		var count = 0;
 		for (var i=0; i<_this.arrInternalToExternal.length; i++)
 		{
 			var tpl = _this.arrInternalToExternal[i];
@@ -398,6 +399,7 @@ function cNuxbar(objName)
 			var re = new RegExp(tpl.reInter, 'ig');
 			if (txt.search(re)>=0)
 			{
+				count++;
 				txt = txt.replace(re, tpl.strExt);
 				if (txt.search(/\nhttps?:\/\//)>5)	// more then one link?
 				{
@@ -421,6 +423,11 @@ function cNuxbar(objName)
 				replaceText(txt, txtarea_id);
 				break;
 			}
+		}
+		
+		if (count<1)
+		{
+			alert('Nie znaleziono ścieżek do plików z serwera plików. Może używasz złego serwera? Albo skrypt nie działa.');
 		}
 	}
 
