@@ -30,7 +30,7 @@ function initCollapser(tr, tr_next) {
             continue;
         }
 
-        // hide until next section
+        // add rows until next section
         if (row === tr_next) {
             //console.log('done: ', row);
             break;
@@ -76,7 +76,8 @@ function initCollapsers(selector) {
         tableCollapsers.push(tableCollapser);
 
         // default state
-        if (tableCollapser.size() > 2) {
+		// hide if not small nor important => hide (collapse)
+        if (tableCollapser.size() > 2 && !isImportantProjectGroup(tableCollapser)) {
             tableCollapser.hide();
         }
 
@@ -94,6 +95,30 @@ function initCollapsers(selector) {
     }
 }
 
+/**
+	Figure out if the section is a important group.
+	
+	Assumes there is an exclamation mark in the header (an icon or emoji).
+	
+	@param {TableCollapser} section
+*/
+function isImportantProjectGroup(section) {
+	// icon
+	let img = section.headerRow.querySelector('img');
+	if (img) {
+		let alt = img.getAttribute('alt');
+		if (alt && alt.indexOf('!')>=0) {
+			return true;
+		}
+	}
+	// emoji or text
+	let text = section.headerRow.textContent;
+	if (text.search(/(\(!\)|❗)/) >= 0) {
+		return true;
+	}
+
+	return false;
+}
 
 //
 // Init (add after intro message or in onready event)
