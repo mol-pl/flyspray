@@ -1,3 +1,16 @@
+<?php if ($domain_auth_only): ?>
+
+<div>
+  <?php if (empty($user->domainAccount)): ?>
+	{L('error#')}7: {L('error7')}
+	&bull; <?=(empty($_SERVER["AUTHENTICATE_SAMACCOUNTNAME"]) ? 'NN' :  htmlspecialchars($_SERVER["AUTHENTICATE_SAMACCOUNTNAME"]))?>
+  <?php endif; ?>
+  <?php if (!empty($user->domainAccount)): ?>
+	{L('username')}: {$user->domainAccount}.
+  <?php endif; ?>
+</div>
+
+<?php else: ?>
 
 <form action="{$baseurl}?do=authenticate" method="post">
 <div>
@@ -34,3 +47,5 @@
   </span>
 </div>
 </form>
+
+<?php endif; ?>

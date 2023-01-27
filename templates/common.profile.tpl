@@ -108,6 +108,8 @@
         </td>
       </tr>
       <?php endif; ?>
+
+    <?php if (!$domain_auth_only): ?>
       <tr>
         <td colspan="2"><hr /></td>
       </tr>
@@ -125,6 +127,8 @@
         <td><label for="confirmpass">{L('confirmpass')}</label></td>
         <td><input id="confirmpass" class="password" type="password" name="confirmpass" value="{Req::val('confirmpass')}" size="40" maxlength="100" /></td>
       </tr>
+    <?php endif; ?>
+	
       <tr>
         <td colspan="2" class="buttons">
           <input type="hidden" name="action" value="{Req::val('action', $do . '.edituser')}" />

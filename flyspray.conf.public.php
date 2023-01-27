@@ -31,6 +31,7 @@ test_server_name = "..."	    				; String, case-insensitive name of the server t
 new_task_reportedver_tenses = "2,3"
 
 anon_lock = "1"									; Boolean. 0 = off, 1 = on. If on anonymous user will only be able to see headers.
+domain_auth_only = "0"							; Boolean. 0 = off, 1 = on. If on only LDAP auth will be allowed.
 
 ; Cliph upper tab bar
 [cliph]

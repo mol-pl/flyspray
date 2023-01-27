@@ -55,6 +55,12 @@ if ($user->isAnon()) {
 	}
 }
 
+// Nux: domain-only auth -- init
+$domain_auth_only = false;
+if (isset($conf['general']['domain_auth_only']) && $conf['general']['domain_auth_only']=='1') {
+	$domain_auth_only = true;
+}
+
 if (Get::val('getfile')) {
 	// Nux: lock for anons
 	if ($anon_lock_active) {
@@ -192,10 +198,16 @@ $page->setTitle($fs->prefs['page_title'] . $proj->prefs['project_title']);
 
 $page->assign('do', $do);
 $page->assign('anon_lock_active', $anon_lock_active);
+$page->assign('domain_auth_only', $domain_auth_only);
 if (!Req::val('printview', 0)) {
 	$page->pushTpl('header.tpl');
 } else {
 	$page->pushTpl('header.printview.tpl');
+}
+// Nux: domain-only auth -- lock user ops
+if ($domain_auth_only && in_array($do, array('authenticate', 'lostpw', 'register'))) {
+	Flyspray::show_error(22);
+	exit();
 }
 
 if (!$anon_lock_active || in_array($do, array('lostpw', 'register'))) {	// Nux: lock for anons -- allow lost password and registration (Note! You can disable registration in settings)
