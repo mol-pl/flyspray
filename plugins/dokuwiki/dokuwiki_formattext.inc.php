@@ -201,6 +201,8 @@ class dokuwiki_TextFormatter
 			        ."\\n  * ilość zgłoszeń: 1"
 			        ."\\n    * BB#"
 					."\\n  * czas wykonania: (G/D/T/M/+/-)"
+					."\\n  * czas wykonania optymistycznie: (G/D/T/M/+/-)"
+					."\\n  * czas wykonania pesymistycznie: (G/D/T/M/+/-)"
 				;
 				
 				if (in_array($user->infos['real_name'], array('Nux', 'Paweł', 'Przemek')))
@@ -241,6 +243,8 @@ class dokuwiki_TextFormatter
 					."\\n====Informacje dodatkowe===="
 					."\\n  * ilość zgłoszeń: 1 (BB#)"
 					."\\n  * czas wykonania: (G/D/T/M/+/-)"
+					."\\n  * czas wykonania optymistycznie: (G/D/T/M/+/-)"
+					."\\n  * czas wykonania pesymistycznie: (G/D/T/M/+/-)"
 				;
 			break;
 		}
