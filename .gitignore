@@ -14,3 +14,4 @@ mail.class.php
 /.workdir/jquery-ui-forms-deploy
 /.logs
 /includes/external/phpmailer/*.log
+*.dia~
