@@ -17,5 +17,12 @@
 		"**/Thumbs.db": true,
 		"**/nbproject": true,
 		"attachments/*_*": true,
-	}
+	},
+	// allow running sql with F5
+	"files.associations": {
+		"*.sql": "postgres" 
+	},
+	"vscode-postgres.defaultConnection": "local 10.0",
+	// "vscode-postgres.defaultConnection": "molpl",
+	"vscode-postgres.defaultDatabase": "bibz"
 }
