@@ -33,6 +33,13 @@ new_task_reportedver_tenses = "2,3"
 anon_lock = "1"									; Boolean. 0 = off, 1 = on. If on anonymous user will only be able to see headers.
 domain_auth_only = "0"							; Boolean. 0 = off, 1 = on. If on only LDAP auth will be allowed.
 
+; Config for sched_attach_delete.php
+[attach_del]
+enabled = "1"									; Boolean. 0 = off, 1 = on. If on anonymous user will only be able to see headers.
+batch_size = 1000								; Max rows checked in one batch (recomended: 1000).
+;max_batches = 10								; Max number of batches in one schedule (this can be as large as you want).
+												; Note! It is recomended that: batch_size*max_batches > total_attachements (total files still on disk).
+
 ; Cliph upper tab bar
 [cliph]
 tab_number = 4
