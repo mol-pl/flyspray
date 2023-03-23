@@ -15,7 +15,7 @@ define('IN_FS', true);
 require_once 'header.php';
 require_once BASEDIR . '/includes/class.AttachmentRemoval.php';
 
-$del_config = include BASEDIR . '/includes/attachment_delete.config.php';
+$del_config = include BASEDIR . '/attachment_delete.config.php';
 
 $sch_helper = new AttachmentRemoval($del_config);
 
