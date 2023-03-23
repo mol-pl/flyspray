@@ -39,6 +39,7 @@ class AttachmentRemoval
 		);
 		
 		// run batches
+		$total_short = array();
 		do {
 			$result = $this->run_batch($total['last_closed_dt']);
 		
@@ -54,9 +55,11 @@ class AttachmentRemoval
 			$total['1st (batch)'] = date('Y-m-d', $result['1st_closed_dt']);
 			$total['last'] = date('Y-m-d', $result['last_closed_dt']);
 
-			echo "\n[INFO] after batch: " . json_encode(array_filter($total, function($key) {
-				return !preg_match('#_dt$#', $key);
-			}, ARRAY_FILTER_USE_KEY));
+			$total_short = array_filter($total, function($key) {
+					return !preg_match('#_dt$#', $key);
+				}, ARRAY_FILTER_USE_KEY)
+			;
+			echo "\n[INFO] after batch: " . json_encode($total_short);
 			
 			// removed enough
 			if ($total['removed'] >= $this->batch_size) {
@@ -75,6 +78,12 @@ class AttachmentRemoval
 			}
 		} while(true);
 		
+		echo "\n";
+		//echo "\n[INFO] total: " . json_encode($total_short);
+		echo "\n[DESC] removed: {$total['removed']}/{$total['checked']} (batches: {$total['batches']} x {$this->batch_size})";
+
+		echo "\n\n";
+
 		return $total;
 	}
 
