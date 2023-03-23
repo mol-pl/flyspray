@@ -17,6 +17,7 @@
 		"**/Thumbs.db": true,
 		"**/nbproject": true,
 		"attachments/*_*": true,
+		"**/.workdir": true,
 	},
 	// allow running sql with F5
 	"files.associations": {

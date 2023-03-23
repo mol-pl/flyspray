@@ -10,9 +10,8 @@ mail.class.php
 /nbproject/private/
 .workdir/tags/copy_tags.sql
 /logs
-/.workdir/main-url-change
-/.workdir/jquery-ui-forms-deploy
 /.logs
 /includes/external/phpmailer/*.log
 *.dia~
 attachment_delete.config.php
+/.vscode/launch.json

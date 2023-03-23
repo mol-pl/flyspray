@@ -232,21 +232,33 @@ class Database
 			);
 			if (defined('LIGHT_DEBUG_SQL'))
 			{
-				die (
-					sprintf(''
-						."\n<div>Query <textarea style='width:100%%' rows='10'>%s</textarea></div>"
-						."\n<div>with params <textarea style='width:100%%' rows='20'>%s</textarea></div>"
-						."\n<div>Failed! <textarea style='width:100%%'>%s</textarea></div>"
-						,htmlspecialchars($sql, ENT_QUOTES, 'utf-8')
-						,var_export(explode(',', $query_params), true)
-						,htmlspecialchars($this->dblink->ErrorMsg())
-					)
-				);
+				if(php_sapi_name() === 'cli') {
+					echo "\n[ERROR] SQL error: ". $this->dblink->ErrorMsg();
+					echo "\n[DEBUG] Query:\n". $sql;
+					echo "\n[DEBUG] params:\n". var_export($inputarr, true);
+				} else {
+					die (
+						sprintf(''
+							."\n<div>Query <textarea style='width:100%%' rows='10'>%s</textarea></div>"
+							."\n<div>with params <textarea style='width:100%%' rows='20'>%s</textarea></div>"
+							."\n<div>Failed! <textarea style='width:100%%'>%s</textarea></div>"
+							,htmlspecialchars($sql, ENT_QUOTES, 'utf-8')
+							,var_export(explode(',', $query_params), true)
+							,htmlspecialchars($this->dblink->ErrorMsg())
+						)
+					);
+				}
 			}
 			else
 			{
-				die (L('errordb'));
+				if(php_sapi_name() === 'cli') {
+					echo "\n[ERROR] SQL error: ". $this->dblink->ErrorMsg();
+					echo "\n[DEBUG] Query:\n\t". $sql;
+				} else {
+					die (L('errordb'));
+				}
 			}
+			exit;
 			// Nux-end: always log, not always show...
         }
 
