@@ -1,6 +1,7 @@
 <fieldset class="box">
   <legend>{L('categories')}</legend>
   <p>{L('listnote')}</p>
+  <div class="cblist-container">
   <?php
   $countlines = -1;
   $categories = $proj->listCategories($proj->id, false, false, false);
@@ -8,6 +9,7 @@
   unset($categories[0]);
   
   if (count($categories)) : ?>
+  <div class="controlBox-container">
   <div id="controlBox">
     <div class="grip"></div>
     <div class="inner">
@@ -16,6 +18,7 @@
         <a href="#" onclick="TableControl.shallower('catTable'); return false;"><img src="{$this->themeUrl()}/left.png" alt="Left" /></a>
         <a href="#" onclick="TableControl.deeper('catTable'); return false;"><img src="{$this->themeUrl()}/right.png" alt="Right" /></a>
     </div>
+  </div>
   </div>
   <?php endif; ?>
     <form action="{CreateURL($do, 'cat', $proj->id)}" method="post">
@@ -83,6 +86,7 @@ SCRIPT_CODE;
 ?>
       <?php endif; ?>
     </form>
+    </div><!-- /cblist-container -->
 
     <hr />
 

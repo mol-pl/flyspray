@@ -116,13 +116,6 @@ var TableControl = {
 			}
 			Event.observe(row[i], 'click', function(e) { TableControl._onClick(e) }, false);
 		}
-		if ( options.controlBox ) {
-			options.controlBoxElt = $(options.controlBox);
-			// may not be a control box if there are no rows currently
-			if (options.controlBoxElt)
-			   options.controlBoxElt.style.left = parseInt(findPos(table)) + parseInt (table.scrollWidth - 30) + 'px';
-		}
-
 		
 		if ( options.tree ) {
 			this._buildTree(table);

@@ -1,11 +1,14 @@
 <p>{L('listnote')}</p>
+<div class="cblist-container">
 <?php if (count($rows)): ?>
+<div class="controlBox-container">
 <div id="controlBox">
     <div class="grip"></div>
     <div class="inner">
         <a href="#" onclick="TableControl.up('listTable'); return false;"><img src="{$this->themeUrl()}/up.png" alt="Up" /></a>
         <a href="#" onclick="TableControl.down('listTable'); return false;"><img src="{$this->themeUrl()}/down.png" alt="Down" /></a>
     </div>
+</div>
 </div>
 <?php endif; ?>
 <form action="{CreateURL($do, $list_type, $proj->id)}" method="post">
@@ -102,6 +105,7 @@ SCRIPT_CODE;
 ?>
   <?php endif; ?>
 </form>
+</div><!-- /cblist-container -->
 <hr />
 <form action="{CreateURL($do, $list_type, $proj->id)}" method="post">
   <table class="list">

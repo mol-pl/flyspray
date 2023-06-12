@@ -1740,11 +1740,11 @@ span.autocomplete ul li.selected {
 
 /* }}} */
 
+/* Up/down controls for managed lists. */
 #controlBox {
 	border : 1px solid gray;
 	padding : 1px;
 	background : #fff;
-	width : auto !important;
 	width : 90px;
 	display : table;
 	position:absolute;
@@ -1761,6 +1761,38 @@ span.autocomplete ul li.selected {
 }
 #controlBox.active div.inner {
 	opacity : 1;
+}
+/* disable selection to avoid confusion */
+#controlBox {
+	-webkit-user-select: none;
+	user-select: none;	
+}
+/* container layout */
+.cblist-container {
+	display: flex;
+	flex-flow: row-reverse;
+	gap: 1em;
+}
+.controlBox-container {
+	position: relative;
+	flex: 1;
+}
+#controlBox {
+	left: 0;
+}
+/* make up/down control sticky */
+@supports (position: sticky) {
+	body #controlBox {
+		width: max-content;
+		display: block;
+		position: sticky;
+		top: 30%;
+		/* ~center */
+		/* top: 40vh; */
+	}
+	body #controlBox div.grip {
+		display: none;
+	}
 }
 
 table.list {
