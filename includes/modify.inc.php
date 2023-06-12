@@ -1316,7 +1316,11 @@ switch ($action = Req::val('action'))
     // adding a reminder
     // ##################
     case 'details.addreminder':
-        $how_often  = Post::val('timeamount1', 1) * Post::val('timetype1');
+		$num = intval(Post::val('timeamount1', 1));
+		if ($num <= 0) {
+			$num = 1;
+		}
+        $how_often  = $num * Post::val('timetype1');
         $start_time = Flyspray::strtotime(Post::val('timeamount2', 0));
 
         if (!Backend::add_reminder($task['task_id'], Post::val('reminder_message'), $how_often, $start_time, Post::val('to_user_id'))) {

@@ -408,7 +408,7 @@ function join_attrs($attr = null) {
     return '';
 }
 // {{{ Datepicker
-function tpl_datepicker($name, $label = '', $value = 0) {
+function tpl_datepicker($name, $label = '', $value = 0, $attrs = array()) {
     global $user;
 
     $date = '';
@@ -455,6 +455,7 @@ function tpl_datepicker($name, $label = '', $value = 0) {
     $page->assign('name', $name);
     $page->assign('date', $date);
     $page->assign('label', $label);
+    $page->assign('attrs', $attrs);
     $page->assign('dateformat', '%Y-%m-%d');
     $page->display('common.datepicker.tpl');
 }
