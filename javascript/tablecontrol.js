@@ -125,6 +125,11 @@ var TableControl = {
 		}
 		
 		this.controlled_tables[table_id] = options;
+
+		// control box element ref
+		if ( options.controlBox ) {
+			options.controlBoxElt = $(options.controlBox);
+		}
 	},
 	
 	/**
@@ -289,29 +294,29 @@ var TableControl = {
 		var active_row = this.active_rows[row.table_id];
 		var options = this.controlled_tables[row.table_id];
 
-		// desactivate previously active row
+		// deactivate previously active row
 		if ( active_row ) {
-			Element.removeClassName(active_row, options.activeClassName);
+			active_row.classList.remove(options.activeClassName);
 			if ( options.tree && options.spreadActiveClass ) {
 				this._forEachChilds(active_row, function(e) {
-					Element.removeClassName(e, options.activeClassName);
+					e.classList.remove(options.activeClassName);
 				});
 			}
 		}
 		else if ( options.controlBoxElt ) {
-			Element.addClassName(options.controlBoxElt, options.activeClassName);
+			options.controlBoxElt.classList.add(options.activeClassName);
 		}
 		// if clicking on the same row : no more active row
 		if ( active_row && active_row == row ) {
 			this.active_rows[row.table_id] = null;
-			Element.removeClassName(options.controlBoxElt, options.activeClassName);
+			options.controlBoxElt.classList.remove(options.activeClassName);
 		}
 		// else activate the new selected row
 		else {
-			Element.addClassName(row, options.activeClassName);
+			row.classList.add(options.activeClassName);
 			if ( options.tree && options.spreadActiveClass ) {
 				this._forEachChilds(row, function(e) {
-					Element.addClassName(e, options.activeClassName);
+					e.classList.add(options.activeClassName);
 				});
 			}
 			this.active_rows[row.table_id] = row;
