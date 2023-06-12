@@ -18,7 +18,7 @@
     <?php foreach ($fs->projects as $project): ?>
     <link rel="section" type="text/html" href="{$baseurl}?project={$project[0]}" />
     <?php endforeach; ?>
-    <link media="screen" href="{$this->themeUrl()}theme.css?1555" rel="stylesheet" type="text/css" />
+    <link media="screen" href="{$this->themeUrl()}theme.css?2016" rel="stylesheet" type="text/css" />
     <link media="screen" href="{$this->themeUrl()}a_mobile.css?1616" rel="stylesheet" type="text/css" />
     <link media="print"  href="{$this->themeUrl()}theme_print.css" rel="stylesheet" type="text/css" />
     <link rel="alternate" type="application/rss+xml" title="Flyspray RSS 1.0 Feed"
@@ -46,7 +46,7 @@
 		// avoid conflict with Prototype JavaScript framework
 		var $jQuery = jQuery.noConflict();
 	</script>
-	<script type="text/javascript" src="{$baseurl}javascript/jquery-ext.js?1135"></script>
+	<script type="text/javascript" src="{$baseurl}javascript/jquery-ext.js?2016"></script>
 	
     <script type="text/javascript" src="{$baseurl}javascript/script.aculo.us/scriptaculous.js"></script>
 	
@@ -54,7 +54,7 @@
         <script type="text/javascript" src="{$baseurl}javascript/{$do}.js"></script>
     <?php endif; ?>
     <?php if ( $do == 'pm' || $do == 'admin'): ?>
-        <script type="text/javascript" src="{$baseurl}javascript/tablecontrol.js"></script>
+        <script type="text/javascript" src="{$baseurl}javascript/tablecontrol.js?2016"></script>
     <?php endif; ?>
 	<script type="text/javascript">
 	//<![CDATA[
