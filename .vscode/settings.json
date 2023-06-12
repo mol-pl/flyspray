@@ -25,5 +25,5 @@
 	},
 	"vscode-postgres.defaultConnection": "local 10.0",
 	// "vscode-postgres.defaultConnection": "molpl",
-	"vscode-postgres.defaultDatabase": "bibz"
+	"vscode-postgres.defaultDatabase": "rejsz"
 }

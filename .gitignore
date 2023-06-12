@@ -1,4 +1,5 @@
 *.lnk
+*.priv.*
 /flyspray.conf.php
 .private.conf.php
 /cache/*
