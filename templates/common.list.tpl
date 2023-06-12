@@ -1,4 +1,7 @@
 <p>{L('listnote')}</p>
+<?php if ($list_type == 'version'): ?>
+<p>→ <a href="#current-version">{L('present')}</a></p>
+<?php endif; ?>
 <div class="cblist-container">
 <?php if (count($rows)): ?>
 <div class="controlBox-container">
@@ -31,11 +34,18 @@
    <tbody>
     <?php
     $countlines = -1;
+	$had_present = false;
     foreach ($rows as $row):
     $countlines++; ?>
     <tr>
       <?php if ($list_type == 'version'): ?>
 		<td>
+			<?php
+				if (!$had_present && $row[$list_type.'_tense'] == 2) {
+					$had_present = true;
+					echo "<a name='current-version' class='list-link'></a>";
+				}
+			?>
 		  {$row[$list_type.'_id']}
 		</td>
       <?php endif; ?>

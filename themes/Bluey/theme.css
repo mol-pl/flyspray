@@ -1795,6 +1795,14 @@ span.autocomplete ul li.selected {
 	}
 }
 
+/* jump link anchor for versions etc */
+.list-link {
+	display: block;
+	position: relative;
+	top: -4em;
+}
+
+/*  */
 table.list {
 	border-collapse:collapse;
 }
