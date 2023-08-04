@@ -26,12 +26,8 @@
 	<!-- when there is a single tag use it instead of project title -->
 	<h2 class="summary severity{$task_details['task_severity']}"
 		><?php
-			if (!empty($task_details['tags']) && count($task_details['tags'])==1): 
-				?><?php 
-					foreach ($task_details['tags'] as $tag_id): 
-						?>{!tpl_tagname($tag_id)}<?php 
-					endforeach;
-				?><?php
+			if (!empty($task_details['proj_tags']) && count($task_details['proj_tags'])==1): 
+				?>{$task_details['proj_tags'][0]}<?php 
 			else:
 				?>{$task_details['project_title']}<?php 
 			endif;

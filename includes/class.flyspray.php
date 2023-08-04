@@ -360,6 +360,8 @@ class Flyspray
             $get_details['assigned_to_name'] = $assignees[1];
         }
 		$get_details['tags'] = Flyspray::GetAssignedTags($task_id);
+		$get_details['proj_tags'] = Flyspray::GetProjectTags($task_id);
+
         $cache[$task_id] = $get_details;
 
         return $get_details;
@@ -920,6 +922,35 @@ class Flyspray
         $tags = array();
         while ($row = $db->FetchRow($sql)) {
             $tags[] = $row['tag_id'];
+        }
+
+        return $tags;
+    } /// }}}
+
+    // {{{
+    /**
+     * Get names of project tags assigned to the task.
+     * @param integer $task_id
+     * @access public static
+     * @return array
+     * @version 1.0
+     */
+    function GetProjectTags($task_id)
+    {
+        global $db, $conf;
+
+		$filter = '';
+		if (!empty($conf['general']['tag_project_group'])) {
+			$filter = " AND t.tag_group ~ '{$conf['general']['tag_project_group']}'";
+		}
+
+        $sql = $db->Query('SELECT t.tag_name
+                             FROM {list_tag} t, {tag_assignment} a
+                            WHERE task_id = ? AND t.tag_id = a.tag_id '.$filter,
+                              array($task_id));
+        $tags = array();
+        while ($row = $db->FetchRow($sql)) {
+            $tags[] = $row['tag_name'];
         }
 
         return $tags;

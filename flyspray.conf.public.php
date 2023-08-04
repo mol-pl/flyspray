@@ -33,6 +33,10 @@ new_task_reportedver_tenses = "2,3"
 anon_lock = "1"									; Boolean. 0 = off, 1 = on. If on anonymous user will only be able to see headers.
 domain_auth_only = "0"							; Boolean. 0 = off, 1 = on. If on only LDAP auth will be allowed.
 
+enable_intro_collapser = "1"					; Boolean. 0 = off, 1 = on. If on then intro message tables will be collapsed. Default=off
+
+tag_project_group = "projekt"					; Regexp filter for project groups of tags
+
 ; Config for sched_attach_delete.php
 [attach_del]
 enabled = "1"									; Boolean. 0 = off, 1 = on. If on anonymous user will only be able to see headers.
