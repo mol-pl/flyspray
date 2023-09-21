@@ -20,16 +20,16 @@ Highlights of differences from original:
 * Mass close for tasks from given version (with given type).
 * Form copying to allow cross-domain copy of tasks between Flyspray installations.
 * Read-only edit form to allow copying closed tasks.
-* Attachments preview (lightbox) -- AFAIK was later added to Flyspray.
+* Attachments preview (lightbox) — AFAIK this was later added to Flyspray.
 * Support for `blockquote` tag in dokuwiki.
-* URL/e-mail inserting helper.
-* Dokuwiki templates support with syntax resembling MediaWiki (defined in plugin configuration though). 
+* Editor tool: helper for inserting URLs (and e-mails).
+* Support for templates in Dokuwiki with template syntax resembling MediaWiki (templates defined in plugin configuration though, not like in MW). 
 * Test sections support for configuration.
 * Flyspray prefix code customization.
 * Database errors logging.
 * Anonymous users notifications.
-* Special support tags dokuwiki -- text in this tags is hidden anonymous users (remove from both notifications, tasks details and comments).
-* Anonymous users lock -- file configuration based lock for your Flyspray installation. With `anon_lock = "1"` users are not able to view any tasks, nor download any files. Only thing they can do is -- using login (authentication), lost password and registration forms.
+* Special support tags in dokuwiki — text in this tags is hidden from anonymous users (removed from notifications, tasks details and comments).
+* Anonymous users lock — a configuration file based lock for your Flyspray installation (blocks anonymous access). With `anon_lock = "1"`, users are not able to view any tasks or download any files. The only thing they can do is to use login form (authentication), lost password form, and registration form.
 * Filter by projects when viewing/searching all tasks (in all projects).
 * Remove old attachments (to be run via cron).
 
