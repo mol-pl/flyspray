@@ -182,7 +182,7 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		
 		// me link (current user)
 		$todo_myself_base = $base_link . '&dev=' . $user->id;
-		$code .= ' • [[' . $todo_myself_base . $data['my_status'] . '|TODO moje]]';
+		$code .= ' • TODO moje: [[' . $todo_myself_base . $data['my_status'] . '|moje dev/test]] • [[' . $todo_myself_base . '|moje all]]';
 		
 		return $code;
 	}	
