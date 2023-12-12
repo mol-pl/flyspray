@@ -89,7 +89,7 @@ if ( ($fromdate = Req::val('fromdate')) || Req::val('todate')) {
         }
 }
 
-if (count(Req::val('events'))) {
+if (count(Req::val('events', array()))) {
     $histories = $db->Query("SELECT h.*
                         FROM  {history} h
                    LEFT JOIN {tasks} t ON h.task_id = t.task_id
