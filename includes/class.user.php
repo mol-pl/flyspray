@@ -27,7 +27,7 @@ class User
 			&& !empty($_SERVER["HTTPS"])  && $_SERVER["HTTPS"]=='on'
 			&& !empty($_SERVER["AUTHENTICATE_SAMACCOUNTNAME"])
 		) {
-			$result = $db->Query('SELECT user_id FROM {users} u WHERE u.SAMACCOUNTNAME = ?',
+			$result = $db->Query('SELECT user_id FROM {users} u WHERE LOWER(u.SAMACCOUNTNAME) = LOWER(?)',
                                 array($_SERVER["AUTHENTICATE_SAMACCOUNTNAME"]));
 	        if ($db->countRows($result)) {
 				$row = $db->FetchRow($result);
