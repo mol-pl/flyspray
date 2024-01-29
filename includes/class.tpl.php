@@ -677,7 +677,7 @@ if(isset($conf['general']['syntax_plugin'])) {
 
 class TextFormatter
 {
-    function get_javascript()
+    public static function get_javascript()
     {
         global $conf;
 
@@ -703,7 +703,7 @@ class TextFormatter
 		
 		@return true if any tag was found
 	*/
-    function remove_tags(&$text)
+    public static function remove_tags(&$text)
     {
         global $conf;
 		
@@ -726,7 +726,7 @@ class TextFormatter
 		
 		@return true if any tag was found
 	*/
-    function is_restore_tags_needed(&$text, &$instructions)
+    public static function is_restore_tags_needed(&$text, &$instructions)
     {
         global $conf;
 		
@@ -750,7 +750,7 @@ class TextFormatter
 		return $isNeeded;
 	}
 
-    function render($text, $onlyfs = false, $type = null, $id = null, $instructions = null)
+    public static function render($text, $onlyfs = false, $type = null, $id = null, $instructions = null)
     {
         global $conf;
 
@@ -788,7 +788,7 @@ class TextFormatter
         }
     }
 
-    function textarea($name, $rows, $cols, $attrs = null, $content = null)
+    public static function textarea($name, $rows, $cols, $attrs = null, $content = null)
     {
         global $conf;
 

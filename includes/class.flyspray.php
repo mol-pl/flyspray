@@ -79,13 +79,14 @@ class Flyspray
         }
 
         $sizes = array();
-        foreach (array(ini_get('memory_limit'), ini_get('post_max_size'), ini_get('upload_max_filesize')) as $val) {
-            if (!$val) {
+        foreach (array(ini_get('memory_limit'), ini_get('post_max_size'), ini_get('upload_max_filesize')) as $str) {
+            if (!$str) {
                 continue;
             }
 
-            $val = trim($val);
-            $last = strtolower($val[strlen($val)-1]);
+			$str = trim($str);
+			$last = substr($str, -1);
+			$val = intval(substr($str, 0, -1));
             switch ($last) {
                 // The 'G' modifier is available since PHP 5.1.0
                 case 'g':

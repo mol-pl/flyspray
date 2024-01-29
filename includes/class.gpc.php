@@ -16,34 +16,34 @@
  
 class Req
 {
-    function has($key)
+    public static function has($key)
     {
         return isset($_REQUEST[$key]);
     }
 
-    function val($key, $default = null)
+    public static function val($key, $default = null)
     {
         return Req::has($key) ? $_REQUEST[$key] : $default;
     }
 
     //it will always return a number no matter what(null is 0)
-    function num($key, $default = null)
+    public static function num($key, $default = null)
     {
         return Filters::num(Req::val($key, $default));
     }
     
-    function enum($key, $options, $default = null)
+    public static function enum($key, $options, $default = null)
     {
         return Filters::enum(Req::val($key, $default), $options);
     }
 
     //always a string (null is typed to an empty string)
-    function safe($key)
+    public static function safe($key)
     {
         return Filters::noXSS(Req::val($key));
     }
 
-    function isAlnum($key)
+    public static function isAlnum($key)
     {
         return Filters::isAlnum(Req::val($key));
     }
@@ -101,7 +101,7 @@ class Get
     }
 
     //it will always return a number no matter what(null is 0)
-    function num($key, $default = null)
+    public static function num($key, $default = null)
     {
         return Filters::num(Get::val($key, $default));
     }
