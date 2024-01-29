@@ -1024,7 +1024,7 @@ class Notifications {
 		* @access public
 		* @return void
 		*/
-	function fixMsgData($data)
+	public static function fixMsgData($data)
 	{
 		// at the first step, remove all NUL bytes
 		//users with broken databases  encoding  can give us this :(

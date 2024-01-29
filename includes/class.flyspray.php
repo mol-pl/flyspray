@@ -147,7 +147,7 @@ class Flyspray
             die('Headers are already sent, this should not have happened. Please inform Flyspray developers.');
         }
 
-        $url = FlySpray::absoluteURI($url);
+        $url = Flyspray::absoluteURI($url);
 
 
         header('Location: '. $url);
@@ -1134,7 +1134,7 @@ class Flyspray
 
             $type = @mime_content_type($fname);
         // I hope we don't have to...
-        } elseif(!FlySpray::function_disabled('exec') && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN'
+        } elseif(!Flyspray::function_disabled('exec') && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN'
                  && php_uname('s') !== 'SunOS') {
 
                $type = @exec(sprintf('file -bi %s', escapeshellarg($fname)));

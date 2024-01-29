@@ -1092,7 +1092,7 @@ class Url {
         }
 	}
 
-    function query_from_array($vars) {
+    public static function query_from_array($vars) {
         $append = '';
 		foreach ($vars as $key => $value) {
             if (is_array($value)) {

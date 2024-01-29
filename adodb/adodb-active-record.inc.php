@@ -69,7 +69,7 @@ class ADODB_Active_Record {
 	var $_original = false; // the original values loaded or inserted, refreshed on update
 	
 	// should be static
-	function SetDatabaseAdapter(&$db) 
+	public static function SetDatabaseAdapter(&$db) 
 	{
 		return ADODB_SetDatabaseAdapter($db);
 	}
@@ -94,7 +94,7 @@ class ADODB_Active_Record {
 			$this->_dbat = sizeof($_ADODB_ACTIVE_DBS)-1;
 		
 		
-		if ($this->_dbat < 0) $this->Error("No database connection set; use ADOdb_Active_Record::SetDatabaseAdapter(\$db)",'ADODB_Active_Record::__constructor');
+		if ($this->_dbat < 0) $this->Error("No database connection set; use ADODB_Active_Record::SetDatabaseAdapter(\$db)",'ADODB_Active_Record::__constructor');
 		
 		$this->_table = $table;
 		$this->_tableat = $table; # reserved for setting the assoc value to a non-table name, eg. the sql string in future
@@ -259,7 +259,7 @@ class ADODB_Active_Record {
 		}
 		
 		if (function_exists('adodb_throw')) {	
-			if (!$db) adodb_throw('ADOdb_Active_Record', $fn, -1, $err, 0, 0, false);
+			if (!$db) adodb_throw('ADODB_Active_Record', $fn, -1, $err, 0, 0, false);
 			else adodb_throw($db->databaseType, $fn, -1, $err, 0, 0, $db);
 		} else
 			if (!$db || $db->debug) ADOConnection::outp($this->_lasterr);
@@ -295,7 +295,7 @@ class ADODB_Active_Record {
 	
 		if ($this->_dbat < 0) {
 			$false = false;
-			$this->Error("No database connection set: use ADOdb_Active_Record::SetDatabaseAdaptor(\$db)", "DB");
+			$this->Error("No database connection set: use ADODB_Active_Record::SetDatabaseAdaptor(\$db)", "DB");
 			return $false;
 		}
 		$activedb = $_ADODB_ACTIVE_DBS[$this->_dbat];
