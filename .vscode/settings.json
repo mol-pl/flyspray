@@ -24,6 +24,18 @@
 	"files.associations": {
 		"*.sql": "postgres" 
 	},
+
+	// less noise
+	"intelephense.diagnostics.undefinedTypes": false,
+	"intelephense.diagnostics.undefinedFunctions": true,
+	"intelephense.diagnostics.undefinedConstants": false,
+	"intelephense.diagnostics.undefinedClassConstants": false,
+	"intelephense.diagnostics.undefinedMethods": false,
+	"intelephense.diagnostics.undefinedProperties": false,
+	"intelephense.diagnostics.undefinedVariables": true,
+	"intelephense.diagnostics.deprecated": false,
+	"intelephense.diagnostics.typeErrors": false,
+	
 	"vscode-postgres.defaultConnection": "local 10.0",
 	// "vscode-postgres.defaultConnection": "molpl",
 	"vscode-postgres.defaultDatabase": "rejsz"
