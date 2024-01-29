@@ -85,7 +85,7 @@ class Flyspray
             }
 
             $val = trim($val);
-            $last = strtolower($val{strlen($val)-1});
+            $last = strtolower($val[strlen($val)-1]);
             switch ($last) {
                 // The 'G' modifier is available since PHP 5.1.0
                 case 'g':
@@ -99,7 +99,7 @@ class Flyspray
             $sizes[] = $val;
         }
         clearstatcache();
-        $func = create_function('$x', 'return @is_file($x . "/index.html") && is_writable($x);');
+        $func = function($x) { return @is_file($x . "/index.html") && is_writable($x); };
         $this->max_file_size = ((bool) ini_get('file_uploads') && $func(BASEDIR . '/attachments')) ? round((min($sizes)/1024/1024), 1) : 0;
     } // }}}
 
@@ -233,17 +233,17 @@ class Flyspray
         $server = $protocol .'://'. $host . (isset($port) ? ':'. $port : '');
 
 
-        if (!strlen($url) || $url{0} == '?' || $url{0} == '#') {
+        if (!strlen($url) || $url[0] == '?' || $url[0] == '#') {
             $uri = isset($_SERVER['REQUEST_URI']) ?
                 $_SERVER['REQUEST_URI'] : $_SERVER['PHP_SELF'];
-            if ($url && $url{0} == '?' && false !== ($q = strpos($uri, '?'))) {
+            if ($url && $url[0] == '?' && false !== ($q = strpos($uri, '?'))) {
                 $url = substr($uri, 0, $q) . $url;
             } else {
                 $url = $uri . $url;
             }
         }
 
-        if ($url{0} == '/') {
+        if ($url[0] == '/') {
             return $server . $url;
         }
 
@@ -626,7 +626,7 @@ class Flyspray
         } elseif (strtolower($pwcrypt) == 'md5') {
             return md5($password);
         } else {
-            return crypt($password);
+            return password_hash($password, PASSWORD_BCRYPT);
         }
     } // }}}
     // {{{

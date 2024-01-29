@@ -393,7 +393,7 @@ class Backend
                 $new_assignees = array_diff(Flyspray::int_explode(' ', $new_assigned_to), Flyspray::int_explode(' ', $old_assigned_to));
                 // Remove current user from notification list
                 if (!$user->infos['notify_own']) {
-                    $new_assignees = array_filter($new_assignees, create_function('$u', 'global $user; return $user->id != $u;'));
+                    $new_assignees = array_filter($new_assignees, function($u) { global $user; return $user->id != $u; });
                 }
                 if(count($new_assignees)) {
                     $notify->Create(NOTIFY_NEW_ASSIGNEE, $task['task_id'], null, $notify->SpecificAddresses($new_assignees));

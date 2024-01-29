@@ -173,7 +173,7 @@ function buildURLparams($params, $sep='&amp;'){
 function buildAttributes($params){
   $url = '';
   foreach($params as $key => $val){
-    if($key{0} == '_') continue;
+    if($key[0] == '_') continue;
 
     $url .= $key.'="';
     $url .= htmlspecialchars ($val);
@@ -933,7 +933,7 @@ function obfuscate($email) {
 
     case 'hex' :
       $encode = '';
-      for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email{$x}).';';
+      for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email[$x]).';';
       return $encode;
 
     case 'none' :

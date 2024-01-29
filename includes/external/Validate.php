@@ -46,12 +46,12 @@ define('VALIDATE_SPACE',        '\s');
 define('VALIDATE_ALPHA_LOWER',  'a-z');
 define('VALIDATE_ALPHA_UPPER',  'A-Z');
 define('VALIDATE_ALPHA',        VALIDATE_ALPHA_LOWER . VALIDATE_ALPHA_UPPER);
-define('VALIDATE_EALPHA_LOWER', VALIDATE_ALPHA_LOWER . 'αινσϊύΰθμςωδλοφόÿβκξτϋγρυ¨εζη½πψώ');
-define('VALIDATE_EALPHA_UPPER', VALIDATE_ALPHA_UPPER . 'ΑΙΝΣΪέΐΘΜÒΩΔΛΟΦάΎΒΚΞΤΫΓΡΥ¦ΕΖΗΌΠΨή');
+define('VALIDATE_EALPHA_LOWER', VALIDATE_ALPHA_LOWER . 'Γ΅Γ©Γ­Γ³ΓΊΓ½Ε•ΔΔ›ΕΕ―Γ¤Γ«ΔΓ¶ΓΌΛ™ΓΆΔ™Γ®Γ΄Ε±ΔƒΕ„Ε‘Β¨ΔΊΔ‡Γ§ΛΔ‘Ε™Ε£');
+define('VALIDATE_EALPHA_UPPER', VALIDATE_ALPHA_UPPER . 'ΓΓ‰ΓΓ“ΓΓΕ”ΔΔΕ‡Ε®Γ„Γ‹ΔΓ–ΓΔΎΓ‚ΔΓΓ”Ε°Δ‚ΕƒΕΒ¦ΔΉΔ†Γ‡Δ½ΔΕΕΆ');
 define('VALIDATE_EALPHA',       VALIDATE_EALPHA_LOWER . VALIDATE_EALPHA_UPPER);
 define('VALIDATE_PUNCTUATION',  VALIDATE_SPACE . '\.,;\:&"\'\?\!\(\)');
 define('VALIDATE_NAME',         VALIDATE_EALPHA . VALIDATE_SPACE . "'" . "-");
-define('VALIDATE_STREET',       VALIDATE_NUM . VALIDATE_NAME . "/\\Ίª\.");
+define('VALIDATE_STREET',       VALIDATE_NUM . VALIDATE_NAME . "/\\ΕΕ\.");
 
 define('VALIDATE_ITLD_EMAILS',  1);
 define('VALIDATE_GTLD_EMAILS',  2);
@@ -741,9 +741,9 @@ class Validate
         } else {
             $date_len = strlen($format);
             for ($i = 0; $i < $date_len; $i++) {
-                $c = $format{$i};
+                $c = $format[$i];
                 if ($c == '%') {
-                    $next = $format{$i + 1};
+                    $next = $format[$i + 1];
                     switch ($next) {
                         case 'j':
                         case 'd':
