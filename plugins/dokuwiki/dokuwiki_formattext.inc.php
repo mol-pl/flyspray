@@ -151,7 +151,7 @@ class dokuwiki_TextFormatter
         $rows = intval($rows);
         $cols = intval($cols);
         $return = '<div id="dokuwiki_toolbar">'
-        		. dokuwiki_TextFormatter::getDokuWikiToolbar( $attrs['id'] )
+        		. self::getDokuWikiToolbar( $attrs['id'] )
         		. '</div>';
         
         $return .= "<textarea name=\"{$name}\" cols=\"$cols\" rows=\"$rows\" ";
@@ -171,7 +171,7 @@ class dokuwiki_TextFormatter
 	 *
 	 * @param string $textareaId
 	 */
-	function getDokuWikiToolbar( $textareaId ) {
+	public static function getDokuWikiToolbar( $textareaId ) {
 		global $dokuConf, $baseurl, $user;
 	
 		//
