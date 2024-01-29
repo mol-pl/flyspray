@@ -54,7 +54,7 @@ class Req
 
 class Post
 {
-    function has($key)
+    public static function has($key)
     {
         // XXX semantics is different for POST, as POST of '' values is never
         //     unintentionnal, whereas GET/COOKIE may have '' values for empty
@@ -62,24 +62,24 @@ class Post
         return isset($_POST[$key]);
     }
 
-    function val($key, $default = null)
+    public static function val($key, $default = null)
     {
         return Post::has($key) ? $_POST[$key] : $default;
     }
 
     //it will always return a number no matter what(null is 0)
-    function num($key, $default = null)
+    public static function num($key, $default = null)
     {
         return Filters::num(Post::val($key, $default));
     }
 
     //always a string (null is typed to an empty string)
-    function safe($key)
+    public static function safe($key)
     {
         return Filters::noXSS(Post::val($key));
     }
 
-    function isAlnum($key)
+    public static function isAlnum($key)
     {
         return Filters::isAlnum(Post::val($key));
     }
@@ -90,12 +90,12 @@ class Post
 
 class Get
 {
-    function has($key)
+    public static function has($key)
     {
         return isset($_GET[$key]) && $_GET[$key] !== '';
     }
 
-    function val($key, $default = null)
+    public static function val($key, $default = null)
     {
         return Get::has($key) ? $_GET[$key] : $default;
     }
@@ -107,12 +107,12 @@ class Get
     }
 
     //always a string (null is typed to an empty string)
-    function safe($key)
+    public static function safe($key)
     {
         return Filters::noXSS(Get::val($key));
     }
 
-    function enum($key, $options, $default = null)
+    public static function enum($key, $options, $default = null)
     {
         return Filters::enum(Get::val($key, $default), $options);
     }
@@ -124,12 +124,12 @@ class Get
 
 class Cookie
 {
-    function has($key)
+    public static function has($key)
     {
         return isset($_COOKIE[$key]) && $_COOKIE[$key] !== '';
     }
 
-    function val($key, $default = null)
+    public static function val($key, $default = null)
     {
         return Cookie::has($key) ? $_COOKIE[$key] : $default;
     }
@@ -155,7 +155,7 @@ class Filters {
      * @notes changed before 0.9.9 to avoid strange results
      * with arrays and objects
      */
-    function num($data)
+    public static function num($data)
     {
          return intval($data); // no further checks here please
     }
@@ -166,7 +166,7 @@ class Filters {
      * @return string htmlspecialchar'ed
      * @access public static
      */
-    function noXSS($data)
+    public static function noXSS($data)
     {
         if(empty($data) || is_numeric($data)) {
             return $data;
@@ -189,7 +189,7 @@ class Filters {
      * Be aware: $data MUST be an string, integers or any other
      * type is evaluated to FALSE
      */
-    function isAlnum($data)
+    public static function isAlnum($data)
     {
         return ctype_alnum($data) && strlen($data);
     }
@@ -202,7 +202,7 @@ class Filters {
      * @return mixed
      * @access public static
      */
-    function enum($data, $options)
+    public static function enum($data, $options)
     {
         if (!in_array($data, $options) && isset($options[0])) {
             return $options[0];

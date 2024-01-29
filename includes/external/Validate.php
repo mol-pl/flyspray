@@ -221,7 +221,7 @@ class Validate
      *
      * @access public
      */
-    function number($number, $options = array())
+    public static function number($number, $options = array())
     {
         $decimal = $dec_prec = $min = $max = null;
         if (is_array($options)) {
@@ -508,7 +508,7 @@ class Validate
      *
      * @access public
      */
-    function email($email, $options = null)
+    public static function email($email, $options = null)
     {
         $check_domain = false;
         $use_rfc822 = false;
@@ -576,7 +576,7 @@ class Validate
      *
      * @access public
      */
-    function string($string, $options)
+    public static function string($string, $options)
     {
         $format = null;
         $min_length = $max_length = 0;
@@ -632,7 +632,7 @@ class Validate
      *
      * @access public
      */
-    function uri($url, $options = null)
+    public static function uri($url, $options = null)
     {
         $strict = ';/?:@$,';
         $domain_check = false;
@@ -700,7 +700,7 @@ class Validate
      *
      * @access public
      */
-    function date($date, $options)
+    public static function date($date, $options)
     {
         $max = $min = false;
         $format = '';
@@ -998,7 +998,7 @@ class Validate
      *
      * @access public
      */
-    function multiple(&$data, &$val_type, $remove = false)
+    public static function multiple(&$data, &$val_type, $remove = false)
     {
         $keys = array_keys($data);
         $valid = array();
