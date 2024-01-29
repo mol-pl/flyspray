@@ -175,7 +175,6 @@ class dbObject {
 	* Destroys the object
 	*/
 	function destroy() {
-		unset( $this );
 	}
 	
 	/**
@@ -2364,7 +2363,6 @@ class adoSchema {
 	* @deprecated adoSchema now cleans up automatically.
 	*/
 	function Destroy() {
-		unset( $this );
 	}
 }
 
