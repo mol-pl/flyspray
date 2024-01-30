@@ -149,7 +149,7 @@ class dbObject {
 		
 	}
 	
-	function create($xmls=null) {
+	function create(&$xmls) {
 		return array();
 	}
 	
@@ -472,7 +472,7 @@ class dbTable extends dbObject {
 	*
 	* @param object $xmls adoSchema object
 	* @return array Array containing table creation SQL
-	*/
+	*/	
 	function create( &$xmls ) {
 		$sql = array();
 		
