@@ -145,7 +145,7 @@ class dokuwiki_TextFormatter
         
         return $return;
     }
-    function textarea( $name, $rows, $cols, $attrs = null, $content = null) {
+    public static function textarea( $name, $rows, $cols, $attrs = null, $content = null) {
     	
     	$name = htmlspecialchars($name, ENT_QUOTES, 'utf-8');
         $rows = intval($rows);

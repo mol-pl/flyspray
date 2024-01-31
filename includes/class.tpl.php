@@ -81,7 +81,7 @@ class Tpl
     function display($_tpl, $_arg0 = null, $_arg1 = null)
     {
         // if only plain text
-        if (is_array($_tpl) && count($tpl)) {
+        if (is_array($_tpl) && count($_tpl)) {
             echo $_tpl[0];
             return;
         }
