@@ -111,16 +111,11 @@ function utf8_check($Str) {
 /**
  * Unicode aware replacement for strlen()
  *
- * utf8_decode() converts characters that are not in ISO-8859-1
- * to '?', which, for the purpose of counting, is alright - It's
- * even faster than mb_strlen.
- *
  * @author <chernyshevsky at hotmail dot com>
  * @see    strlen()
- * @see    utf8_decode()
  */
 function utf8_strlen($string){
-  return strlen(utf8_decode($string));
+  return mb_strlen($string);
 }
 
 /**
