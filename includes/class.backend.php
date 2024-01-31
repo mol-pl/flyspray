@@ -258,7 +258,7 @@ class Backend
 	 *	True if the lists are the same.
 	 *  Array of integers created with `Flyspray::int_explode` from $new.
 	 */
-	function _equal_old_new_ids($old, $new) {
+	private static function _equal_old_new_ids($old, $new) {
 		$old = trim($old);
 		$new = trim($new);
 		// check if strings are equal

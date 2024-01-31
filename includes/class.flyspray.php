@@ -1221,7 +1221,7 @@ class Flyspray
      * @access public
      * @return string
      */
-    function getSvnRev()
+    public static function getSvnRev()
     {
         if(is_file(BASEDIR. '/REVISION') && is_dir(BASEDIR . '/.svn')) {
 
