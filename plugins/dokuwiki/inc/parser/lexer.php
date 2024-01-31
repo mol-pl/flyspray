@@ -541,8 +541,8 @@ class Doku_Lexer {
         // modes starting with plugin_ are all handled by the same
         // handler but with an additional parameter
         if(substr($handler,0,7)=='plugin_'){
-          list($handler,$plugin) = explode('_',$handler,2);
-              return $this->_parser->$handler($content, $is_match, $pos, $plugin);
+            list($handler,$plugin)  = array_pad(explode('_',$handler,2), 2, "");
+            return $this->_parser->$handler($content, $is_match, $pos, $plugin);
         }
 
             return $this->_parser->$handler($content, $is_match, $pos);

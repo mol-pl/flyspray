@@ -120,8 +120,8 @@ class syntax_plugin_changelinks extends DokuWiki_Syntax_Plugin {
     function render($mode, &$renderer, $data) {
         if($mode == 'xhtml') {
             global $dokuConf;
-            $id = $data[0];
-            $name = $data[1];
+            $id = is_array($data) && count($data) ? $data[0] : '';
+            $name = is_array($data) && count($data)>1 ? $data[1] : '';
            
             //prepare for formating
             $link['target'] = $dokuConf['target']['wiki'];
@@ -134,10 +134,12 @@ class syntax_plugin_changelinks extends DokuWiki_Syntax_Plugin {
             $link['name']   = ($name) ? $name : $id;
             $link['title']  = ($name) ? $name : $id;
             //add search string
+			/*
             if($search){
                 ($dokuConf['userewrite']) ? $link['url'].='?s=' : $link['url'].='&amp;s=';
                 $link['url'] .= urlencode($search);
             }
+			*/
     
             //output formatted
             $renderer->doc .= $renderer->_formatLink($link);

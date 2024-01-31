@@ -147,8 +147,8 @@ class DokuWiki_Syntax_Plugin extends Doku_Parser_Mode {
     // plugin introspection methods
     // extract from class name, format = <plugin type>_plugin_<name>[_<component name>]
     function getPluginType() { list($t) = explode('_', get_class($this), 2); return $t;  }
-    function getPluginName() { list($t, $p, $n) = explode('_', get_class($this), 4); return $n; }
-    function getPluginComponent() { list($t, $p, $n, $c) = explode('_', get_class($this), 4); return (isset($c)?$c:''); }
+    function getPluginName() { list($t, $p, $n)  = array_pad(explode('_', get_class($this), 4), 3, ""); return $n; }
+    function getPluginComponent() { list($t, $p, $n, $c)  = array_pad(explode('_', get_class($this), 4), 4, ""); return (isset($c)?$c:''); }
 
     // localisation methods
     /**

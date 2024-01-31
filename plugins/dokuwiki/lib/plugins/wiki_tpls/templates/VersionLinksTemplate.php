@@ -52,16 +52,18 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		}
 		
 		// drugi parametr może być wielokrotny...
-		if (is_array($tpl_params['ver_id']))
-		{
-			foreach($tpl_params['ver_id'] as $ver)
+		if (!empty($tpl_params['ver_id'])) {
+			if (is_array($tpl_params['ver_id']))
 			{
-				$base_link .= '&due[]='.$ver;
+				foreach($tpl_params['ver_id'] as $ver)
+				{
+					$base_link .= '&due[]='.$ver;
+				}
 			}
-		}
-		else
-		{
-			$base_link .= '&due[]='.$tpl_params['ver_id'];
+			else
+			{
+				$base_link .= '&due[]='.$tpl_params['ver_id'];
+			}
 		}
 		
 		return $base_link;

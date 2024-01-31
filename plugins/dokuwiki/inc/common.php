@@ -641,7 +641,7 @@ function pageTemplate($data){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawWikiSlices($range,$id,$rev=''){
-  list($from,$to) = explode('-',$range,2);
+  list($from,$to)  = array_pad(explode('-',$range,2), 2, "");
   $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
   if(!$from) $from = 0;
   if(!$to)   $to   = strlen($text)+1;

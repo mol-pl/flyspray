@@ -295,8 +295,8 @@ $page->assign('fmt', $fmt);
 $page->assign('graphname', $graphname);
 
 $endtime = microtime();
-list($startusec, $startsec) = explode(' ', $starttime);
-list($endusec, $endsec) = explode(' ', $endtime);
+list($startusec, $startsec)  = array_pad(explode(' ', $starttime), 2, "");
+list($endusec, $endsec)  = array_pad(explode(' ', $endtime), 2, "");
 $diff = ($endsec - $startsec) + ($endusec - $startusec);
 $page->assign('time', round($diff, 2));
 

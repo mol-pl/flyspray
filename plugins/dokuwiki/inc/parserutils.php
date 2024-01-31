@@ -241,7 +241,7 @@ function p_get_metadata($id, $key=false, $render=false){
 
   // filter by $key
   if ($key){
-    list($key, $subkey) = explode(' ', $key, 2);
+    list($key, $subkey)  = array_pad(explode(' ', $key, 2), 2, "");
     if (trim($subkey)) return $meta[$key][$subkey];
     else return $meta[$key];
   }

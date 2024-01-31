@@ -143,7 +143,7 @@ class cache {
     }
 
     if (isset($stats[$this->ext])) {
-      list($ext,$count,$hits) = explode(',',$stats[$this->ext]);
+      list($ext,$count,$hits)  = array_pad(explode(',',$stats[$this->ext]), 3, "");
     } else {
       $ext = $this->ext;
       $count = 0;

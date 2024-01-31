@@ -5,7 +5,7 @@
 
   // start timing Dokuwiki execution
   function delta_time($start=0) {
-    list($usec, $sec) = explode(" ", microtime());
+    list($usec, $sec)  = array_pad(explode(" ", microtime()), 2, "");
     return ((float)$usec+(float)$sec)-((float)$start);
   }
   define('DOKU_START_TIME', delta_time());
@@ -269,7 +269,7 @@ function getBaseURL($abs=false){
   if($dokuConf['baseurl']) return $dokuConf['baseurl'].$dir;
 
   //split hostheader into host and port
-  list($host,$port) = explode(':',$_SERVER['HTTP_HOST']);
+  list($host,$port)  = array_pad(explode(':',$_SERVER['HTTP_HOST']), 2, "");
   if(!$port)  $port = $_SERVER['SERVER_PORT'];
   if(!$port)  $port = 80;
 
