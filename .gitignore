@@ -2,6 +2,7 @@
 *.priv.*
 /flyspray.conf.php
 .private.conf.php
+/attachments/*
 /cache/*
 /.htaccess
 /_test*
