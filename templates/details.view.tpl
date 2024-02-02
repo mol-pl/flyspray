@@ -5,9 +5,9 @@
 	><img src="{$this->get_image('klipper_icon')}" alt="{L('copy summary')}" 
 	/></button>
 	
-	<!--
+	<?php /*
 	<a href="{$conf['mol']['bibz_base_url']}?do=details&task_id={$task_details['task_id']}">widok w Bibz</a>
-	-->
+	*/ ?>
 
 	<?php if ($prev_id): ?>
   {!tpl_tasklink($prev_id, L('previoustask'), false, array('id'=>'prev', 'accesskey' => 'p'))}
