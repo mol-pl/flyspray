@@ -68,24 +68,36 @@ class Flyspray
      */
     function __construct()
     {
-        global $db;
-
         $this->startSession();
-
+        $this->loadPrefs();
+        $this->checkMaxFileSize();
+	}
+	private function loadPrefs() {
+        global $db;
         $res = $db->Query('SELECT pref_name, pref_value FROM {prefs}');
 
         while ($row = $db->FetchRow($res)) {
             $this->prefs[$row['pref_name']] = $row['pref_value'];
         }
-
-        $sizes = array();
-        foreach (array(ini_get('memory_limit'), ini_get('post_max_size'), ini_get('upload_max_filesize')) as $str) {
+	}
+	/** Check max file size. */
+	private function checkMaxFileSize(){
+		$inis = array(ini_get('memory_limit'), ini_get('post_max_size'), ini_get('upload_max_filesize'));
+		$sizes = self::checkIniFileSize($inis);
+		$files_ok = (bool) ini_get('file_uploads') && self::checkDirLock(BASEDIR . '/attachments');
+		$php_size_limit = (int)round((min($sizes)/1024/1024), 1);
+        $this->max_file_size = $files_ok ? $php_size_limit : 0;
+	}
+	/** Check size of ini values. */
+	public static function checkIniFileSize($inis){
+		$sizes = array();
+        foreach ($inis as $str) {
             if (!$str) {
                 continue;
             }
 
 			$str = trim($str);
-			$last = substr($str, -1);
+			$last = strtolower(substr($str, -1));
 			$val = intval(substr($str, 0, -1));
             switch ($last) {
                 // The 'G' modifier is available since PHP 5.1.0
@@ -99,9 +111,12 @@ class Flyspray
 
             $sizes[] = $val;
         }
+		return $sizes;
+	}
+	/** @private Check if dir is locked from public view, but writeable.  */
+	public static function checkDirLock($dir){
         clearstatcache();
-        $func = function($x) { return @is_file($x . "/index.html") && is_writable($x); };
-        $this->max_file_size = ((bool) ini_get('file_uploads') && $func(BASEDIR . '/attachments')) ? round((min($sizes)/1024/1024), 1) : 0;
+        return @is_file($dir . "/index.html") && is_writable($dir);
     } // }}}
 
     public static function base_version($version)
