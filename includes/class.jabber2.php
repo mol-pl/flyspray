@@ -45,7 +45,7 @@ class Jabber
         }
 
         // Extract data from user@server.org
-        list($username, $server) = explode('@', $login);
+        list($username, $server)  = array_pad(explode('@', $login), 2, "");
 
         // Decide whether or not to use encryption
         if ($security == SECURITY_SSL && !Jabber::can_use_ssl() || $security == SECURITY_TLS && !Jabber::can_use_tls()) {
@@ -539,12 +539,12 @@ class Jabber
         return false;
     }
 
-    function can_use_ssl()
+    public static function can_use_ssl()
     {
         return extension_loaded('openssl');
     }
 
-    function can_use_tls()
+    public static function can_use_tls()
     {
         return Jabber::can_use_ssl() && function_exists('stream_socket_enable_crypto');
     }
@@ -583,7 +583,7 @@ class Jabber
      * @access public
      * @return array a => b ...
      */
-    function parse_data($data)
+    public static function parse_data($data)
     {
         // super basic, but should suffice
         $data = explode(',', $data);
@@ -603,7 +603,7 @@ class Jabber
      * @access public
      * @return string
      */
-    function implode_data($data)
+    public static function implode_data($data)
     {
         $return = array();
         foreach ($data as $key => $value) {
@@ -618,7 +618,7 @@ class Jabber
      * @access public
      * @return string
      */
-    function check_jid($jid)
+    public static function check_jid($jid)
     {
         $i = strpos($jid, '@');
         if ($i === false) {
@@ -798,7 +798,7 @@ class Jabber
         return $result;
     }
 
-    function jspecialchars($data)
+    public static function jspecialchars($data)
     {
         return htmlspecialchars($data, ENT_QUOTES, 'utf-8');
     }
@@ -810,7 +810,7 @@ class Jabber
 	// xmlize()
 	// (c) Hans Anderson / http://www.hansanderson.com/php/xml/
 
-	function xmlize($data, $WHITE=1, $encoding='UTF-8') {
+	public static function xmlize($data, $WHITE=1, $encoding='UTF-8') {
 
 		$data = trim($data);
         if (substr($data, 0, 5) != '<?xml') {
@@ -846,7 +846,7 @@ class Jabber
 	// _xml_depth()
 	// (c) Hans Anderson / http://www.hansanderson.com/php/xml/
 
-	function _xml_depth($vals, &$i) {
+	public static function _xml_depth($vals, &$i) {
 		$children = array();
 
 		if ( isset($vals[$i]['value']) )

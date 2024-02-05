@@ -373,7 +373,7 @@
 	* All error messages go through this bottleneck function.
 	* You can define your own handler by defining the function name in ADODB_OUTP.
 	*/
-	function outp($msg,$newline=true)
+	public static function outp($msg,$newline=true)
 	{
 	global $ADODB_FLUSH,$ADODB_OUTP;
 	
@@ -565,7 +565,7 @@
 	*/
 	function QMagic($s)
 	{
-		return $this->qstr($s,get_magic_quotes_gpc());
+		return $this->qstr($s,false);
 	}
 
 	function q(&$s)
@@ -782,7 +782,7 @@
 		} else {
 			$this->_transOK = false;
 			$this->RollbackTrans();
-			if ($this->debug) ADOCOnnection::outp("Smart Rollback occurred");
+			if ($this->debug) ADOConnection::outp("Smart Rollback occurred");
 		}
 		
 		return $this->_transOK;
@@ -1746,9 +1746,6 @@
 		if (!$rs) {
 		// no cached rs found
 			if ($this->debug) {
-				if (get_magic_quotes_runtime() && !$this->memCache) {
-					ADOConnection::outp("Please disable magic_quotes_runtime - it corrupts cache files :(");
-				}
 				if ($this->debug !== -1) ADOConnection::outp( " $md5file cache failure: $err (see sql below)");
 			}
 			
@@ -2452,7 +2449,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	 *
 	 * @return date in unix timestamp format, or 0 if before TIMESTAMP_FIRST_YEAR, or false if invalid date format
 	 */
-	function UnixDate($v)
+	public static function UnixDate($v)
 	{
 		if (is_object($v)) {
 		// odbtp support
@@ -2476,7 +2473,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	 *
 	 * @return date in unix timestamp format, or 0 if before TIMESTAMP_FIRST_YEAR, or false if invalid date format
 	 */
-	function UnixTimeStamp($v)
+	public static function UnixTimeStamp($v)
 	{
 		if (is_object($v)) {
 		// odbtp support
@@ -2608,7 +2605,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	/**
 	* Will select the supplied $page number from a recordset, given that it is paginated in pages of 
 	* $nrows rows per page. It also saves two boolean values saying if the given page is the first 
-	* and/or last one of the recordset. Added by Iván Oliva to provide recordset pagination.
+	* and/or last one of the recordset. Added by IvÃ¡n Oliva to provide recordset pagination.
 	*
 	* See readme.htm#ex8 for an example of usage.
 	*
@@ -2635,7 +2632,7 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	/**
 	* Will select the supplied $page number from a recordset, given that it is paginated in pages of 
 	* $nrows rows per page. It also saves two boolean values saying if the given page is the first 
-	* and/or last one of the recordset. Added by Iván Oliva to provide recordset pagination.
+	* and/or last one of the recordset. Added by IvÃ¡n Oliva to provide recordset pagination.
 	*
 	* @param secs2cache	seconds to cache data, set to 0 to force query
 	* @param sql
@@ -2743,9 +2740,9 @@ http://www.stanford.edu/dept/itss/docs/oracle/10g/server.101/b10759/statements_1
 	var $_obj; 				/** Used by FetchObj */
 	var $_names;			/** Used by FetchObj */
 	
-	var $_currentPage = -1;	/** Added by Iván Oliva to implement recordset pagination */
-	var $_atFirstPage = false;	/** Added by Iván Oliva to implement recordset pagination */
-	var $_atLastPage = false;	/** Added by Iván Oliva to implement recordset pagination */
+	var $_currentPage = -1;	/** Added by IvÃ¡n Oliva to implement recordset pagination */
+	var $_atFirstPage = false;	/** Added by IvÃ¡n Oliva to implement recordset pagination */
+	var $_atLastPage = false;	/** Added by IvÃ¡n Oliva to implement recordset pagination */
 	var $_lastPageNo = -1; 
 	var $_maxRecordCount = 0;
 	var $datetime = false;

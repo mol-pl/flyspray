@@ -2,6 +2,7 @@
 *.priv.*
 /flyspray.conf.php
 .private.conf.php
+/attachments/*
 /cache/*
 /.htaccess
 /_test*
@@ -16,3 +17,4 @@ mail.class.php
 *.dia~
 attachment_delete.config.php
 /.vscode/launch.json
+.workdir/temp.php

@@ -9,8 +9,10 @@
                    <br />
 
                    <select size="8" style="width:200px;" name="rassigned_to" onkeypress="deleteuser(event)" id="rassigned_to">
+				     <?php if (isset($userlist)): ?>
                      {!tpl_options($userlist)}
-                   </select>
+					 <?php endif; ?>
+					</select>
                    <input type="hidden" value="{Req::val('assigned_to', $old_assigned)}" id="vassigned_to" name="assigned_to" />
 				</div>
                 <script type="text/javascript">

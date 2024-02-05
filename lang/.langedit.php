@@ -252,7 +252,7 @@ foreach ($language as $key => $val)
     $onchange = "onchange=\"set('$key');\" onkeypress=\"set('$key');\"";
     // \ is displayed as \\ in edit fields to allow \n as line feed
     $trans = str_replace("\\", "\\\\", $trans);
-    if($lines > 1 || strlen(utf8_decode($val)) > 60 || strlen(utf8_decode($trans)) > 60)
+    if($lines > 1 || mb_strlen($val) > 60 || mb_strlen($trans) > 60)
     {
       // Format long texts for <textarea>, remove spaces after each new line
       $trans = preg_replace("/\n[ \t]+|\\n/", "\n", htmlentities($trans, ENT_NOQUOTES, "UTF-8"));

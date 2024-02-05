@@ -514,7 +514,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //keep hash anchor
-        list($id,$hash) = explode('#',$id,2);
+        list($id,$hash)  = array_pad(explode('#',$id,2), 2, "");
 
         //prepare for formating
         $link['target'] = $dokuConf['target']['wiki'];
@@ -614,7 +614,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         }
 
         //split into hash and url part
-        list($wikiUri,$hash) = explode('#',$wikiUri,2);
+        list($wikiUri,$hash)  = array_pad(explode('#',$wikiUri,2), 2, "");
 
         //replace placeholder
         if(preg_match('#\{(URL|NAME|SCHEME|HOST|PORT|PATH|QUERY)\}#',$url)){
@@ -623,12 +623,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
             $url = str_replace('{URL}',strtr(rawurlencode($wikiUri), array('%2F'=>'/')),$url);
             $url = str_replace('{NAME}',$wikiUri,$url);
             $parsed = parse_url($wikiUri);
-            if(!$parsed['port']) $parsed['port'] = 80;
-            $url = str_replace('{SCHEME}',$parsed['scheme'],$url);
-            $url = str_replace('{HOST}',$parsed['host'],$url);
-            $url = str_replace('{PORT}',$parsed['port'],$url);
-            $url = str_replace('{PATH}',$parsed['path'],$url);
-            $url = str_replace('{QUERY}',$parsed['query'],$url);
+			if (is_array($parsed)) {
+				if(empty($parsed['port'])) $parsed['port'] = 80;
+				$url = str_replace('{SCHEME}', isset($parsed['scheme']) ? $parsed['scheme'] : '', $url);
+				$url = str_replace('{HOST}', isset($parsed['host']) ? $parsed['host'] : '', $url);
+				$url = str_replace('{PORT}', isset($parsed['port']) ? $parsed['port'] : '', $url);
+				$url = str_replace('{PATH}', isset($parsed['path']) ? $parsed['path'] : '', $url);
+				$url = str_replace('{QUERY}', isset($parsed['query']) ? $parsed['query'] : '', $url);
+			}
             $link['url'] = $url;
         }else{
             //default
@@ -952,7 +954,7 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         global $dokuConf;
 
         //if there is a hash we use the ancor name only
-        list($name,$hash) = explode('#',$name,2);
+        list($name,$hash)  = array_pad(explode('#',$name,2), 2, "");
         if($hash) return $hash;
 
         //trim colons of a namespace link

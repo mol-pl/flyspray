@@ -52,16 +52,18 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		}
 		
 		// drugi parametr może być wielokrotny...
-		if (is_array($tpl_params['ver_id']))
-		{
-			foreach($tpl_params['ver_id'] as $ver)
+		if (!empty($tpl_params['ver_id'])) {
+			if (is_array($tpl_params['ver_id']))
 			{
-				$base_link .= '&due[]='.$ver;
+				foreach($tpl_params['ver_id'] as $ver)
+				{
+					$base_link .= '&due[]='.$ver;
+				}
 			}
-		}
-		else
-		{
-			$base_link .= '&due[]='.$tpl_params['ver_id'];
+			else
+			{
+				$base_link .= '&due[]='.$tpl_params['ver_id'];
+			}
 		}
 		
 		return $base_link;
@@ -182,7 +184,14 @@ class VersionLinksTemplate extends AbstractWikiTemplate {
 		
 		// me link (current user)
 		$todo_myself_base = $base_link . '&dev=' . $user->id;
-		$code .= ' • TODO moje: [[' . $todo_myself_base . $data['my_status'] . '|moje dev/test]] • [[' . $todo_myself_base . '|moje all]]';
+		$code .= ' • TODO moje: ';
+		// make sure cache is ready
+		if (isset($data['my_status'])) {
+			$code .= '[[' . $todo_myself_base . $data['my_status'] . '|moje dev/test]] ';
+		} else {
+			$code .= 'cache fail ';
+		}
+		$code .= '• [[' . $todo_myself_base . '|moje all]]';
 		
 		return $code;
 	}	

@@ -277,7 +277,7 @@ function localeFN($id){
 function resolve_id($ns,$id,$clean=true){
   // if the id starts with a dot we need to handle the
   // relative stuff
-  if($id{0} == '.'){
+  if($id[0] == '.'){
     // normalize initial dots without a colon
     $id = preg_replace('/^(\.+)(?=[^:\.])/','\1:',$id);
     // prepend the current namespace
@@ -331,7 +331,7 @@ function resolve_pageid($ns,&$page,&$exists){
 
   //keep hashlink if exists then clean both parts
   if (strpos($page,'#')) {
-    list($page,$hash) = explode('#',$page,2);
+    list($page,$hash)  = array_pad(explode('#',$page,2), 2, "");
   } else {
     $hash = '';
   }
@@ -399,7 +399,7 @@ function resolve_pageid($ns,&$page,&$exists){
 function getCacheName($data,$ext=''){
   global $dokuConf;
   $md5  = md5($data);
-  $file = $dokuConf['cachedir'].'/'.$md5{0}.'/'.$md5.$ext;
+  $file = $dokuConf['cachedir'].'/'.$md5[0].'/'.$md5.$ext;
   io_makeFileDir($file);
   return $file;
 }

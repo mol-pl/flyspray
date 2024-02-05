@@ -208,7 +208,7 @@ class syntax_plugin_wiki_tpls extends DokuWiki_Syntax_Plugin
 					$p_name = $tpl_param_names[$i];
 					
 					// param is an array of vaules
-					if (is_array($tpl_params[$p_name]))
+					if (isset($tpl_params[$p_name]) && is_array($tpl_params[$p_name]))
 					{
 						$tpl_params[$p_name][] = $tpl_param_values[$i];
 					}

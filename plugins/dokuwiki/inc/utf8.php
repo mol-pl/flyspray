@@ -62,7 +62,7 @@ function utf8_decodeFN($file){
  */
 function utf8_isASCII($str){
   for($i=0; $i<strlen($str); $i++){
-    if(ord($str{$i}) >127) return false;
+    if(ord($str[$i]) >127) return false;
   }
   return true;
 }
@@ -77,8 +77,8 @@ function utf8_isASCII($str){
 function utf8_strip($str){
   $ascii = '';
   for($i=0; $i<strlen($str); $i++){
-    if(ord($str{$i}) <128){
-      $ascii .= $str{$i};
+    if(ord($str[$i]) <128){
+      $ascii .= $str[$i];
     }
   }
   return $ascii;
@@ -111,16 +111,11 @@ function utf8_check($Str) {
 /**
  * Unicode aware replacement for strlen()
  *
- * utf8_decode() converts characters that are not in ISO-8859-1
- * to '?', which, for the purpose of counting, is alright - It's
- * even faster than mb_strlen.
- *
  * @author <chernyshevsky at hotmail dot com>
  * @see    strlen()
- * @see    utf8_decode()
  */
 function utf8_strlen($string){
-  return strlen(utf8_decode($string));
+  return mb_strlen($string);
 }
 
 /**
@@ -464,12 +459,12 @@ function utf8_tohtml ($str) {
   $max = strlen($str);
   $last = 0;  // keeps the index of the last regular character
   for ($i=0; $i<$max; $i++) {
-    $c = $str{$i};
+    $c = $str[$i];
     $c1 = ord($c);
     if ($c1>>5 == 6) {  // 110x xxxx, 110 prefix for 2 bytes unicode
       $ret .= substr($str, $last, $i-$last); // append all the regular characters we've passed
       $c1 &= 31; // remove the 3 bit two bytes prefix
-      $c2 = ord($str{++$i}); // the next byte
+      $c2 = ord($str[++$i]); // the next byte
       $c2 &= 63;  // remove the 2 bit trailing byte prefix
       $c2 |= (($c1 & 3) << 6); // last 2 bits of c1 become first 2 of c2
       $c1 >>= 2; // c1 shifts 2 to the right
@@ -514,7 +509,7 @@ function utf8_to_unicode($str,$strict=false) {
 
     for($i = 0; $i < $len; $i++) {
 
-        $in = ord($str{$i});
+        $in = ord($str[$i]);
 
         if ( $mState == 0) {
 

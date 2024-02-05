@@ -510,7 +510,7 @@ class Doku_Handler {
         $link = preg_replace(array('/^\{\{rss>/','/\}\}$/'),'',$match);
 
         // get params
-        list($link,$params) = explode(' ',$link,2);
+        list($link,$params)  = array_pad(explode(' ',$link,2), 2, "");
 
         $p = array();
         if(preg_match('/\b(\d+)\b/',$params,$match)){

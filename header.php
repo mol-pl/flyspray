@@ -58,7 +58,9 @@ if (!isset($project_id)) {
 }
 
 $proj = new Project($project_id);
-$proj->setCookie();
+if(php_sapi_name() !== 'cli') {
+	$proj->setCookie();
+}
 
 // Load translations
 load_translations();

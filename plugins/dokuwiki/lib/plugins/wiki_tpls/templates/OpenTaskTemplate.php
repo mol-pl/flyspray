@@ -47,7 +47,10 @@ class OpenTaskTemplate extends AbstractWikiTemplate {
 		
 		$extra_cat_names = array();
 		$extra_cat_ids = array();
-		$extra_cats = is_array($tpl_params['extra_cat']) ? $tpl_params['extra_cat'] : array($tpl_params['extra_cat']);
+		$extra_cats = array();
+		if (isset($tpl_params['extra_cat'])) {
+			$extra_cats = is_array($tpl_params['extra_cat']) ? $tpl_params['extra_cat'] : array($tpl_params['extra_cat']);
+		}
 		foreach($extra_cats as $extra_cat)
 		{
 			if (is_numeric($extra_cat)) {

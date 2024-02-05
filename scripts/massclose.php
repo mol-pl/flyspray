@@ -3,13 +3,13 @@
   /*********************************************************************\
   | Mass close tasks											        |
   | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~						            	|
-  | Zamykanie zg³oszeñ na podstawie id zg³oszenia podanego w task_id,	|
+  | Zamykanie zgÅ‚oszeÅ„ na podstawie id zgÅ‚oszenia podanego w task_id,	|
   |                                                                     |
-  | UWAGA! Najpierw wyœwietlany jest formularz z mo¿liwoœci¹ wyboru     |
-  | powodu zamkniêcia. Dopiero po zatwierdzeniu zg³oszenia s¹ zamykane. |
+  | UWAGA! Najpierw wyÅ›wietlany jest formularz z moÅ¼liwoÅ›ciÄ… wyboru     |
+  | powodu zamkniÄ™cia. Dopiero po zatwierdzeniu zgÅ‚oszenia sÄ… zamykane. |
   |                                                                     |
-  | Zalecane jest wy³¹czenie powiadomieñ przed masowym zamykaniem.      |
-  | http://prl.mol.com.pl/bugz/index.php?do=admin&area=prefs            |
+  | Zalecane jest wyÅ‚Ä…czenie powiadomieÅ„ przed masowym zamykaniem.      |
+  | https://pp.mol.com.pl/bugz/index.php?do=admin&area=prefs            |
   \*********************************************************************/
 
 if (!defined('IN_FS')) {
@@ -108,7 +108,7 @@ $page->setTitle($task_details['project_title'] . sprintf(' - %s#%d : %s', FS_PRE
 							ORDER BY v.date_time DESC',
 							array($task_id));
 
-	if ($task_details['last_edited_time'] > $cached['last_updated'] || !defined('FLYSPRAY_USE_CACHE')) {
+	if (empty($cached) || $task_details['last_edited_time'] > $cached['last_updated'] || !defined('FLYSPRAY_USE_CACHE')) {
 		$task_text = TextFormatter::render($task_details['detailed_desc'], false, 'task', $task_details['task_id']);
 	} else {
 		$task_text = TextFormatter::render($task_details['detailed_desc'], false, 'task', $task_details['task_id'], $cached['content']);

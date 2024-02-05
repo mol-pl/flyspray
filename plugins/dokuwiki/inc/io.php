@@ -69,7 +69,7 @@ function io_readWikiPage($file, $id, $rev=false) {
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function _io_readWikiPage_action($data) {
-    if (is_array($data) && is_array($data[0]) && count($data[0])===2) {
+    if (is_array($data) && count($data) && is_array($data[0]) && count($data[0])===2) {
         return call_user_func_array('io_readFile', $data[0]);
     } else {
         return ''; //callback error
@@ -147,7 +147,7 @@ function io_writeWikiPage($file, $content, $id, $rev=false) {
  * @author Ben Coburn <btcoburn@silicodon.net>
  */
 function _io_writeWikiPage_action($data) {
-    if (is_array($data) && is_array($data[0]) && count($data[0])===3) {
+    if (is_array($data) && count($data) && is_array($data[0]) && count($data[0])===3) {
         return call_user_func_array('io_saveFile', $data[0]);
     } else {
         return false; //callback error

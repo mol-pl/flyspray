@@ -1208,12 +1208,9 @@ class PHPMailer {
       $this->SetError($this->Lang('file_open') . $path);
       return '';
     }
-    $magic_quotes = get_magic_quotes_runtime();
-    set_magic_quotes_runtime(0);
     $file_buffer = fread($fd, filesize($path));
     $file_buffer = $this->EncodeString($file_buffer, $encoding);
     fclose($fd);
-    set_magic_quotes_runtime($magic_quotes);
 
     return $file_buffer;
   }
@@ -1375,7 +1372,7 @@ class PHPMailer {
     $eol = "\r\n";
     $escape = '=';
     $output = '';
-    while( list(, $line) = each($lines) ) {
+    foreach ($lines as $line) {
       $linlen = strlen($line);
       $newline = '';
       for($i = 0; $i < $linlen; $i++) {

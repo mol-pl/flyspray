@@ -173,7 +173,7 @@ function buildURLparams($params, $sep='&amp;'){
 function buildAttributes($params){
   $url = '';
   foreach($params as $key => $val){
-    if($key{0} == '_') continue;
+    if($key[0] == '_') continue;
 
     $url .= $key.'="';
     $url .= htmlspecialchars ($val);
@@ -641,7 +641,7 @@ function pageTemplate($data){
  * @author Andreas Gohr <andi@splitbrain.org>
  */
 function rawWikiSlices($range,$id,$rev=''){
-  list($from,$to) = explode('-',$range,2);
+  list($from,$to)  = array_pad(explode('-',$range,2), 2, "");
   $text = io_readWikiPage(wikiFN($id, $rev), $id, $rev);
   if(!$from) $from = 0;
   if(!$to)   $to   = strlen($text)+1;
@@ -933,7 +933,7 @@ function obfuscate($email) {
 
     case 'hex' :
       $encode = '';
-      for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email{$x}).';';
+      for ($x=0; $x < strlen($email); $x++) $encode .= '&#x' . bin2hex($email[$x]).';';
       return $encode;
 
     case 'none' :

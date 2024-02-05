@@ -1235,9 +1235,11 @@ switch ($action = Req::val('action'))
             break;
         }
 
+		$time = time();
+		
         $where = '';
 
-        $params = array(Post::val('comment_text'), time(),
+        $params = array(Post::val('comment_text'), $time,
                         Post::val('comment_id'), $task['task_id']);
 
         if ($user->perms('edit_own_comments') && !$user->perms('edit_comments')) {

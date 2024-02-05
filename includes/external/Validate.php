@@ -46,12 +46,12 @@ define('VALIDATE_SPACE',        '\s');
 define('VALIDATE_ALPHA_LOWER',  'a-z');
 define('VALIDATE_ALPHA_UPPER',  'A-Z');
 define('VALIDATE_ALPHA',        VALIDATE_ALPHA_LOWER . VALIDATE_ALPHA_UPPER);
-define('VALIDATE_EALPHA_LOWER', VALIDATE_ALPHA_LOWER . '·ÈÌÛ˙˝‡ËÏÚ˘‰ÎÔˆ¸ˇ‚ÍÓÙ˚„Òı®ÂÊÁΩ¯˛');
-define('VALIDATE_EALPHA_UPPER', VALIDATE_ALPHA_UPPER . '¡…Õ”⁄›¿»Ã“ŸƒÀœ÷‹æ¬ Œ‘€√—’¶≈∆«º–ÿﬁ');
+define('VALIDATE_EALPHA_LOWER', VALIDATE_ALPHA_LOWER . '√°√©√≠√≥√∫√Ω≈ïƒçƒõ≈à≈Ø√§√´ƒè√∂√ºÀô√¢ƒô√Æ√¥≈±ƒÉ≈Ñ≈ë¬®ƒ∫ƒá√ßÀùƒë≈ô≈£');
+define('VALIDATE_EALPHA_UPPER', VALIDATE_ALPHA_UPPER . '√Å√â√ç√ì√ö√ù≈îƒåƒö≈á≈Æ√Ñ√ãƒé√ñ√úƒæ√Çƒò√é√î≈∞ƒÇ≈É≈ê¬¶ƒπƒÜ√áƒΩƒê≈ò≈¢');
 define('VALIDATE_EALPHA',       VALIDATE_EALPHA_LOWER . VALIDATE_EALPHA_UPPER);
 define('VALIDATE_PUNCTUATION',  VALIDATE_SPACE . '\.,;\:&"\'\?\!\(\)');
 define('VALIDATE_NAME',         VALIDATE_EALPHA . VALIDATE_SPACE . "'" . "-");
-define('VALIDATE_STREET',       VALIDATE_NUM . VALIDATE_NAME . "/\\∫™\.");
+define('VALIDATE_STREET',       VALIDATE_NUM . VALIDATE_NAME . "/\\≈ü≈û\.");
 
 define('VALIDATE_ITLD_EMAILS',  1);
 define('VALIDATE_GTLD_EMAILS',  2);
@@ -221,7 +221,7 @@ class Validate
      *
      * @access public
      */
-    function number($number, $options = array())
+    public static function number($number, $options = array())
     {
         $decimal = $dec_prec = $min = $max = null;
         if (is_array($options)) {
@@ -259,7 +259,7 @@ class Validate
      *
      * @access  private
      */
-    function __stringToUtf7($string) {
+    private static function __stringToUtf7($string) {
         $return = '';
         $utf7 = array(
                         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K',
@@ -334,9 +334,9 @@ class Validate
      *
      * @access private
      */
-    function __emailRFC822(&$email, &$options)
+    private static function __emailRFC822(&$email, &$options)
     {
-        if (Validate::__stringToUtf7($email) != $email) {
+        if (self::__stringToUtf7($email) != $email) {
             return false;
         }
         static $address = null;
@@ -403,7 +403,7 @@ class Validate
      * @param  array     $options  The options for validation
      * @return bool      True if validating succeeds
      */
-    function _fullTLDValidation($email, $options)
+    protected static function _fullTLDValidation($email, $options)
     {
         $validate = array();
 
@@ -508,7 +508,7 @@ class Validate
      *
      * @access public
      */
-    function email($email, $options = null)
+    public static function email($email, $options = null)
     {
         $check_domain = false;
         $use_rfc822 = false;
@@ -524,7 +524,7 @@ class Validate
          */
         $checkTLD = true;
         if (isset($fullTLDValidation)) {
-            $valid = Validate::_fullTLDValidation($email, $fullTLDValidation);
+            $valid = self::_fullTLDValidation($email, $fullTLDValidation);
 
             if ($valid) {
                 $checkTLD = false;
@@ -548,7 +548,7 @@ class Validate
 
          $regex .= '$&xi';
 
-        if ($use_rfc822? Validate::__emailRFC822($email, $options) :
+        if ($use_rfc822? self::__emailRFC822($email, $options) :
             preg_match($regex, $email)) {
             if ($check_domain && function_exists('checkdnsrr')) {
                 list (, $domain)  = explode('@', $email);
@@ -576,7 +576,7 @@ class Validate
      *
      * @access public
      */
-    function string($string, $options)
+    public static function string($string, $options)
     {
         $format = null;
         $min_length = $max_length = 0;
@@ -602,7 +602,7 @@ class Validate
      * option, like this:
      * <code>
      * $options = array('allowed_schemes' => array('http', 'https', 'ftp'))
-     * var_dump(Validate::uri('http://www.example.org', $options));
+     * var_dump(self::uri('http://www.example.org', $options));
      * </code>
      *
      * NOTE 1: The rfc2396 normally allows middle '-' in the top domain
@@ -632,7 +632,7 @@ class Validate
      *
      * @access public
      */
-    function uri($url, $options = null)
+    public static function uri($url, $options = null)
     {
         $strict = ';/?:@$,';
         $domain_check = false;
@@ -700,7 +700,7 @@ class Validate
      *
      * @access public
      */
-    function date($date, $options)
+    public static function date($date, $options)
     {
         $max = $min = false;
         $format = '';
@@ -741,16 +741,16 @@ class Validate
         } else {
             $date_len = strlen($format);
             for ($i = 0; $i < $date_len; $i++) {
-                $c = $format{$i};
+                $c = $format[$i];
                 if ($c == '%') {
-                    $next = $format{$i + 1};
+                    $next = $format[$i + 1];
                     switch ($next) {
                         case 'j':
                         case 'd':
                             if ($next == 'j') {
-                                $day = (int)Validate::_substr($date, 1, 2);
+                                $day = (int)self::_substr($date, 1, 2);
                             } else {
-                                $day = (int)Validate::_substr($date, 2);
+                                $day = (int)self::_substr($date, 2);
                             }
                             if ($day < 1 || $day > 31) {
                                 return false;
@@ -759,9 +759,9 @@ class Validate
                         case 'm':
                         case 'n':
                             if ($next == 'm') {
-                                $month = (int)Validate::_substr($date, 2);
+                                $month = (int)self::_substr($date, 2);
                             } else {
-                                $month = (int)Validate::_substr($date, 1, 2);
+                                $month = (int)self::_substr($date, 1, 2);
                             }
                             if ($month < 1 || $month > 12) {
                                 return false;
@@ -770,11 +770,11 @@ class Validate
                         case 'Y':
                         case 'y':
                             if ($next == 'Y') {
-                                $year = Validate::_substr($date, 4);
+                                $year = self::_substr($date, 4);
                                 $year = (int)$year?$year:'';
                             } else {
                                 $year = (int)(substr(date('Y'), 0, 2) .
-                                              Validate::_substr($date, 2));
+                                              self::_substr($date, 2));
                             }
                             if (strlen($year) != 4 || $year < 0 || $year > 9999) {
                                 return false;
@@ -783,9 +783,9 @@ class Validate
                         case 'g':
                         case 'h':
                             if ($next == 'g') {
-                                $hour = Validate::_substr($date, 1, 2);
+                                $hour = self::_substr($date, 1, 2);
                             } else {
-                                $hour = Validate::_substr($date, 2);
+                                $hour = self::_substr($date, 2);
                             }
                             if (!preg_match('/^\d+$/', $hour) || $hour < 0 || $hour > 12) {
                                 return false;
@@ -794,9 +794,9 @@ class Validate
                         case 'G':
                         case 'H':
                             if ($next == 'G') {
-                                $hour = Validate::_substr($date, 1, 2);
+                                $hour = self::_substr($date, 1, 2);
                             } else {
-                                $hour = Validate::_substr($date, 2);
+                                $hour = self::_substr($date, 2);
                             }
                             if (!preg_match('/^\d+$/', $hour) || $hour < 0 || $hour > 24) {
                                 return false;
@@ -804,7 +804,7 @@ class Validate
                             break;
                         case 's':
                         case 'i':
-                            $t = Validate::_substr($date, 2);
+                            $t = self::_substr($date, 2);
                             if (!preg_match('/^\d+$/', $t) || $t < 0 || $t > 59) {
                                 return false;
                             }
@@ -815,7 +815,7 @@ class Validate
                     $i++;
                 } else {
                     //literal
-                    if (Validate::_substr($date, 1) != $c) {
+                    if (self::_substr($date, 1) != $c) {
                         return false;
                     }
                 }
@@ -871,7 +871,7 @@ class Validate
         return true;
     }
 
-    function _substr(&$date, $num, $opt = false)
+    private static function _substr(&$date, $num, $opt = false)
     {
         if ($opt && strlen($date) >= $opt && preg_match('/^[0-9]{'.$opt.'}/', $date, $m)) {
             $ret = $m[0];
@@ -882,7 +882,7 @@ class Validate
         return $ret;
     }
 
-    function _modf($val, $div) {
+    private static function _modf($val, $div) {
         if (function_exists('bcmod')) {
             return bcmod($val, $div);
         } elseif (function_exists('fmod')) {
@@ -903,7 +903,7 @@ class Validate
      *
      * @access protected
      */
-    function _multWeights($number, &$weights) {
+    protected static function _multWeights($number, &$weights) {
         if (!is_array($weights)) {
             return -1;
         }
@@ -933,13 +933,13 @@ class Validate
      *
      * @access protected
      */
-    function _getControlNumber($number, &$weights, $modulo = 10, $subtract = 0, $allow_high = false) {
+    protected static function _getControlNumber($number, &$weights, $modulo = 10, $subtract = 0, $allow_high = false) {
         // calc sum
-        $sum = Validate::_multWeights($number, $weights);
+        $sum = self::_multWeights($number, $weights);
         if ($sum == -1) {
             return -1;
         }
-        $mod = Validate::_modf($sum, $modulo);  // calculate control digit
+        $mod = self::_modf($sum, $modulo);  // calculate control digit
 
         if ($subtract > $mod && $mod > 0) {
             $mod = $subtract - $mod;
@@ -967,7 +967,7 @@ class Validate
             return false;
         }
         $target_digit  = substr($number, count($weights), 1);
-        $control_digit = Validate::_getControlNumber($number, $weights, $modulo, $subtract, $modulo > 10);
+        $control_digit = self::_getControlNumber($number, $weights, $modulo, $subtract, $modulo > 10);
 
         if ($control_digit == -1) {
             return false;
@@ -998,7 +998,7 @@ class Validate
      *
      * @access public
      */
-    function multiple(&$data, &$val_type, $remove = false)
+    public static function multiple(&$data, &$val_type, $remove = false)
     {
         $keys = array_keys($data);
         $valid = array();
@@ -1057,6 +1057,3 @@ class Validate
         return $valid;
     }
 }
-
-?>
-

@@ -167,7 +167,7 @@ function html_backtomedia_button($params,$akey=''){
   $ret = '<form class="button" method="get" action="'.DOKU_BASE.'lib/exe/mediamanager.php"><div class="no">';
 
   reset($params);
-  while (list($key, $val) = each($params)) {
+  foreach ($params as $key => $val) {
     $ret .= '<input type="hidden" name="'.$key.'" ';
     $ret .= 'value="'.htmlspecialchars($val).'" />';
   }
@@ -217,7 +217,7 @@ function html_btn($name,$id,$akey,$params,$method='get',$tooltip=''){
 
   if(is_array($params)){
     reset($params);
-    while (list($key, $val) = each($params)) {
+    foreach ($params as $key => $val) {
       $ret .= '<input type="hidden" name="'.$key.'" ';
       $ret .= 'value="'.htmlspecialchars($val).'" />';
     }

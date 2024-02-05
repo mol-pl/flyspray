@@ -36,10 +36,10 @@ ini_set('zend.ze1_compatibility_mode',0);
 
 //we don't want magic_quotes_runtime ..
 
-ini_set('magic_quotes_runtime',0);
+// ini_set('magic_quotes_runtime',0);
 
 //this one too
-ini_set('magic_quotes_sybase',0);
+// ini_set('magic_quotes_sybase',0);
 
 // no transparent session id improperly configured servers
 
@@ -153,48 +153,6 @@ if (!isset($_SERVER['REQUEST_URI']))
 
     if (isset($_SERVER['QUERY_STRING'])) {
         $_SERVER['REQUEST_URI'] .=  '?'.$_SERVER['QUERY_STRING'];
-    }
-}
-
-/* we also don't want magic_quotes_gpc at all
- * this code was written by Ilia Alshanetsky <iilia@php.net>
- * is licensed under the BSD.
- */
-
-function undo_magic_quotes(&$var)
-{
-    if (is_array($var)) {
-        foreach ($var as $k => $v) {
-            if (is_array($v)) {
-                array_walk($var[$k], 'undo_magic_quotes');
-            } else {
-                $var[$k] = stripslashes($v);
-            }
-        }
-    } else {
-        $var = stripslashes($var);
-    }
-}
-
-if (ini_get('magic_quotes_gpc')) {
-    if (count($_REQUEST)) {
-        array_walk($_REQUEST, 'undo_magic_quotes');
-    }
-
-    if (count($_GET)) {
-        array_walk($_GET,     'undo_magic_quotes');
-    }
-
-    if (count($_POST)) {
-        array_walk($_POST,    'undo_magic_quotes');
-    }
-
-    if (count($_COOKIE)) {
-        array_walk($_COOKIE, 'undo_magic_quotes');
-    }
-
-    if (count($_FILES) && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-        array_walk($_FILES,   'undo_magic_quotes');
     }
 }
 
