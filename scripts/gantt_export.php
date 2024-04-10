@@ -209,7 +209,8 @@ foreach ($tasks_in_groups as $k=>&$tasks_)
 		// calculate end date (might change start date)
 		if (empty($intervals['std']))
 		{
-			$intervals['std'] = ' +1 day';	// default interval
+			$default_days = $conf['gantt']['default_days'];
+			$intervals['std'] = ' +'.$default_days.' day';	// default interval
 		}
 		$task_end_dt = WorkTaskEndDT ($task_start_dt, $intervals['std'], $task['assigned_to_name']);
 

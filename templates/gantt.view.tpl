@@ -126,11 +126,10 @@
 
 		<!-- gantt -->
 		<h2>Diagram</h2>
+		<p><b>Uwaga!</b> Zadaniom bez wpisanego czasu wykonania dopisano <strong>(?)</strong> i przypisano czas wykonania na <?=$conf['gantt']['default_days']?> dzień/dni.</p>
 		<div id="GanttChartDIV">
 			<a href="{!$gantt_xml_url}">Gantt data</a>
 		</div>
-
-		<p><b>Uwaga!</b> Zadaniom bez wpisanego czasu wykonania dopisano (?) i przypisano czas wykonania na 1 dzień.</p>
 
 		<input type="button" name="update" onclick="oJSGantEdit.chartUpdate()" value="Aktualizuj z pola" title="Aktualizuj diagram z pola edycyjnego do diagramu" />
 

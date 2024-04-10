@@ -29,6 +29,10 @@ if(!empty($conf['general']['test_sections'])
 }
 // Nux end
 
+// Gantt settings
+if (empty($conf['gantt'])) $conf['gantt'] = array();
+if (!isset($conf['gantt']['default_days'])) $conf['gantt']['default_days'] = 3;
+
 // $baseurl
 // htmlspecialchars because PHP_SELF is user submitted data, and can be used as an XSS vector.
 if (isset($conf['general']['force_baseurl']) && $conf['general']['force_baseurl'] != '') {
