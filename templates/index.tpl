@@ -43,6 +43,9 @@
         {!tpl_checkbox('search_in_comments', (Get::val('string', '')=='' ? true : Get::has('search_in_comments')), 'sic')}
         <label class="left" for="sic">{L('searchcomments')}</label>
 
+        {!tpl_checkbox('search_id', (Get::val('string', '')=='' ? true : Get::has('search_id')), 'search_id')}
+        <label class="left" for="search_id">{L('search')} ID</label>
+
         {!tpl_checkbox('search_in_details', (Get::val('string', '')=='' ? true : Get::has('search_in_details')), 'search_in_details')}
         <label class="left" for="search_in_details">{L('searchindetails')}</label>
 

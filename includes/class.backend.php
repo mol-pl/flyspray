@@ -1484,6 +1484,9 @@ class Backend
                 ${$var}[]      = '(' . $db_key . ' <= ' . Flyspray::strtotime($date) . ' AND ' . $db_key . ' > 0)';
             }
         }
+		
+		// Nux: allow title-only search (do not check task_id)
+		$search_id = intval(array_get($args, 'search_id', '0'));
 
         if (array_get($args, 'string')) {
             $words = explode(' ', strtr(array_get($args, 'string'), '()', '  '));
@@ -1499,8 +1502,13 @@ class Backend
 
             foreach ($words as $word) {
                 $word = '%' . str_replace('+', ' ', trim($word)) . '%';
-                $where_temp[] = "(t.item_summary ILIKE ? OR CAST(t.task_id as varchar) LIKE ? $comments)";
-                array_push($sql_params, $word, $word);
+				if ($search_id) {
+					$where_temp[] = "(t.item_summary ILIKE ? OR CAST(t.task_id as varchar) LIKE ? $comments)";
+					array_push($sql_params, $word, $word);
+				} else {
+					$where_temp[] = "(t.item_summary ILIKE ? $comments)";
+					array_push($sql_params, $word);
+				}
                 if (array_get($args, 'search_in_comments')) {
                     array_push($sql_params, $word);
                 }
