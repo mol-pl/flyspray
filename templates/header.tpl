@@ -46,7 +46,8 @@
 		// avoid conflict with Prototype JavaScript framework
 		var $jQuery = jQuery.noConflict();
 	</script>
-	<script type="text/javascript" src="{$baseurl}javascript/jquery-ext.js?2016"></script>
+	<script src="{$baseurl}javascript/jquery-ext.js?1311"></script>
+    <link href="{$baseurl}javascript/jquery-ext.css?1311" rel="stylesheet" media="screen" />
 	
     <script type="text/javascript" src="{$baseurl}javascript/script.aculo.us/scriptaculous.js"></script>
 	

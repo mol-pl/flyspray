@@ -9,6 +9,40 @@
 		$('#related').insertAfter( "#taskdetails" ).removeClass('tab').addClass('box').attr('style', 'border-color:#000; padding:1em; margin: 1em 0; width: 99.8%; box-sizing:border-box;');
 		$('<strong />').prependTo('#related').prepend(jQuery('#relatedtab').text());
 	});
+
+	/**
+		Toggle low level headers (show/hide).
+	*/
+	$(function()
+	{
+		// details parent
+		let parent = document.querySelector('#taskdetailsfull');
+		if (!parent) {
+			return;
+		}
+		parent.querySelectorAll('h4').forEach((toggle) => {
+			toggle.classList.add('closed');
+		});
+
+		parent.addEventListener('click', function(event) {
+			// Check if the clicked element is an <h4> inside #taskdetailsfull
+			if (event.target.tagName === 'H4') {
+				let nextDiv = event.target.nextElementSibling;
+				// Toggle the next sibling div with class 'level4'
+				if (nextDiv && nextDiv.classList.contains('level4')) {
+					if (nextDiv.style.display === "none" || nextDiv.style.display === "") {
+						nextDiv.style.display = "block";
+						event.target.classList.add('open');
+						event.target.classList.remove('closed');
+					} else {
+						nextDiv.style.display = "none";
+						event.target.classList.add('closed');
+						event.target.classList.remove('open');
+					}
+				}
+			}
+		});
+	});
 	
 	/**
 		Hide task cells

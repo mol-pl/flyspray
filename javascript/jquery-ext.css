@@ -1,0 +1,17 @@
+/* show/hide low level details */
+#taskdetailsfull {
+	div.level4 {
+		display: none;
+	}
+	h4.closed::before {
+		content: "⯈ "; /* Right arrow for closed */
+	}
+	h4.open::before {
+		content: "⯆ "; /* Down arrow for open */
+	}
+	h4 {
+		cursor: pointer;
+		user-select: none; /* Disable double-click text selection */
+	}
+}
+
