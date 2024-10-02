@@ -16,31 +16,34 @@
 	$(function()
 	{
 		// details parent
-		let parent = document.querySelector('#taskdetailsfull');
-		if (!parent) {
+		let parentSelector = '#taskdetailsfull,.commenttext';
+		let parents = document.querySelectorAll(parentSelector);
+		if (!parents.length) {
 			return;
 		}
-		parent.querySelectorAll('h4').forEach((toggle) => {
+		document.querySelectorAll(`:is(${parentSelector}) h4`).forEach((toggle) => {
 			toggle.classList.add('closed');
 		});
 
-		parent.addEventListener('click', function(event) {
-			// Check if the clicked element is an <h4> inside #taskdetailsfull
-			if (event.target.tagName === 'H4') {
-				let nextDiv = event.target.nextElementSibling;
-				// Toggle the next sibling div with class 'level4'
-				if (nextDiv && nextDiv.classList.contains('level4')) {
-					if (nextDiv.style.display === "none" || nextDiv.style.display === "") {
-						nextDiv.style.display = "block";
-						event.target.classList.add('open');
-						event.target.classList.remove('closed');
-					} else {
-						nextDiv.style.display = "none";
-						event.target.classList.add('closed');
-						event.target.classList.remove('open');
+		parents.forEach((parent) => {
+			parent.addEventListener('click', function(event) {
+				// Check if the clicked element is an <h4> inside #taskdetailsfull
+				if (event.target.tagName === 'H4') {
+					let nextDiv = event.target.nextElementSibling;
+					// Toggle the next sibling div with class 'level4'
+					if (nextDiv && nextDiv.classList.contains('level4')) {
+						if (nextDiv.style.display === "none" || nextDiv.style.display === "") {
+							nextDiv.style.display = "block";
+							event.target.classList.add('open');
+							event.target.classList.remove('closed');
+						} else {
+							nextDiv.style.display = "none";
+							event.target.classList.add('closed');
+							event.target.classList.remove('open');
+						}
 					}
 				}
-			}
+			});
 		});
 	});
 	
