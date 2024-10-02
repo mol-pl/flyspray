@@ -16,7 +16,7 @@
 	$(function()
 	{
 		// details parent
-		let parentSelector = '#taskdetailsfull,.commenttext';
+		let parentSelector = '#taskdetailsfull,#comments';
 		let parents = document.querySelectorAll(parentSelector);
 		if (!parents.length) {
 			return;

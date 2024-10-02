@@ -1,5 +1,5 @@
 /* show/hide low level details */
-#taskdetailsfull,.commenttext {
+#taskdetailsfull,#comments {
 	div.level4 {
 		display: none;
 	}
