@@ -285,14 +285,17 @@ class dokuwiki_TextFormatter
 			
 			<img src="'.$baseurl.'plugins/dokuwiki/img/divider.gif" align="bottom" alt="|" style="margin: 0 3px 0 3px;" />
 			
-			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'======\', \'======\', \''.$textareaId.'\'); return false;">
+			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'====== \', \' ======\', \''.$textareaId.'\'); return false;">
 			<img title="Nagłówek - poziom 1" src="'.$baseurl.'plugins/dokuwiki/img/h1.gif" align="bottom" width="23" height="22" alt="Heading1" border="0" /></a>
 
-			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'=====\', \'=====\', \''.$textareaId.'\'); return false;">
+			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'===== \', \' =====\', \''.$textareaId.'\'); return false;">
 			<img title="Nagłówek - poziom 2" src="'.$baseurl.'plugins/dokuwiki/img/h2.gif" align="bottom" width="23" height="22" alt="Heading2" border="0" /></a>
 
-			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'====\', \'====\', \''.$textareaId.'\'); return false;">
+			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'==== \', \' ====\', \''.$textareaId.'\'); return false;">
 			<img title="Nagłówek - poziom 3" src="'.$baseurl.'plugins/dokuwiki/img/h3.gif" align="bottom" width="23" height="22" alt="Heading3" border="0" /></a>
+
+			<a tabindex="-1" href="javascript:void(0);" onclick="surroundText(\'==== \', \' ====\', \''.$textareaId.'\'); return false;">
+			<img title="Nagłówek - poziom 4" src="'.$baseurl.'plugins/dokuwiki/img/h4.gif" align="bottom" width="23" height="22" alt="Heading4" border="0" /></a>
 			
 			<img title="Divider" src="'.$baseurl.'plugins/dokuwiki/img/divider.gif" alt="|" style="margin: 0 3px 0 3px;" />
 			
