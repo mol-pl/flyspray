@@ -1,10 +1,13 @@
 /* show/hide low level details */
-#taskdetailsfull,#comments {
+#taskdetailsfull,#comments,#preview {
 	div.level4 {
-		display: none;
+		display: none; /* Close section by default */
 	}
 	h4.closed::before {
 		content: "⯈ "; /* Right arrow for closed */
+	}
+	h4:not(.open) {
+		margin-bottom: 1em;	/* more space, especially for the last closed section */
 	}
 	h4.open::before {
 		content: "⯆ "; /* Down arrow for open */
@@ -14,4 +17,3 @@
 		user-select: none; /* Disable double-click text selection */
 	}
 }
-

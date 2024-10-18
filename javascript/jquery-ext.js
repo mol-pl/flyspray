@@ -11,16 +11,24 @@
 	});
 
 	/**
-		Toggle low level headers (show/hide).
+		ToggleH4: Toggle low level headers (show/hide).
 	*/
 	$(function()
 	{
 		// details parent
 		let parentSelector = '#taskdetailsfull,#comments';
+		// optionally add preview to parents
+		if (!document.querySelector(`:is(${parentSelector}) #preview`)) {
+			console.log('[ToggleH4] add #preview');
+			parentSelector += ',#preview';
+		}
+		// make sure there are any parents
 		let parents = document.querySelectorAll(parentSelector);
 		if (!parents.length) {
 			return;
 		}
+		console.log('[ToggleH4] parents count:', parents.length);
+
 		document.querySelectorAll(`:is(${parentSelector}) h4`).forEach((toggle) => {
 			toggle.classList.add('closed');
 		});
