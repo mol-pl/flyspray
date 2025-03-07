@@ -50,7 +50,7 @@ $language_data = array (
     // Bash DOES have single line comments with # markers. But bash also has
     // the  $# variable, so comments need special handling (see sf.net
     // 1564839)
-	'COMMENT_SINGLE' => array(),
+	'COMMENT_SINGLE' => array(1=>'#'),
 	'COMMENT_MULTI' => array(),
 	'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
 	'QUOTEMARKS' => array("'", '"'),
