@@ -262,16 +262,16 @@ if(!isset($_SERVER['SERVER_NAME']) && php_sapi_name() === 'cli') {
 // http://ilia.ws/archives/107-Another-unserialize-abuse.html
 
 if(PHP_VERSION >= 5) {
+	function flyspray_exception_handler($exception) {
+		die("Completely unexpected exception: " .
+			htmlspecialchars($exception->getMessage(),ENT_QUOTES, 'utf-8')  . "<br/>" .
+		"This should <strong> never </strong> happend, please inform Flyspray Developers");
 
-function flyspray_exception_handler($exception) {
-
-    die("Completely unexpected exception: " .
-        htmlspecialchars($exception->getMessage(),ENT_QUOTES, 'utf-8')  . "<br/>" .
-      "This should <strong> never </strong> happend, please inform Flyspray Developers");
-
+	}
+	// on linux server hijack exceptions
+	if (empty($_SERVER['WINDIR'])) {
+		set_exception_handler('flyspray_exception_handler');
+	}
 }
-    set_exception_handler('flyspray_exception_handler');
-}
-
 
 ?>
