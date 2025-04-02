@@ -19,6 +19,8 @@ if ( !($task_details = Flyspray::GetTaskDetails(Req::num('task_id')))
     Flyspray::show_error(9);
 }
 
+require_once BASEDIR.'/includes/depends.inc.php';
+
 $path_to_dot = array_get($conf['general'], 'dot_path', '');
 //php 4 on windows does not have is_executable..
 $func = function_exists('is_executable') ? 'is_executable' : 'is_file';
@@ -184,13 +186,24 @@ foreach ($node_list as $n => $r) {
     $x = dechex(255-($r['pct']+10));
     $col = "#$x$x$x";
     // Make sure label terminates in \n!
-    $label = FS_PREFIX_CODE."#$n \n". ((!$use_public) ? addslashes(utf8_substr($r['sum'], 0, 25)) . "\n" : '') .
+    $label = '';
+	if ($use_public) {
+		$label .= FS_PREFIX_CODE."#$n \n";
+	} else {
+		$wrap_len = 30;
+		$max_lines = 3;
+		$title = FS_PREFIX_CODE."#$n ". $r['sum'];
+		$label .= wrapAndCut( addslashes($title), $wrap_len, $max_lines, "…");
+		$label .= "\n";
+		// echo "<pre>$label</pre>";
+	}
+    $label .=
         (
 		 $r['clsd'] ? 
 		 L('closed')
 		 :
          //L('status') . ": ".$r['status_name']))
-         $r['status_name']
+         "{$r['status_name']} ({$r['pct']}%)"
 		)
 	;
     $tooltip =

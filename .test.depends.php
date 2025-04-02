@@ -6,6 +6,7 @@
 if(php_sapi_name() !== 'cli') {
 	die('');
 }
+$_SERVER['WINDIR'] = "C:\Windows";
 // load classes
 define('IN_FS', true);
 require_once(dirname(__FILE__) . '/header.php');
