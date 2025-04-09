@@ -23,13 +23,19 @@
      <td>{!tpl_userlink($row['user_id'])}</td>
      <td>{formatDate($row['start_time'])}</td>
      <?php
+	  function formatLocalHowOften($number) {
+	    global $proj;
+		$decimals = 2;
+		$decimal_separator = $proj->prefs['lang_code'] == 'en' ? '.' : ',';
+		return number_format($number, $decimals, $decimal_separator, '');
+	  }
       // Work out the unit of time to display
       if ($row['how_often'] < 86400) {
-          $how_often = $row['how_often'] / 3600 . ' ' . L('hours');
-      } elseif ($row['how_often'] < 604800) {
-          $how_often = $row['how_often'] / 86400 . ' ' . L('days');
+          $how_often = formatLocalHowOften($row['how_often'] / 3600) . ' ' . L('hours');
+      } elseif ($row['how_often'] < 7 * 86400) {
+          $how_often = formatLocalHowOften($row['how_often'] / 86400) . ' ' . L('days');
       } else {
-          $how_often = $row['how_often'] / 604800 . ' ' . L('weeks');
+          $how_often = formatLocalHowOften($row['how_often'] / 604800) . ' ' . L('weeks');
       }
      ?>
      <td>{$how_often}</td>
