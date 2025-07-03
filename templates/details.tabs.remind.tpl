@@ -15,6 +15,14 @@
       <th>{L('message')}</th>
     </tr>
 
+    <?php
+	  function formatLocalHowOften($number) {
+	    global $proj;
+		$decimals = 2;
+		$decimal_separator = $proj->prefs['lang_code'] == 'en' ? '.' : ',';
+		return number_format($number, $decimals, $decimal_separator, '');
+	  }
+    ?>
     <?php foreach ($reminders as $row): ?>
     <tr>
       <td class="ttcolumn">
@@ -23,12 +31,6 @@
      <td>{!tpl_userlink($row['user_id'])}</td>
      <td>{formatDate($row['start_time'])}</td>
      <?php
-	  function formatLocalHowOften($number) {
-	    global $proj;
-		$decimals = 2;
-		$decimal_separator = $proj->prefs['lang_code'] == 'en' ? '.' : ',';
-		return number_format($number, $decimals, $decimal_separator, '');
-	  }
       // Work out the unit of time to display
       if ($row['how_often'] < 86400) {
           $how_often = formatLocalHowOften($row['how_often'] / 3600) . ' ' . L('hours');
