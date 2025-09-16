@@ -19,7 +19,7 @@
 		let parentSelector = '#taskdetailsfull,#comments';
 		// optionally add preview to parents
 		if (!document.querySelector(`:is(${parentSelector}) #preview`)) {
-			console.log('[ToggleH4] add #preview');
+			//console.log('[ToggleH4] add #preview');
 			parentSelector += ',#preview';
 		}
 		// make sure there are any parents
@@ -27,12 +27,34 @@
 		if (!parents.length) {
 			return;
 		}
-		console.log('[ToggleH4] parents count:', parents.length);
+		//console.log('[ToggleH4] parents count:', parents.length);
 
 		document.querySelectorAll(`:is(${parentSelector}) h4`).forEach((toggle) => {
 			toggle.classList.add('closed');
 		});
 
+		// convert to details-summary if possible
+		// (will not work in preview, but should allow searching with CTRL+F on a static page)
+		document.querySelectorAll(`:is(${parentSelector}) h4`).forEach((h4) => {
+			const content = h4.nextElementSibling;
+			if (content && content.classList.contains("level4")) {
+				// prepare new elements
+				const details = document.createElement("details");
+				details.className = 'h4-groupped';
+				while (content.firstChild) {
+					details.appendChild(content.firstChild);
+				}
+				const summary = document.createElement("summary");
+				summary.textContent = h4.textContent;
+				details.prepend(summary);
+
+				// replace in document's DOM
+				content.replaceWith(details);
+				h4.remove();
+			}
+		});
+
+		// click in h4 mode (in preview)
 		parents.forEach((parent) => {
 			parent.addEventListener('click', function(event) {
 				// Check if the clicked element is an <h4> inside #taskdetailsfull

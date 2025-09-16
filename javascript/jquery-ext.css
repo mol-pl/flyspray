@@ -3,6 +3,7 @@
 	div.level4 {
 		display: none; /* Close section by default */
 	}
+	h4:not(.open):not(.closed)::before,
 	h4.closed::before {
 		content: "⯈ "; /* Right arrow for closed */
 	}
@@ -12,8 +13,19 @@
 	h4.open::before {
 		content: "⯆ "; /* Down arrow for open */
 	}
+	.h4-groupped summary,
 	h4 {
 		cursor: pointer;
 		user-select: none; /* Disable double-click text selection */
+	}
+
+	/* details-summary version */
+	.h4-groupped {
+		margin-left: 3em;
+		margin-block: 1em;
+
+		summary {
+			font-weight: bold;
+		}
 	}
 }
