@@ -1,7 +1,7 @@
 <?php
 $prev_copytask_id = '';
 /*	  <?php if (!empty($prev_copytask_id)): > <span>({L('previoustask')} {$prev_copytask_id})</span> <?php endif; >*/
-if (strpos($_SERVER['HTTP_REFERER'], 'copytask&task_id')!==false)
+if (!empty($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'copytask&task_id')!==false)
 {
 	preg_match('/copytask\&task_id=([0-9]+)/', $_SERVER['HTTP_REFERER'], $matches);
 	if ($matches)
