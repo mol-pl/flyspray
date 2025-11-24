@@ -849,4 +849,6 @@ Regards,',
 
 'closeerror.notasksfound' => 'No tasks found to close.',
 'closeerror.notallclosed' => 'Only some of the tasks have been closed.',
+
+'upload.total_size_too_big' => 'The total size of the files is too large',
 );

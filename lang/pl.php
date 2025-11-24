@@ -860,4 +860,6 @@ Pozdrowienia,",
 
 'closeerror.notasksfound' => 'Nie znaleziono zadań do zamknięcia.',
 'closeerror.notallclosed' => 'Zamknięto tylko część zadań.',
+
+'upload.total_size_too_big' => 'Sumaryczna wielkość plików jest za duża',
 );

@@ -370,10 +370,62 @@ function ToggleSelected(id) {
   }
 }
 
+// Nux: check size of the files on the client side
+function addUploadSizeCheck(fieldsParentId) {
+	let sizeMega = 10;
+	{
+		let sizeEl = document.querySelector('#extra-data .max-file-size');
+		if (!sizeEl) return false;
+		sizeMega = parseInt(sizeEl.textContent);
+		if (isNaN(sizeMega)) return false;
+	}
+	let lang = {};
+	try {
+		lang.limit = document.querySelector('.lang--upload-limit').textContent;
+		lang.tooBig = document.querySelector('.lang--upload-too-big').textContent;
+	} catch (error) {
+		console.error(error);
+		return false;
+	}
+
+	let form = document.getElementById(fieldsParentId).closest('form');
+	if (!form) return false;
+
+	// mark/check done
+	let done = form.getAttribute('data-adduploadsizecheck-done');
+	if (done == 'yes') return true;
+	form.setAttribute('data-adduploadsizecheck-done', 'yes');
+
+	console.log('addUploadSizeCheck', 'form setup', form);
+
+	// setup
+	form.addEventListener('submit', function (e) {
+		let maxSize = sizeMega * 1024 * 1024;
+		let files = form.querySelectorAll('input[type="file"]');
+		let allSize = 0;
+		let fileCount = 0;
+		Array.from(files).filter(fileInput => fileInput.files.length > 0).forEach(fileInput => {
+			allSize += fileInput.files[0].size;
+			fileCount ++;
+		});
+		if (allSize > maxSize) {
+			alert(`${lang.tooBig} (${(allSize / 1024 / 1024).toFixed(1)} MiB)!\n\n(${lang.limit} ${sizeMega} MiB)`);
+			e.preventDefault();
+		}
+		console.log('addUploadSizeCheck', 'Final:', {
+			fileCount,
+			allSize: (allSize/1024/1024).toFixed(1),
+		});
+	});
+
+	return true;
+}
+
 function addUploadFields(id) {
   if (!id) {
     id = 'uploadfilebox';
   }
+  addUploadSizeCheck(id);
   var el = $(id);
   var span = el.getElementsByTagName('span')[0];
   if ('none' == span.style.display) {
