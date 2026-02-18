@@ -937,7 +937,7 @@ indication of severities*/
 }
 @media only screen and (min-width: 1001px) {
 	#tasklist_table .task_summary {
-		max-width: 50%;
+		max-width: 30em;
 		min-width: 14em;
 	}
 }
