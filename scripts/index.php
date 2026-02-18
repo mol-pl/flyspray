@@ -126,10 +126,13 @@ function tpl_draw_cell($task, $colname, $format = "<td class='%s'>%s</td>") {
             $value = tpl_tasklink($task, $task['task_id']);
             break;
         case 'summary':
-            $value = tpl_tasklink($task, utf8_substr($task['item_summary'], 0, $conf['general']['max_summary_on_list']));
-            if (utf8_strlen($task['item_summary']) > $conf['general']['max_summary_on_list']) {
-                $value .= '...';
-            }
+            $value = tpl_tasklink($task, $task['item_summary']);
+			// $value = $task['item_summary'];
+			// Nux: useless, this can be done in CSS
+            // $value = tpl_tasklink($task, utf8_substr($task['item_summary'], 0, $conf['general']['max_summary_on_list']));
+            // if (utf8_strlen($task['item_summary']) > $conf['general']['max_summary_on_list']) {
+            //     $value .= '...';
+            // }
             break;
 
         case 'severity':

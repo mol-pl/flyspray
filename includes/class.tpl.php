@@ -188,7 +188,8 @@ function tpl_tasklink($task, $text = null, $strict = false, $attrs = array(), $t
     if (is_null($text)) {
         $text = sprintf(FS_PREFIX_CODE.'#%d - %s', $task['task_id'], Filters::noXSS($summary));
     } elseif(is_string($text)) {
-        $text = htmlspecialchars(utf8_substr($text, 0, 64), ENT_QUOTES, 'utf-8');
+        //$text = htmlspecialchars(utf8_substr($text, 0, 64), ENT_QUOTES, 'utf-8');
+        $text = htmlspecialchars($text, ENT_QUOTES, 'utf-8');
     } else {
         //we can't handle non-string stuff here.
         return '';
@@ -254,9 +255,10 @@ function tpl_tasklink($task, $text = null, $strict = false, $attrs = array(), $t
     $title_text = htmlspecialchars($title_text, ENT_QUOTES, 'utf-8');
     $link  = sprintf('<a href="%s" title="%s" %s>%s</a>',$url, $title_text, join_attrs($attrs), $text);
 
-    if ($task['is_closed']) {
-        $link = '<del>&#160;' . $link . '&#160;</del>';
-    }
+	// Nux: useless, this can be done in CSS
+    // if ($task['is_closed']) {
+    //     $link = '<del>&#160;' . $link . '&#160;</del>';
+    // }
     return $link;
 }
 

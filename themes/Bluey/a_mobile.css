@@ -32,7 +32,9 @@
 	#tasklist_table :is(.task_summary, .colhead-summary) {
 		flex-basis: 100%;
 	}
-
+	#tasklist_table .caret {
+		display: none;
+	}
 	#tasklist_table :is(td, th):not(.ttcolumn, .caret)::before {
 		content: '|';
 		padding: .5em;
@@ -41,6 +43,13 @@
 	}
 	div#tasklist table :is(td, th) {
 		padding-right: 0;
+		--lines-pad: 1.3em;
+		padding-left: var(--lines-pad);	/* odstęp dla linii */
+		text-indent: calc(-1 * var(--lines-pad)); /* cofnięcie pierwszej */
+	}
+	div#tasklist table td:not(.task_summary) {
+		min-width: 1em;
+		max-width: 100%;
 	}
 	#tasklist_table tr {
 		border-bottom:1px solid black;

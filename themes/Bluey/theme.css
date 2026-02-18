@@ -935,7 +935,12 @@ indication of severities*/
 #tasklist_table td {
 	cursor:pointer;
 }
-
+@media only screen and (min-width: 1001px) {
+	#tasklist_table .task_summary {
+		max-width: 50%;
+		min-width: 14em;
+	}
+}
 
 /* .fineprint is merely used for the details about when a task has
 been created and changed (in the details pages) */
