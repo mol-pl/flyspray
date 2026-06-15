@@ -1580,7 +1580,7 @@ class Doku_Handler_Block {
                                 
                                 // plugin test, true if plugin has a state which precludes it requiring blockOpen or blockClose
                                 $plugin_plusone = true;
-                                $plugin_test = ($call[$key+1][1][2] == DOKU_LEXER_MATCHED) || ($call[$key+1][1][2] == DOKU_LEXER_MATCHED);
+                                $plugin_test = ($calls[$key+1][1][2] == DOKU_LEXER_MATCHED) || ($calls[$key+1][1][2] == DOKU_LEXER_MATCHED);
                             } else {
                                 $plugin_plusone = false;
                             }
