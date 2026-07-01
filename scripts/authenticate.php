@@ -27,16 +27,18 @@ if (Req::val('user_name') != '' && Req::val('password') != '') {
         }elseif ($user_id === -1) {
             Flyspray::show_error(23);
         } else  /* $user_id == 0 */ {
+            $lockFor = $fs->prefs['lock_for'] ?? 2; // in minutes
+
             // just some extra check here so that never ever an account can get locked when it's already disabled
             // ... that would make it easy to get enabled
             $db->Query('UPDATE {users} SET login_attempts = login_attempts+1 WHERE account_enabled = 1 AND user_name = ?',
                         array($username));
             // Lock account if failed too often for a limited amount of time
             $db->Query('UPDATE {users} SET lock_until = ?, account_enabled = 0 WHERE login_attempts > ? AND user_name = ?',
-                         array(time() + 60 * $fs->prefs['lock_for'], LOGIN_ATTEMPTS, $username));
+                         array(time() + 60 * $lockFor, LOGIN_ATTEMPTS, $username));
 
             if ($db->AffectedRows()) {
-                Flyspray::show_error(sprintf(L('error71'), $fs->prefs['lock_for']));
+                Flyspray::show_error(sprintf(L('error71'), $lockFor));
                 Flyspray::Redirect($baseurl);
             } else {
                 Flyspray::show_error(7);

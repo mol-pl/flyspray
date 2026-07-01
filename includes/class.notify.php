@@ -68,7 +68,7 @@ class Notifications {
 		if (!count($to)) {
 			return false;
 		}
-		$msg = $this->GenerateMsg($type, $task_id, $info);
+		[$subject, $body] = $this->GenerateMsg($type, $task_id, $info);
 		// Nux start - correct urls for anons and others...
 		if (!empty($conf['mol']) && !empty($conf['mol']['mail_replace_url_regexp']))
 		{
@@ -83,17 +83,19 @@ class Notifications {
 					$mol_url_replacement = $conf['mol']['bibz_admins_base_url'];
 				break;
 			}
-			$msg = preg_replace($conf['mol']['mail_replace_url_regexp'], $mol_url_replacement, $msg);
+			$body = preg_replace($conf['mol']['mail_replace_url_regexp'], $mol_url_replacement, $body);
 		}
 		// Nux end
 		$result = true;
 		if ($ntype == NOTIFY_EMAIL || $ntype == NOTIFY_BOTH) {
-			if(!$this->SendEmail((is_array($to[0]) ? $to[0] : $to), $msg[0], $msg[1], $task_id)) {
+			$recipients = (isset($to[0]) && is_array($to[0])) ? $to[0] : $to;
+			if(!$this->SendEmail($recipients, $subject, $body, $task_id)) {
 				$result = false;
 			}
 		}
 		if ($ntype == NOTIFY_JABBER || $ntype == NOTIFY_BOTH) {
-			if(!$this->StoreJabber((is_array($to[1]) ? $to[1] : $to), $msg[0], $msg[1])) {
+			$recipients = (isset($to[1]) && is_array($to[1])) ? $to[1] : $to;
+			if(!$this->StoreJabber($recipients, $subject, $body)) {
 				$result = false;
 			}
 		}

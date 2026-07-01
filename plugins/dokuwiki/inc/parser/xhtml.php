@@ -656,11 +656,14 @@ class Doku_Renderer_xhtml extends Doku_Renderer {
         $link['suf']   = '';
         $link['style']  = '';
         //Display error on browsers other than IE
-        $link['more'] = 'onclick="if(document.all == null){alert(\''.
+        $link['more'] = '';
+        if ( is_array($lang) ) {
+            $link['more'] = 'onclick="if(document.all == null){alert(\''.
                         $this->_xmlEntities($lang['nosmblinks'],ENT_QUOTES).
                         '\');}" onkeypress="if(document.all == null){alert(\''.
                         $this->_xmlEntities($lang['nosmblinks'],ENT_QUOTES).'\');}"';
 
+        }
         $link['name'] = $this->_getLinkTitle($name, $url, $isImage);
         if ( !$isImage ) {
             $link['class'] = 'windows';
