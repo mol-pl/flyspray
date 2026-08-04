@@ -499,6 +499,7 @@ function p_xhtml_cached_geshi($code, $language) {
     @touch($cache);
 
   } else {
+    global $dokuConf;
 
     require_once(DOKU_INC . 'inc/geshi.php');
 

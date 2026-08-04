@@ -280,27 +280,44 @@ function io_deleteFromFile($file,$badline,$regex=false){
  * It waits maximal 3 seconds for the lock, after this time
  * the lock is assumed to be stale and the function goes on
  *
- * @author Andreas Gohr <andi@splitbrain.org>
+ * Example stack:
+    io_lock()                                    io.php:175
+    └─ io_saveFile()                             parserutils.php:515
+       └─ p_xhtml_cached_geshi()                 xhtml.php:400
+          └─ Doku_Renderer_xhtml->code()         dokuwiki_formattext.inc.php:92
+             └─ dokuwiki_TextFormatter::render() class.tpl.php:778
+                └─ TextFormatter::render()       class.tpl.php(eval):87
+                   └─ eval()                     class.tpl.php:120
+                      └─ Tpl->display()          class.tpl.php:126
+                         └─ Tpl->render()        index.php:215
+
+ * @author Andreas Gohr <andi@splitbrain.org>, Maciej Nux
  */
 function io_lock($file){
   global $dokuConf;
   // no locking if safemode hack
   if($dokuConf['safemodehack']) return;
 
-  $lockDir = $dokuConf['lockdir'].'/'.md5($file);
+  // Nux: cannot use this, lockdir conf is not defined in this context
+  // $lockDir = $dokuConf['lockdir'].'/'.md5($file);
+  // Nux: use lock file instead of dir
+  // note: it is assumed the dir was already created (which should be true with `io_makeFileDir($file)`)
+  $lockFile = $file . '.lock';
   @ignore_user_abort(1);
 
-  $timeStart = time();
+  $deadline = microtime(true) + 3.0;
   do {
-    //waited longer than 3 seconds? -> stale lock
-    if ((time() - $timeStart) > 3) break;
-    $locked = @mkdir($lockDir, $dokuConf['dmode']);
-    if($locked){
-      if(!empty($dokuConf['dperm'])) chmod($lockDir, $dokuConf['dperm']);
-      break;
+    $handle = @fopen($lockFile, 'x');
+    if ($handle !== false) {
+      fclose($handle);
+      return true;
     }
-    usleep(50);
-  } while ($locked === false);
+    usleep(10000); // 10ms
+  } while (microtime(true) < $deadline);
+
+  // waited longer than 3 seconds? Assume we have stale lock (leftovers)
+  trigger_error("Existing lock is assumed stale. Continue without acquiring it. $file", E_USER_WARNING);
+  return true;
 }
 
 /**
@@ -313,8 +330,8 @@ function io_unlock($file){
   // no locking if safemode hack
   if($dokuConf['safemodehack']) return;
 
-  $lockDir = $dokuConf['lockdir'].'/'.md5($file);
-  @rmdir($lockDir);
+  $lockFile = $file . '.lock';
+  if (file_exists($lockFile)) @unlink($lockFile);
   @ignore_user_abort(0);
 }
 
