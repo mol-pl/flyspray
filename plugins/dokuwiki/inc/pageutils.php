@@ -241,9 +241,13 @@ function metaFiles($id){
  */
 function mediaFN($id){
   global $dokuConf;
+  // should not happen, but... Undefined array key "mediadir" in .../bibz_admins/plugins/dokuwiki/inc/pageutils.php on line 246
+  if (!isset($dokuConf) || !isset($dokuConf['mediadir'])) {
+    return '';
+  }
   $id = cleanID($id);
   $id = str_replace(':','/',$id);
-    $fn = $dokuConf['mediadir'].'/'.utf8_encodeFN($id);
+  $fn = $dokuConf['mediadir'].'/'.utf8_encodeFN($id);
   return $fn;
 }
 

@@ -16,12 +16,9 @@
 function mimetype($file){
   $ret    = array(false,false); // return array
   $mtypes = getMimeTypes();     // known mimetypes
-  $exts   = join('|',array_keys($mtypes));  // known extensions (regexp)
-  if(preg_match('#\.('.$exts.')$#i',$file,$matches)){
-    $ext = strtolower($matches[1]);
-  }
+  $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-  if($ext && $mtypes[$ext]){
+  if ($ext !== '' && isset($mtypes[$ext])) {
     $ret = array($ext, $mtypes[$ext]);
   }
 
