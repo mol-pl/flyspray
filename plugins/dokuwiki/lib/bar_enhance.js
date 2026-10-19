@@ -75,8 +75,59 @@ function cNuxbar(objName)
 		
 		_this.msg.styleWidth = 300;
 		_this.msg.showCancel = true;
+		
+		_this.initToolbarShortcuts();
 	}
-	
+
+	/*!
+		@brief Keyboard shortcuts for the editor.
+	*/
+	this.initToolbarShortcuts = function ()
+	{
+		const toolbar = document.querySelector('#dokuwiki_toolbar');
+		if (!toolbar) return;
+
+		const shortcuts = {
+			'img[src*="format-text-bold"]':      'CTRL+B',
+			'img[src*="format-text-italic"]':    'CTRL+I',
+			'img[src*="format-text-underline"]': 'CTRL+U',
+			
+			'img[src*="text-html"]':             'CTRL+K',
+			
+			'img[src*="h1.gif"]':                'CTRL+1',
+			'img[src*="h2.gif"]':                'CTRL+2',
+			'img[src*="h3.gif"]':                'CTRL+3',
+			'img[src*="h4.gif"]':                'CTRL+4',
+		};
+
+		const shortcutMap = new Map();
+
+		for (const [selector, shortcut] of Object.entries(shortcuts)) {
+			let img = toolbar.querySelector(selector);
+			let link = img?.closest('a');
+			if (!link) continue;
+
+			shortcutMap.set(shortcut.toUpperCase(), link);
+			img.title = `${img.title} (${shortcut})`;
+		}
+
+		document.addEventListener('keydown', (event) => {
+			// build map-key for pressed keybaord keys
+			let shortcut = [
+				event.ctrlKey ? 'CTRL' : '',
+				event.shiftKey ? 'SHIFT' : '',
+				event.altKey ? 'ALT' : '',
+				event.key.toUpperCase()
+			].filter(Boolean).join('+');
+
+			let link = shortcutMap.get(shortcut);
+			if (!link) return;
+
+			event.preventDefault();
+			link.click();
+		});
+	}
+
 	/*!
 		@brief Shows basic URL insert form (message)
 	*/
