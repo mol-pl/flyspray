@@ -108,31 +108,34 @@ class syntax_plugin_bblink extends DokuWiki_Syntax_Plugin
 	 */
 	function render($mode, &$renderer, $data)
 	{
-		$plugin_conf = $this->getMyConf();
-		if($mode == 'xhtml')
-		{
-			// get data set in handle()
-			$id = $data[1];
-			$confid = $data[2];
-			$text = $data[0];
-			// prepare other data
-			global $dokuConf;
-			$url = str_replace('{ID}', $id, $plugin_conf[$confid]['url']);
-		   
-			//prepare for formating
-			$link['target'] = $dokuConf['target']['wiki'];
-			$link['style']  = '';
-			$link['pre']	= '';
-			$link['suf']	= '';
-			$link['more']   = '';
-			$link['class']  = 'interwikilink';
-			$link['url']	= $url;
-			$link['name']   = $text;
-			$link['title']  = $text;
-	
-			//output formatted
-			$renderer->doc .= $renderer->_formatLink($link);
+		if ($mode != 'xhtml') {
+			return false;
 		}
+		$plugin_conf = $this->getMyConf();
+		if (count($data) != 3) {
+			return true;
+		}
+		// get data set in handle()
+		$id = $data[1];
+		$confid = $data[2];
+		$text = $data[0];
+		// prepare other data
+		global $dokuConf;
+		$url = str_replace('{ID}', $id, $plugin_conf[$confid]['url']);
+	   
+		//prepare for formating
+		$link['target'] = $dokuConf['target']['wiki'];
+		$link['style']  = '';
+		$link['pre']	= '';
+		$link['suf']	= '';
+		$link['more']   = '';
+		$link['class']  = 'interwikilink';
+		$link['url']	= $url;
+		$link['name']   = $text;
+		$link['title']  = $text;
+
+		//output formatted
+		$renderer->doc .= $renderer->_formatLink($link);
 		return true;
 	}
 }
