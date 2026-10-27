@@ -7,7 +7,7 @@
 
 define('IN_FS', true);
 
-header('Content-type: text/html; charset=utf-8');
+header('Content-Type: application/json; charset=utf-8');
 
 require_once('../../header.php');
 $baseurl = dirname(dirname($baseurl)) .'/' ;
@@ -25,14 +25,31 @@ $done = Get::num('done');
 
 // Check permissions
 if (!($user->perms('add_comments', $project_id))) {
-    die();
+	http_response_code(403);
+	die(json_encode(['error' => 'Forbidden']));
 }
 
-$db->Query('UPDATE {comments} SET done = ? WHERE comment_id = ?', array($done, $comment_id));
+// Update
+$result = $db->Query('UPDATE {comments} SET done = ? WHERE comment_id = ?', array($done, $comment_id));
+if ($result === false) {
+	http_response_code(500);
+	die(json_encode(['error' => 'Database error']));
+}
 if ($db->affectedRows()) {
-	die('OK');
+	http_response_code(200);
+	die(json_encode(['status' => 'OK']));
 }
 
+// Check what is wrong
+$result = $db->Query('SELECT COUNT(*) FROM {comments} WHERE comment_id = ?', array($comment_id));
+list($count) = $db->fetchRow($result);
+if ($count == 0) {
+	http_response_code(404);
+	die(json_encode(['error' => 'Comment not found']));
+}
+
+http_response_code(200);
+die(json_encode(['status' => 'OK', 'info'=>'already set']));
 
 /*
 $page = new FSTpl;

@@ -96,35 +96,51 @@
 	});
 
 	/**
-	 * Toggles status of comments
-	 * @param {type} baseUrl
-	 * @param {type} projectId
-	 * @param {type} commentId
-	 * @param {Boolean} done
+	 * Changes comment status.
+	 * @param {string} baseUrl
+	 * @param {number} projectId
+	 * @param {number} commentId
+	 * @param {boolean} done
+	 * @param {Function} onSuccess
 	 */
 	function toggleStatus(baseUrl, projectId, commentId, done, onSuccess) {
 		var url = baseUrl + 'javascript/callbacks/commentstatus.php';
+
 		$.ajax({
 			url: url,
 			method: 'GET',
+			dataType: 'json',
 			data: {
-				project_id : projectId,
-				comment_id : commentId,
-				done : done ? 1 : 0
+				project_id: projectId,
+				comment_id: commentId,
+				done: done ? 1 : 0
 			}
 		})
 		.done(function(data) {
-			if (data === 'OK') {
-				if (typeof onSuccess == 'function') {
+			if (data && data.status === 'OK') {
+				if (typeof onSuccess === 'function') {
 					onSuccess(data);
 				}
 			} else {
-				console.warn('[toggleStatus] possible problem settings status: ', data);
+				console.error('[toggleStatus] Unexpected response:', data);
 			}
 		})
-		.fail(function(jqXHR, textStatus) {
-			console.error('[toggleStatus] problem settings status: ', textStatus, jqXHR);
+		.fail(function(jqXHR, textStatus, errorThrown) {
+			var data = jqXHR.responseJSON;
+			var message = data && data.error ? data.error : (errorThrown || textStatus);
+
+			console.error('[toggleStatus] HTTP ' + jqXHR.status + ': ' + message);
+
+			switch (jqXHR.status) {
+				case 403:
+					alert('Permission denied.');
+					break;
+				case 404:
+					alert('Comment not found.');
+					break;
+				default:
+					alert('Failed to change comment status: ' + message);
+			}
 		});
 	}
-
 })(jQuery);
